@@ -6,6 +6,9 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+import 'package:eakazijobs/interactions.dart';
+import 'package:eakazijobs/integrations.dart';
+import 'package:eakazijobs/init.dart';
 
 import '../../../../../constants/assets/images_constants.dart';
 import '../../../../../constants/theme/color_selection.dart';
@@ -30,10 +33,35 @@ class SignUp extends StatelessWidget {
       }
 
       _formKey.currentState!.save();
+      Fields? _fields;
       customLoader.showLoader('Creating your account...');
+     var fullname = signupModel.firstName! + signupModel.lastName!;
+      var email = signupModel.email!;
+      var role = signupModel.role!;
 
-      final result = await authService.signUp(signupModel);
-      print('result $result');
+     Future<void> initFields() async {
+    _fields = (await AgentFactory.create(
+      // the canister id and url for local testing
+
+      canisterId: 'd6g4o-amaaa-aaaaa-qaaoq-cai',
+      url: 'http://10.0.2.2:4943/',
+      // For Android emulator, please use 10.0.2.2 as endpoint
+      idl: idl,
+    ))
+        .hook(Fields());
+  }
+
+    Future<void> createUser() async {
+    if (_fields == null) {
+      await initFields();
+    }
+     await _fields!.createUser(fullname: fullname, email: email, role: role);
+    // print('result $result');
+  }
+
+
+      // final result = await authService.signUp(signupModel);
+      
       customLoader.showSuccess('Account created! Proceed to login');
       Get.toNamed(Routes.login);
       // if (signupModel.role == 'freelancer') {
@@ -160,6 +188,7 @@ class SignUp extends StatelessWidget {
                                 }
                               },
                               keyboardType: TextInputType.name),
+
                           const SizedBox(
                             height: 24,
                           ),
@@ -191,7 +220,7 @@ class SignUp extends StatelessWidget {
                               ],
                               onSaved: (value) {
                                 String role = value == 'Freelancer'
-                                    ? 'trainee'
+                                    ? 'Trainee'
                                     : 'business';
                                 signupModel.role = role;
                                 print("value $role");
@@ -236,6 +265,7 @@ class SignUp extends StatelessWidget {
                           //   ),
                           // ),
 
+
                           Column(
                             children: [
                               const SizedBox(
@@ -249,6 +279,7 @@ class SignUp extends StatelessWidget {
                                       ? true
                                       : false,
                                   onPressed: () {
+
                                     submit(context);
                                     // Loader<void>(context)
                                     //     .simpleLoader(() => signUpCtrl.signUp());

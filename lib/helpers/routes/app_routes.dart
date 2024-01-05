@@ -6,6 +6,7 @@ abstract class Routes {
   static const onBoarding2 = '/onboarding2';
   static const onboardiing3 = '/onboarding3';
   static const login = '/login';
+  static const internetIdentity = '/internetIdentity';
   static const signup = '/siignup';
   static const home = '/Home';
   static const freeLancerCoursers = '/freelancercourses';

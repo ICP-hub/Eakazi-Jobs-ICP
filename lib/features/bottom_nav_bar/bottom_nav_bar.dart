@@ -113,8 +113,8 @@ class _BottomSheetScreenState extends State<BottomSheetScreen>
               // print("ctrl showbadge  " + controller.showBadge.toString());
               List<Widget> _pages = <Widget>[
                 c.userData.value.userRole == "trainee"
-                    ? const FreeLancerHome()
-                    : const EmployersHomeScreen(),
+                    ? const FreeLancerHome()    // apply
+                    : const EmployersHomeScreen(), // create a job, // searching for profile
                 const WalletHomeScreen(),
                 const SizedBox(),
                 const FreeLanceProfile(),

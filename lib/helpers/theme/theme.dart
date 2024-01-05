@@ -8,9 +8,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 const ColorScheme colorSchemeData = ColorScheme(
   primary: ColorsConst.primary,
-  primaryVariant: ColorsConst.blackFour,
+//  primaryVariant: ColorsConst.blackFour,
   secondary: ColorsConst.secoundary,
-  secondaryVariant: ColorsConst.blackFive,
+// secondaryVariant: ColorsConst.blackFive,
   surface: ColorsConst.white,
   background: ColorsConst.backgroundColor,
   error: ColorsConst.warning,

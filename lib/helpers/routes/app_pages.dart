@@ -277,6 +277,8 @@ class AppPages {
       page: () => SignIn(),
       // page: () => const MyProfileVendor(),
     ),
+
+
     GetPage(
       name: Routes.signup,
       // binding: MyProfileVendorBinding(),

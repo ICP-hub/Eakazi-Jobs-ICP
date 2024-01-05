@@ -1,0 +1,30 @@
+{
+  "canisters": {
+    "ea_backend": {
+      "candid": "src/ea_backend/ea_backend.did",
+      "package": "ea_backend",
+      "type": "rust"
+    },
+    "ea_frontend": {
+      "dependencies": [
+        "ea_backend"
+      ],
+      "frontend": {
+        "entrypoint": "src/ea_frontend/src/index.html"
+      },
+      "source": [
+        "src/ea_frontend/assets",
+        "dist/ea_frontend/"
+      ],
+      "type": "assets"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}

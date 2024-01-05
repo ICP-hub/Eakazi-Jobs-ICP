@@ -76,7 +76,7 @@ class MessagesContainer extends StatelessWidget {
             ),
           ),
           // Spacer(),
-          ChatBadges()
+          // ChatBadges()
           // MessageCount(room: room),
         ],
       ),

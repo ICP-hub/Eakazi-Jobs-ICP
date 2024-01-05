@@ -1,11 +1,14 @@
+import 'package:agent_dart/agent_dart.dart';
+import 'package:agent_dart/bridge/ffi/ffi.dart';
+import 'package:eakazijobs/features/authentication/login/view/screen/webViewScreen.dart';
 import 'package:eakazijobs/helpers/utils/customLoader.dart';
 import 'package:eakazijobs/models/signinModel.dart';
-
+import 'package:webview_flutter/webview_flutter.dart';
 import 'package:eakazijobs/services/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../../../constants/assets/images_constants.dart';
 import '../../../../../constants/theme/color_selection.dart';
 import '../../../../../helpers/routes/app_pages.dart';
@@ -13,12 +16,50 @@ import '../../../../../helpers/utils/utils.dart';
 import '../../../../shared_widgets/buttons.dart';
 import '../../../../shared_widgets/input_text.dart';
 
+
 class SignIn extends StatelessWidget {
+  
   SignIn({Key? key}) : super(key: key);
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   SigninModel signinModel = SigninModel();
   AuthService authService = AuthService();
   CustomLoader customLoader = CustomLoader();
+  //  var authClientCreateOptions = AuthClientLoginOptions()
+    // var createUrlOptions = CreateUrlOptions(
+    //   redirectUri: Uri(
+    //     scheme: "https",
+    //     path: "login.html",
+    //     host: "https://identity.ic0.app/#authorize",
+    //   )
+    //   publicKey: publicKey, // of session key
+    //    scope: scope
+    //    )  
+
+  //   var authClient = AuthClient(
+  //   scheme: "rubaru",
+  //   path: "auth",
+  //   authFunction: (AuthPayload payload) async {
+  //     Uri uri = Uri(
+  //       scheme: "https",
+  //       path: "login.html",
+  //       host: "https://identity.ic0.app/#authorize",
+  //       queryParameters: {
+  //         "authUrl": payload.url,
+  //       },
+  //     );
+  //     String result = await FlutterWebAuth.authenticate(
+  //       url: uri.toString(),
+  //       callbackUrlScheme: "rubaru",
+  //     );
+  //     return result;
+  //   },
+  // );
+
+  
+  @override
+  submitSecond(context) async {
+    
+  }
 
   @override
   submit(context) async {
@@ -26,7 +67,6 @@ class SignIn extends StatelessWidget {
       if (!_formKey.currentState!.validate()) {
         return;
       }
-
       _formKey.currentState!.save();
       customLoader.showLoader('Login you in...');
 
@@ -62,6 +102,8 @@ class SignIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SignInValidateInputController c = Get.put(SignInValidateInputController());
+
+    // AuthClient client = AuthClient(scheme: scheme, authFunction: authunction);
     return Obx(() => Scaffold(
           // appBar: App,
 
@@ -203,6 +245,31 @@ class SignIn extends StatelessWidget {
                                     text: "Sign In",
                                   ),
                                 ),
+
+                                // add internet identity signin
+                                // customDropDown, themes, buttons,badges, messagelistcontiner
+
+                                const SizedBox(
+                                  height: 6,
+                                ),
+
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 16, right: 16),
+                                  child: AuthBtn(
+                                    isComplete: c.isValidated.value == true
+                                        ? true
+                                        : false,
+                                    onPressed: () {
+                                      submitSecond(context);
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const WebViewScreen()));
+                                      // canister id : rdmx6-jaaaa-aaaaa-aaadq-cai
+                                      // configure plug in here
+                                    },
+                                    text: "Sign in with Internet Identity",
+                                  ),
+                                ),
+
                                 const SizedBox(
                                   height: 6,
                                 ),

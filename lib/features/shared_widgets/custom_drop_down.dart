@@ -171,7 +171,8 @@ class CustomDropdownButton extends StatelessWidget {
           enabledBorder: OutlineInputBorder(
               borderRadius: borderRadius ?? miniBoxCornerRadius,
               borderSide: BorderSide(
-                  color: colorScheme(context).secondaryVariant, width: 1)),
+                // variant: colorScheme(context).secondaryVariant,
+                  color: colorScheme(context).secondary, width: 1)),
           hintText: "000000\n0",
           focusedBorder: OutlineInputBorder(
               borderRadius: borderRadius ?? miniBoxCornerRadius,

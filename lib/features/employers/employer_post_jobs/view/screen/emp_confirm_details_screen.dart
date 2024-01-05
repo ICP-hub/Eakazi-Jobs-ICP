@@ -112,7 +112,7 @@ class EmployerConfirmDetailsScreen extends StatelessWidget {
                 ),
               ),
             ],
-          ),
+          ), 
         ));
   }
 }

@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:agent_dart/agent_dart.dart';
 import 'package:eakazijobs/helpers/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -20,6 +20,7 @@ void main() async {
   // await Hive.initFlutter();
 
   runApp(
+    
     // DevicePreview(
     //     enabled: false,
     //     builder: (context) {
@@ -82,7 +83,7 @@ void main() async {
   );
 }
 
-// Progect structure
+// Project structure
 // asssets
 // icons
 // images
