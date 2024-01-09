@@ -9,7 +9,6 @@
     `adb devices`
 
     `adb reverse tcp:4943 tcp:4943`
-     
 
 3. For the repository cloned in WSL run the following commands :
 
