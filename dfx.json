@@ -1,0 +1,32 @@
+{
+	"canisters": {
+		"eakazijobs": {
+			"main": "backend/src/ea_backend/ea_backend.did",
+			"package": "ea_backend",
+			"type": "rust"
+		},
+		"ea_frontend": {
+			"dependencies": [
+				"ea_backend"
+			],
+			"frontend": {
+				"entrypoint": "backend/src/ea_frontend/src/index.html"
+			},
+			"source": [
+				"backend/src/ea_frontend/assets",
+				"dist/ea_frontend/"
+			],
+			"type": "assets"
+		},
+		"internet_identity": {
+			"type": "pull",
+			"id": "rdmx6-jaaaa-aaaaa-aaadq-cai"
+		}
+	},
+	"defaults": {
+		"build": {
+			"packtool": ""
+		}
+	},
+	"version": 1
+}

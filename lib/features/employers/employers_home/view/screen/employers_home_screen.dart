@@ -8,6 +8,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+import 'package:eakazijobs/features/authentication/login/view/screen/sign_in.dart';
 
 import '../../../../../constants/assets/icon_constans.dart';
 import '../../../../../helpers/routes/app_pages.dart';
@@ -40,7 +41,7 @@ class EmployersHomeScreen extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        "Hi, ${c.userData.value.firstName}",
+                        "Hi, ${fullName}",
                         style: textTheme(context).headline3,
                       ),
                       const Spacer(),

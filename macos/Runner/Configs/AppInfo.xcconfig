@@ -5,10 +5,10 @@
 // 'flutter create' template.
 
 // The application's name. By default this is also the title of the Flutter window.
-PRODUCT_NAME = eakazijobs
+PRODUCT_NAME = auth_counter
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.ea-kazi-mobile.eakazijobs
+PRODUCT_BUNDLE_IDENTIFIER = com.example.authCounter
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2022 com.ea-kazi-mobile. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2021 com.example. All rights reserved.

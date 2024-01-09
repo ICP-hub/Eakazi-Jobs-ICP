@@ -21,51 +21,47 @@ class InputTextNormal extends StatelessWidget {
   final String hintText;
   final TextInputAction textInputAction;
   final TextInputType keyboardType;
-
-  // final TextEditingController controller;
-  //TODO: learn how to use voidcallback here
-  final dynamic onSave;
-  final String? Function(String?)? validator;
+  final SaveCallBack onSave;
+  final ValidateCallBack? validator;
   final TextEditingController? controller;
   final AutovalidateMode? autovalidateMode;
+  final FocusNode focusNode;
+  final VoidCallback onEditingComplete;
 
   const InputTextNormal({
     Key? key,
     required this.hintText,
     required this.textInputAction,
     required this.keyboardType,
-    this.onSave,
+    required this.onSave,
     this.validator,
     this.controller,
     this.autovalidateMode,
+    required this.focusNode,
+    required this.onEditingComplete,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 64,
+    return ConstrainedBox(
+      constraints: BoxConstraints(minHeight: 64),
+      // height: 64,
       child: TextFormField(
-        // controller: controller,
-        key: key,
-        maxLines: null,
-        minLines: null,
-        expands: true,
-        onChanged: (change) {},
+        focusNode: focusNode,
         onSaved: onSave,
         validator: validator,
         keyboardType: keyboardType,
         textInputAction: textInputAction,
         autovalidateMode: autovalidateMode,
         controller: controller,
-
         cursorColor: Colors.black,
-        // style:
-        //     textTheme(context).bodyText1?.copyWith(color: ColorConst.blackTwo),
-        decoration: InputTExtxHelper(context, hintText, null).decoration(),
+        decoration: InputTExtxHelper(context, hintText, 16.0).decoration(),
+        onEditingComplete: onEditingComplete,
       ),
     );
   }
 }
+
 
 class InputTextNormal2 extends StatelessWidget {
   final String hintText;

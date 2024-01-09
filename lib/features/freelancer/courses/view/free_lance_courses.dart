@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:sizer/sizer.dart';
+import 'package:eakazijobs/features/authentication/login/view/screen/sign_in.dart';
 
 import '../../../../constants/assets/icon_constans.dart';
 import '../../shared_widgets/media_container.dart';
@@ -35,7 +36,7 @@ class FreeLancerCourses extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        "Hi, Mary",
+                        "Hi, ${fullName}",
                         style: textTheme(context).headline3,
                       ),
                       const Spacer(),
@@ -69,9 +70,12 @@ class FreeLancerCourses extends StatelessWidget {
                         )),
                     child: Row(
                       children: [
-                        Text(
-                          "e.g Game development jobs.............",
-                          style: textTheme(context).overline,
+                        Flexible(
+                          child: Text(
+                            "e.g Game development jobs.............",
+                            style: textTheme(context).overline,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                         const Spacer(),
                         const Icon(Icons.search, color: ColorsConst.blackFour)

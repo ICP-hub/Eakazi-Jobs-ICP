@@ -13,7 +13,7 @@ class ServiceDropDown extends StatefulWidget {
     required this.services,
     this.validator,
     required this.onSaved,
-    this.hint = 'sign up as ',
+    this.hint = 'Sign up as ',
   }) : super(key: key);
 
   final List<String> services;

@@ -42,6 +42,7 @@ class FreeLancerHome extends StatelessWidget {
                         style: textTheme(context).headline3,
                       ),
                       const Spacer(),
+                      // Menu bar icon
                       Material(
                         borderRadius: BorderRadius.circular(50),
                         elevation: 2,

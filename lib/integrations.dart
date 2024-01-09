@@ -1,6 +1,42 @@
 import 'package:agent_dart/agent_dart.dart';
 import 'init.dart';
 
+final RecordClass course = IDL.Record({
+  'id' : IDL.Text,
+  'title' : IDL.Text,
+  'creator' : IDL.Principal,
+  'applicants' : IDL.Vec(IDL.Principal),
+});
+
+final RecordClass jobs = IDL.Record({
+  'id' : IDL.Text,
+  'title' : IDL.Text,
+  'creator' : IDL.Principal,
+  'applicants' : IDL.Vec(IDL.Principal),
+});
+
+final VariantClass roles = IDL.Variant({
+  'TRAINEE': IDL.Null,
+  'TRAINER': IDL.Null,
+  'ADMIN' : IDL.Null,
+  'EMPLOYER' : IDL.Null,
+
+});
+
+final RecordClass profile = IDL.Record({
+  'id' : IDL.Text,
+  'occupation' : IDL.Text,
+  'resume' : IDL.Vec(IDL.Nat8),
+  'role' : roles,
+  'description' : IDL.Text,
+  'email' : IDL.Text,
+  'fullname' : IDL.Text,
+  'keywords' : IDL.Vec(IDL.Text),
+  'organization' : IDL.Text,
+  'skills' : IDL.Vec(IDL.Text),
+  'location' : IDL.Text,
+
+});
 
 abstract class FieldsMethod {
   /// use staic const as method name
@@ -16,49 +52,9 @@ abstract class FieldsMethod {
   static const getSelf = 'getSelf';
   static const search = 'search';
   static const update = 'update';
-}
-// define all record and variant class here
+  // define service class
 
-    final RecordClass course = IDL.Record({
-    'id' : IDL.Text,
-    'title' : IDL.Text,
-    'creator' : IDL.Principal,
-    'applicants' : IDL.Vec(IDL.Principal),
-  });
-
-  final RecordClass jobs = IDL.Record({
-    'id' : IDL.Text,
-    'title' : IDL.Text,
-    'creator' : IDL.Principal,
-    'applicants' : IDL.Vec(IDL.Principal),
-  });
-
-  final VariantClass roles = IDL.Variant({
-    'TRAINEE': IDL.Null,
-    'TRAINER': IDL.Null,
-    'ADMIN' : IDL.Null,
-    'EMPLOYER' : IDL.Null,
-
-  });
-
-  final RecordClass profile = IDL.Record({
-  'id' : IDL.Text,
-  'occupation' : IDL.Text,
-  'resume' : IDL.Vec(IDL.Nat8),
-  'role' : roles,
-  'description' : IDL.Text,
-  'email' : IDL.Text,
-  'fullname' : IDL.Text,
-  'keywords' : IDL.Vec(IDL.Text),
-  'organization' : IDL.Text,
-  'skills' : IDL.Vec(IDL.Text),
-  'location' : IDL.Text,
-
-  });
-
-  // define service class 
-
-  final ServiceClass idl = IDL.Service({
+  static final ServiceClass idl = IDL.Service({
     FieldsMethod.applyCourse: IDL.Func([IDL.Text], [], []),
 
     FieldsMethod.applyJobs: IDL.Func([IDL.Principal], [], []),
@@ -83,6 +79,11 @@ abstract class FieldsMethod {
 
     FieldsMethod.update: IDL.Func([profile], [], []),
   });
+
+}
+// define all record and variant class here
+
+
 
 
 class Fields extends ActorHook {

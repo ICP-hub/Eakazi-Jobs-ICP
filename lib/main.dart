@@ -7,20 +7,32 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:sizer/sizer.dart';
-
+import 'package:go_router/go_router.dart';
 import 'constants/theme/color_selection.dart';
 import 'helpers/routes/app_pages.dart';
 import 'helpers/theme/theme.dart';
 
 // run on realdevise or simulator/emulato
 
+// final _router = GoRouter(
+//   initialLocation: '/',
+//   routes: [
+//     GoRoute(
+//       name: 'signup',
+//       path: '/signup',
+//       builder: (context, state) => MyHomePage(),
+//     ),
+//   ],
+// );
+
 void main() async {
   // await dotenv.load(fileName: "assets/.env");
   WidgetsFlutterBinding.ensureInitialized();
+  // Get.put(ActorController());
   // await Hive.initFlutter();
 
   runApp(
-    
+
     // DevicePreview(
     //     enabled: false,
     //     builder: (context) {

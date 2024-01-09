@@ -1,7 +1,7 @@
 import 'package:eakazijobs/constants/theme/color_selection.dart';
 import 'package:eakazijobs/helpers/utils/utils.dart';
 import 'package:flutter/material.dart';
-
+import 'package:eakazijobs/features/authentication/login/view/screen/sign_in.dart';
 import '../../../../../constants/assets/images_constants.dart';
 import '../../../../shared_widgets/linear_percenth_indicator.dart';
 import '../../../shared_widgets/reconmended_tile.dart';
@@ -35,7 +35,7 @@ class FreeLanceProfile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Marvelous IK",
+                        fullName,
                         style: textTheme(context).subtitle2?.copyWith(
                             color: ColorsConst.tittleColor, fontSize: 20),
                       ),

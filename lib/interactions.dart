@@ -22,17 +22,17 @@ class _MyAppState extends State<MyApp> {
     loading(true);
   }
 
-  Future<void> initFields() async {
-    _fields = (await AgentFactory.create(
-      // the canister id and url for local testing
-
-      canisterId: 'd6g4o-amaaa-aaaaa-qaaoq-cai',
-      url: 'http://127.0.0.1:4943/',
-      // For Android emulator, please use 10.0.2.2 as endpoint
-      idl: idl,
-    ))
-        .hook(Fields());
-  }
+  // Future<void> initFields() async {
+  //   _fields = (await AgentFactory.create(
+  //     // the canister id and url for local testing
+  //
+  //     canisterId: 'd6g4o-amaaa-aaaaa-qaaoq-cai',
+  //     url: 'http://127.0.0.1:4943/',
+  //     // For Android emulator, please use 10.0.2.2 as endpoint
+  //     idl: idl,
+  //   ))
+  //       .hook(Fields());
+  // }
 
   void loading(bool state) {
     setState(() {
@@ -40,13 +40,13 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  Future<void> createUser() async {
-    if (_fields == null) {
-      await initFields();
-    }
-    await _fields!.createUser();
-    loading(false);
-  }
+  // Future<void> createUser() async {
+  //   if (_fields == null) {
+  //     await initFields();
+  //   }
+  //   await _fields!.createUser();
+  //   loading(false);
+  // }
 
   Future<void> getSelf() async {
     loading(true);

@@ -21,9 +21,9 @@ class SkillContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 26),
-      padding: const EdgeInsets.all(28),
-      height: 124,
-      width: 73.w,
+      padding: const EdgeInsets.all(26),
+      height: 126,
+      width: 79.w,
       decoration: BoxDecoration(
         color: ColorsConst.primary.withOpacity(0.08),
         borderRadius: BorderRadius.circular(12),

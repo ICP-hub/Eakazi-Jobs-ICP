@@ -24,9 +24,12 @@ class SearchContainer extends StatelessWidget {
           )),
       child: Row(
         children: [
-          Text(
-            "e.g Game development jobs.............",
-            style: textTheme(context).overline,
+          Flexible( // Wrap the Text widget with Flexible
+            child: Text(
+              "e.g Game development jobs.............",
+              style: textTheme(context).overline,
+              overflow: TextOverflow.ellipsis, // Handle text overflow
+            ),
           ),
           const Spacer(),
           const Icon(Icons.search, color: ColorsConst.blackFour)
