@@ -23,10 +23,14 @@ type Profile = record {
   skills : vec text;
   location : text;
 };
+type CheckUser = record {
+  user : principal; 
+};
 type Roles = variant { TRAINEE; TRAINER; ADMIN; EMPLOYER };
 service : {
   applyCourse : (text) -> ();
   applyJobs : (principal) -> ();
+  checkUser : (principal) -> (bool);
   createCourse : (text) -> (Course);
   createJob : (text) -> (Jobs);
   createUser : (text, text, text) -> (Profile);
