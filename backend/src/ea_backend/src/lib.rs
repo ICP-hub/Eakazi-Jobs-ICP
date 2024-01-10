@@ -53,14 +53,46 @@ struct Jobs {
     pub applicants: Vec<Principal>,
 }
 
+#[derive(Clone, Debug, CandidType, Deserialize)]
+struct CheckUser {
+    pub user: Principal,
+}
+impl Default for CheckUser {
+    fn default() -> Self {
+        Self {
+            user: ic_cdk::api::caller(),
+        }
+    }
+    
+}
+
 thread_local! {
+    static CHECK_USER_STORE: RefCell<Vec<CheckUser>> = RefCell::default();
     static PROFILE_STORE: RefCell<ProfileStore> = RefCell::default();
     static ID_STORE: RefCell<IdStore> = RefCell::default();
     static COURSE_STORE : RefCell<CourseStore> = RefCell::default();
     static JOB_STORE : RefCell<JobStore> = RefCell::default();
 }
 
+#[update]
+async fn checkUser(user: Principal) -> bool {
+    let exists = CHECK_USER_STORE.with(|check_user_store| {
+        check_user_store
+            .borrow()
+            .iter()
+            .any(|check_user| check_user.user == user)
+    });
 
+    // If the principal does not exist, store it in the vector
+    if !exists {
+        CHECK_USER_STORE.with(|check_user_store| {
+            check_user_store.borrow_mut().push(CheckUser { user });
+        });
+        true
+    } else {
+        false
+    }
+}
 
 #[update]
 // fn is_ascii_compatible(bytes: &[u8]) -> bool {
