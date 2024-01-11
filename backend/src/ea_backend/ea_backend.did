@@ -30,7 +30,7 @@ type Roles = variant { TRAINEE; TRAINER; ADMIN; EMPLOYER };
 service : {
   applyCourse : (text) -> ();
   applyJobs : (principal) -> ();
-  checkUser : (principal) -> (bool);
+  checkUser : () -> (bool);
   createCourse : (text) -> (Course);
   createJob : (text) -> (Jobs);
   createUser : (text, text, text) -> (Profile);
