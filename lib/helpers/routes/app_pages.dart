@@ -65,7 +65,7 @@ class AppPages {
       name: "/",
       binding: BottomNavBarBinding(),
       page: () => const OnBoardingOne(),
-      // page: () => const BottomSheetScreen(),
+      // page: () => SignUp(),
       // page: () => const FLJobsDetails(),
     ),
     GetPage(

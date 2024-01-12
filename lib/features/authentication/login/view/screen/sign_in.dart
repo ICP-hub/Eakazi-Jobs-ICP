@@ -23,7 +23,6 @@ import 'package:go_router/go_router.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:agent_dart/agent_dart.dart';
-
 import 'package:eakazijobs/helpers/utils/customLoader.dart';
 import 'package:eakazijobs/models/signupModel.dart';
 import 'package:eakazijobs/services/auth_service.dart';
@@ -36,10 +35,9 @@ import 'package:eakazijobs/interactions.dart';
 import 'package:eakazijobs/integrations.dart';
 import 'package:eakazijobs/init.dart';
 import 'package:eakazijobs/features/authentication/login/view/screen/sign_in.dart'
-    as signIn;
+as signIn;
 import 'package:get/get.dart';
 import 'package:agent_dart/agent_dart.dart';
-
 import '../../../../../constants/assets/images_constants.dart';
 import '../../../../../constants/theme/color_selection.dart';
 import '../../../../../helpers/routes/app_pages.dart';
@@ -49,6 +47,7 @@ import '../../../../shared_widgets/input_text.dart';
 import '../../../../shared_widgets/options_drop_down.dart';
 import 'dart:convert';
 
+// Global variables --------------------------
 CanisterActor? newActor;
 var fullName = "John Doe";
 
@@ -62,15 +61,12 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   String? _error;
   StreamSubscription? _sub;
-  bool _isLoggedIn = false;
   var publicKeyString;
-  String _decodedDelegation = '';
   Ed25519KeyIdentity? newIdentity;
 
   @override
   void initState() {
     super.initState();
-    // ed25519();
     initUniLinks();
   }
 
@@ -78,18 +74,6 @@ class _SignInState extends State<SignIn> {
   void dispose() {
     _sub?.cancel();
     super.dispose();
-  }
-
-  // ---------------- Handling Login ----------------
-  void handleLogin() async {
-    await authenticate();
-  }
-
-  // ---------------- Handling Logout ----------------
-  void handleLogout() {
-    setState(() {
-      _isLoggedIn = false;
-    });
   }
 
   // ---------------- Receiving Query Params ----------------
@@ -101,49 +85,55 @@ class _SignInState extends State<SignIn> {
 
         String delegationString = queryParams['del'].toString();
 
-        _decodedDelegation = Uri.decodeComponent(delegationString);
+        String _decodedDelegation = Uri.decodeComponent(delegationString);
 
-        DelegationChain _delegationChain =
-            DelegationChain.fromJSON(jsonDecode(_decodedDelegation));
-
-        DelegationIdentity _delegationIdentity =
-            DelegationIdentity(newIdentity!, _delegationChain);
-
-        HttpAgent newAgent = HttpAgent(
-          options: HttpAgentOptions(
-            identity: _delegationIdentity,
-          ),
-          defaultHost: 'localhost',
-          defaultPort: 4943,
-          defaultProtocol: 'http',
-        );
-
-        // Creating Canister Actor -----------------------
-        newActor = CanisterActor(
-            ActorConfig(
-              canisterId: Principal.fromText('a4tbr-q4aaa-aaaaa-qaafq-cai'),
-              agent: newAgent,
-            ),
-            FieldsMethod.idl);
-
-        var checkUser = false;
-
-        if (checkUser == true) {
-          customLoader.showLoader('Welcome back, please wait...');
-          Future.delayed(Duration(seconds: 2), () {
-            customLoader.dismissLoader();
-            Get.toNamed(Routes.home);
-          });
-        } else {
-          customLoader
-              .showLoader('Hey you are new here, please enter your details');
-          Future.delayed(Duration(seconds: 2), () {
-            customLoader.dismissLoader();
-            Get.toNamed(Routes.signup);
-          });
-        }
+        await newDelegation(_decodedDelegation);
       }
     });
+  }
+
+  Future<void> newDelegation(decodedDelegation) async {
+    DelegationChain _delegationChain =
+    DelegationChain.fromJSON(jsonDecode(decodedDelegation));
+
+    DelegationIdentity _delegationIdentity =
+    DelegationIdentity(newIdentity!, _delegationChain);
+
+    HttpAgent newAgent = HttpAgent(
+      options: HttpAgentOptions(
+        identity: _delegationIdentity,
+      ),
+      defaultHost: 'localhost',
+      defaultPort: 4943,
+      defaultProtocol: 'http',
+    );
+
+    // Creating Canister Actor -----------------------
+    newActor = CanisterActor(
+        ActorConfig(
+          canisterId: Principal.fromText('a4tbr-q4aaa-aaaaa-qaafq-cai'),
+          agent: newAgent,
+        ),
+        FieldsMethod.idl);
+
+    var checkUser = await newActor!.getFunc(FieldsMethod.checkUser)?.call([]);
+
+    print(checkUser);
+
+    if (checkUser == true) {
+      customLoader.showLoader('Welcome back, please wait...');
+      Future.delayed(Duration(seconds: 2), () {
+        customLoader.dismissLoader();
+        Get.toNamed(Routes.home);
+      });
+    } else {
+      customLoader
+          .showLoader('Hey you are new here, please enter your details');
+      Future.delayed(Duration(seconds: 2), () {
+        customLoader.dismissLoader();
+        Get.toNamed(Routes.signup);
+      });
+    }
   }
 
   // ---------------- Authentication ----------------
@@ -200,116 +190,116 @@ class _SignInState extends State<SignIn> {
 
     // AuthClient client = AuthClient(scheme: scheme, authFunction: authunction);
     return Obx(() => Scaffold(
-          // appBar: App,
+      // appBar: App,
 
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  height: 50.h,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(ImageAssets.backGroundImage),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 16),
-                    child: SafeArea(
-                      child: Column(
-                        // mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Get.back();
-                            },
-                            child: const Icon(
-                              Icons.arrow_back,
-                              color: ColorsConst.white,
-                            ),
-                          ),
-                          const Spacer(),
-                          Text(
-                            "Sign in",
-                            style: textTheme(context).headline2,
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: Text(
-                              "Welcome back to EA Kazi complete courses , Get trained and certified by experts on the platform",
-                              style: textTheme(context).subtitle2,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: 50.h,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(ImageAssets.backGroundImage),
+                  fit: BoxFit.fill,
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 16),
+                child: SafeArea(
+                  child: Column(
+                    // mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: const Icon(
+                          Icons.arrow_back,
+                          color: ColorsConst.white,
+                        ),
                       ),
-                    ),
+                      const Spacer(),
+                      Text(
+                        "Sign in",
+                        style: textTheme(context).headline2,
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: Text(
+                          "Welcome back to EA Kazi complete courses , Get trained and certified by experts on the platform",
+                          style: textTheme(context).subtitle2,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Form(
-                      key: _formKey,
-                      onChanged: () {
-                        validateFields(c);
-                      },
-                      child: SingleChildScrollView(
-                        child: Column(
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Form(
+                  key: _formKey,
+                  onChanged: () {
+                    validateFields(c);
+                  },
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Column(
                           children: [
-                            Column(
-                              children: [
-                                const SizedBox(
-                                  height: 50,
+                            const SizedBox(
+                              height: 50,
+                            ),
+                            const SizedBox(
+                              width: 200,
+                              height: 100,
+                              child: Image(
+                                  image: AssetImage(ImageAssets.icpLogo)),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 24, right: 24),
+                              child: AuthBtn(
+                                isComplete: c.isValidated.value,
+                                onPressed: authenticate,
+                                text: "Sign in with Internet Identity",
+                                borderRadius: BorderRadius.circular(12),
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Color(0xFF522785),
+                                    Color(0xFFED1E79)
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
                                 ),
-                                const SizedBox(
-                                  width: 200,
-                                  height: 100,
-                                  child: Image(
-                                      image: AssetImage(ImageAssets.icpLogo)),
+                                textStyle: TextStyle(
+                                  color: Colors.white,
                                 ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 24, right: 24),
-                                  child: AuthBtn(
-                                    isComplete: c.isValidated.value,
-                                    onPressed: handleLogin,
-                                    text: "Sign in with Internet Identity",
-                                    borderRadius: BorderRadius.circular(12),
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        Color(0xFF522785),
-                                        Color(0xFFED1E79)
-                                      ],
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                    ),
-                                    textStyle: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
                           ],
                         ),
-                      ),
-                    )),
-              ],
-            ),
-          ),
-        ));
+                      ],
+                    ),
+                  ),
+                )),
+          ],
+        ),
+      ),
+    ));
   }
 }
 

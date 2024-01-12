@@ -21,47 +21,32 @@ class InputTextNormal extends StatelessWidget {
   final String hintText;
   final TextInputAction textInputAction;
   final TextInputType keyboardType;
-  final SaveCallBack onSave;
-  final ValidateCallBack? validator;
-  final TextEditingController? controller;
-  final AutovalidateMode? autovalidateMode;
-  final FocusNode focusNode;
-  final VoidCallback onEditingComplete;
+  // final TextEditingController controller;
+  final Function(String?)? onSave;
+  final String? Function(String?)? validator;
 
   const InputTextNormal({
     Key? key,
     required this.hintText,
     required this.textInputAction,
     required this.keyboardType,
-    required this.onSave,
+    // this.controller,
+    this.onSave,
     this.validator,
-    this.controller,
-    this.autovalidateMode,
-    required this.focusNode,
-    required this.onEditingComplete,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: BoxConstraints(minHeight: 64),
-      // height: 64,
-      child: TextFormField(
-        focusNode: focusNode,
-        onSaved: onSave,
-        validator: validator,
-        keyboardType: keyboardType,
-        textInputAction: textInputAction,
-        autovalidateMode: autovalidateMode,
-        controller: controller,
-        cursorColor: Colors.black,
-        decoration: InputTExtxHelper(context, hintText, 16.0).decoration(),
-        onEditingComplete: onEditingComplete,
-      ),
+    return TextFormField(
+      // controller: controller,
+      onSaved: onSave,
+      validator: validator,
+      keyboardType: keyboardType,
+      textInputAction: textInputAction,
+        decoration: InputTExtxHelper(context, hintText, 14.0).decoration2(),
     );
   }
 }
-
 
 class InputTextNormal2 extends StatelessWidget {
   final String hintText;
@@ -263,21 +248,21 @@ class InputPasswordText extends StatelessWidget {
             //     textTheme(context).caption?.copyWith(color: Colors.black),
             suffixIcon: isVissible.value
                 ? IconButton(
-                    splashRadius: 0.1,
-                    onPressed: () {
-                      isVissible.value = false;
-                    },
-                    icon: SvgIcon(
-                      IconsAssets.visibility,
-                    ))
+                splashRadius: 0.1,
+                onPressed: () {
+                  isVissible.value = false;
+                },
+                icon: SvgIcon(
+                  IconsAssets.visibility,
+                ))
                 : IconButton(
-                    splashRadius: 0.1,
-                    onPressed: () {
-                      isVissible.value = true;
-                    },
-                    icon: SvgIcon(
-                      IconsAssets.visibilityOff,
-                    )),
+                splashRadius: 0.1,
+                onPressed: () {
+                  isVissible.value = true;
+                },
+                icon: SvgIcon(
+                  IconsAssets.visibilityOff,
+                )),
 
             // prefixIcon: Icon(Icons.email),
             // contentPadding: const EdgeInsets.only(
@@ -294,12 +279,12 @@ class InputPasswordText extends StatelessWidget {
             focusedErrorBorder: OutlineInputBorder(
               borderRadius: smallBoxCornerRadius,
               borderSide:
-                  BorderSide(color: colorScheme(context).error, width: 1),
+              BorderSide(color: colorScheme(context).error, width: 1),
             ),
             errorBorder: OutlineInputBorder(
                 borderRadius: smallBoxCornerRadius,
                 borderSide:
-                    BorderSide(color: colorScheme(context).error, width: 1)),
+                BorderSide(color: colorScheme(context).error, width: 1)),
             enabledBorder: OutlineInputBorder(
                 borderRadius: smallBoxCornerRadius,
                 borderSide: BorderSide(
