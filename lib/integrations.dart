@@ -40,6 +40,10 @@ final RecordClass profile = IDL.Record({
 
 });
 
+final CheckUser = IDL.Record({
+  'user' : IDL.Principal,
+});
+
 abstract class FieldsMethod {
   /// use staic const as method name
   static const applyCourse = 'applyCourse';
@@ -62,7 +66,7 @@ abstract class FieldsMethod {
 
     FieldsMethod.applyJobs: IDL.Func([IDL.Principal], [], []),
 
-    FieldsMethod.checkUser: IDL.Func([IDL.Principal], [IDL.Bool], []),
+    FieldsMethod.checkUser: IDL.Func([], [IDL.Bool], []),
 
     FieldsMethod.createCourse: IDL.Func([IDL.Text], [course], []),
 

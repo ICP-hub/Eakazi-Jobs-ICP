@@ -49,7 +49,7 @@ import 'dart:convert';
 
 // Global variables --------------------------
 CanisterActor? newActor;
-var fullName = "John Doe";
+// var fullName;
 
 class SignIn extends StatefulWidget {
   SignIn({Key? key}) : super(key: key);
@@ -87,53 +87,54 @@ class _SignInState extends State<SignIn> {
 
         String _decodedDelegation = Uri.decodeComponent(delegationString);
 
-        await newDelegation(_decodedDelegation);
+        DelegationChain _delegationChain =
+        DelegationChain.fromJSON(jsonDecode(_decodedDelegation));
+
+        DelegationIdentity _delegationIdentity =
+        DelegationIdentity(newIdentity!, _delegationChain);
+
+        HttpAgent newAgent = HttpAgent(
+          options: HttpAgentOptions(
+            identity: _delegationIdentity,
+          ),
+          defaultHost: 'localhost',
+          defaultPort: 4943,
+          defaultProtocol: 'http',
+        );
+
+        // Creating Canister Actor -----------------------
+        newActor = CanisterActor(
+            ActorConfig(
+              canisterId: Principal.fromText('br5f7-7uaaa-aaaaa-qaaca-cai'),
+              agent: newAgent,
+            ),
+            FieldsMethod.idl);
+
+        var checkUser = await newActor!.getFunc(FieldsMethod.checkUser)?.call([]);
+          // var checkUser = false;
+        // print("CheckUser : $checkUser");
+
+        if (checkUser == true) {
+          customLoader.showLoader('Welcome back, please wait...');
+          Future.delayed(Duration(seconds: 1), () {
+            customLoader.dismissLoader();
+            Get.toNamed(Routes.home);
+          });
+        } else {
+          customLoader
+              .showLoader('Hey you are new here, please enter your details');
+          Future.delayed(Duration(seconds: 1), () {
+            customLoader.dismissLoader();
+            Get.toNamed(Routes.signup);
+          });
+        }
+
       }
     });
   }
 
   Future<void> newDelegation(decodedDelegation) async {
-    DelegationChain _delegationChain =
-    DelegationChain.fromJSON(jsonDecode(decodedDelegation));
 
-    DelegationIdentity _delegationIdentity =
-    DelegationIdentity(newIdentity!, _delegationChain);
-
-    HttpAgent newAgent = HttpAgent(
-      options: HttpAgentOptions(
-        identity: _delegationIdentity,
-      ),
-      defaultHost: 'localhost',
-      defaultPort: 4943,
-      defaultProtocol: 'http',
-    );
-
-    // Creating Canister Actor -----------------------
-    newActor = CanisterActor(
-        ActorConfig(
-          canisterId: Principal.fromText('a4tbr-q4aaa-aaaaa-qaafq-cai'),
-          agent: newAgent,
-        ),
-        FieldsMethod.idl);
-
-    var checkUser = await newActor!.getFunc(FieldsMethod.checkUser)?.call([]);
-
-    print(checkUser);
-
-    if (checkUser == true) {
-      customLoader.showLoader('Welcome back, please wait...');
-      Future.delayed(Duration(seconds: 2), () {
-        customLoader.dismissLoader();
-        Get.toNamed(Routes.home);
-      });
-    } else {
-      customLoader
-          .showLoader('Hey you are new here, please enter your details');
-      Future.delayed(Duration(seconds: 2), () {
-        customLoader.dismissLoader();
-        Get.toNamed(Routes.signup);
-      });
-    }
   }
 
   // ---------------- Authentication ----------------

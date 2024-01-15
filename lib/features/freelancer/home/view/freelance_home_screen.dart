@@ -16,6 +16,9 @@ import '../../courses/view/free_lance_courses.dart';
 import '../../shared_widgets/media_container.dart';
 import '../../shared_widgets/reconmended_tile.dart';
 import '../../shared_widgets/skill_container.dart';
+import 'package:eakazijobs/models/signupModel.dart';
+
+SignupModel signupModel = SignupModel();
 
 class FreeLancerHome extends StatelessWidget {
   const FreeLancerHome({Key? key}) : super(key: key);
@@ -38,7 +41,7 @@ class FreeLancerHome extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        "Hi, ${c.userData.value.firstName}",
+                        "Hi, null",
                         style: textTheme(context).headline3,
                       ),
                       const Spacer(),
@@ -160,7 +163,7 @@ class SkillAquiListOne extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              Get.toNamed(Routes.freeLancerCoursers);
+              Get.toNamed(Routes.freelancercoursesassesment);
             },
             child: const SkillContainer(
               tittle: "Skill Acquisition",
@@ -171,10 +174,15 @@ class SkillAquiListOne extends StatelessWidget {
           const SizedBox(
             width: 17,
           ),
-          const SkillContainer(
-            tittle: "Bid For Jobs",
-            subTittle: "Click here to get started",
-            icon: IconsAssets.briefcase,
+          GestureDetector(
+            onTap: () {
+              Get.toNamed(Routes.fLJobs);
+            },
+            child: const SkillContainer(
+              tittle: "Bid For Jobs",
+              subTittle: "Click here to get started",
+              icon: IconsAssets.briefcase,
+            ),
           ),
         ],
       ),

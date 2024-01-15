@@ -6,6 +6,9 @@ import '../../../../../constants/assets/images_constants.dart';
 import '../../../../shared_widgets/linear_percenth_indicator.dart';
 import '../../../shared_widgets/reconmended_tile.dart';
 import '../widgets/profile_container.dart';
+import 'package:eakazijobs/models/signupModel.dart';
+
+SignupModel signupModel = SignupModel();
 
 class FreeLanceProfile extends StatelessWidget {
   const FreeLanceProfile({super.key});
@@ -35,7 +38,7 @@ class FreeLanceProfile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        fullName,
+                        "null",
                         style: textTheme(context).subtitle2?.copyWith(
                             color: ColorsConst.tittleColor, fontSize: 20),
                       ),

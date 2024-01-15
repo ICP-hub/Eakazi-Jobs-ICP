@@ -31,4 +31,9 @@ class SignupModel {
 
     return data;
   }
+
+  // @override
+  // String getFullName() {
+  //   // return fullName!;
+  // }
 }

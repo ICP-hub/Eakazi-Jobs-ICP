@@ -12,6 +12,8 @@ abstract class Routes {
   static const freeLancerCoursers = '/freelancercourses';
   static const freelancercoursesassesment = '/freelancerCoursesAssesment';
   static const freeLanceCourseVideos = '/freeLanceCourseVideios';
+
+  static const flCourseDetails = '/flCourseDetails';
   static const fLJobs = '/FL_Jobs';
   static const flJobsDetails = '/flJobDetails';
   static const flProfilePublic = '/flProfile';

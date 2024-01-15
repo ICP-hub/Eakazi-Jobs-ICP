@@ -22,6 +22,7 @@ import '../../features/freelancer/courses/view/assement_courses_sucessful.dart';
 import '../../features/freelancer/courses/view/assement_fullvideo_fl.dart';
 import '../../features/freelancer/courses/view/free_lance_courses.dart';
 import '../../features/freelancer/courses/view/free_lance_courses_assesment.dart';
+import '../../features/freelancer/courses/view/free_course_details.dart';
 import '../../features/freelancer/jobs/view/binding/freelancer_jobs_details_binding.dart';
 import '../../features/freelancer/jobs/view/screen/free_lance_job_details.dart';
 import '../../features/freelancer/jobs/view/screen/free_lance_jobs.dart';
@@ -64,9 +65,11 @@ class AppPages {
     GetPage(
       name: "/",
       binding: BottomNavBarBinding(),
-      page: () => const OnBoardingOne(),
+      // page: () => const OnBoardingOne(),
       // page: () => SignUp(),
       // page: () => const FLJobsDetails(),
+      page : () => const FreeLancerHome(),
+      // page : () => const FLCoursesDetails(),
     ),
     GetPage(
       name: Routes.onBoarding2,
@@ -277,12 +280,16 @@ class AppPages {
       page: () => SignIn(),
       // page: () => const MyProfileVendor(),
     ),
-
-
     GetPage(
       name: Routes.signup,
       // binding: MyProfileVendorBinding(),
       page: () => SignUp(),
+      // page: () => const MyProfileVendor(),
+    ),
+    GetPage(
+      name: Routes.flCourseDetails,
+      // binding: MyProfileVendorBinding(),
+      page: () => const FLCoursesDetails(),
       // page: () => const MyProfileVendor(),
     ),
   ];

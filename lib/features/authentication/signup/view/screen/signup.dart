@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:eakazijobs/helpers/utils/customLoader.dart';
 import 'package:eakazijobs/models/signupModel.dart';
 import 'package:eakazijobs/services/auth_service.dart';
@@ -59,7 +61,7 @@ class SignUp extends StatelessWidget {
   // final TextEditingController lastNameController = TextEditingController();
   // final TextEditingController emailController = TextEditingController();
 
-  submit() async {
+  submit(context) async {
 
     try {
       if (!_formKey.currentState!.validate()) {
@@ -69,15 +71,26 @@ class SignUp extends StatelessWidget {
       customLoader.showLoader('Creating your account...');
 
       // Use actual values instead of string literals
-      String fullName = signupModel.firstName! + ' ' + signupModel.lastName!;
-      String email = signupModel.email!;
-      String role = signupModel.role!;
+      signupModel.fullName = signupModel.firstName! + ' ' + signupModel.lastName!;
+      // signupModel.email = signupModel.email!;
+      // signupModel.role = signupModel.role!;
+
+      Map<String, dynamic> jsonObject = {
+        "first_name": signupModel.firstName,
+        "last_name": signupModel.lastName,
+        "full_name": signupModel.fullName,
+        "email": signupModel.email,
+        "user_role": signupModel.role,
+        "password": "12345678"
+      };
+
+      SignupModel.fromJson(jsonObject);
 
       var createUserResult =
           await newActor?.getFunc(FieldsMethod.createUser)?.call([
-        fullName,
-        email,
-        role,
+            signupModel.fullName,
+        signupModel.email,
+        signupModel.role,
       ]);
 
       print("Create User: $createUserResult");
@@ -253,7 +266,7 @@ class SignUp extends StatelessWidget {
                                       ? true
                                       : false,
                                   onPressed: () {
-                                    submit();
+                                    submit(context);
                                     // Loader<void>(context)
                                     //     .simpleLoader(() => signUpCtrl.signUp());
                                   },
@@ -282,3 +295,22 @@ class ValidateInputController extends GetxController {
   RxBool isValidated = false.obs;
   void updateValidateStatus(state) => isValidated.value = state;
 }
+
+// class UserDetails extends StatelessWidget {
+//   final String fullName;
+//   final String email;
+//   final String role;
+//
+//   const UserDetails({
+//     Key? key,
+//     required this.fullName,
+//     required this.email,
+//     required this.role,
+//   }) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     // TODO: implement build
+//     throw UnimplementedError();
+//   }
+// }

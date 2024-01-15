@@ -19,6 +19,9 @@ import '../../../../freelancer/shared_widgets/reconmended_tile.dart';
 import '../../../../freelancer/shared_widgets/skill_container.dart';
 import '../widgets/data_employer_jobs.dart';
 import '../widgets/no_data_jobs.dart';
+import 'package:eakazijobs/models/signupModel.dart';
+
+SignupModel signupModel = SignupModel();
 
 class EmployersHomeScreen extends StatelessWidget {
   const EmployersHomeScreen({Key? key}) : super(key: key);
@@ -41,7 +44,7 @@ class EmployersHomeScreen extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        "Hi, ${fullName}",
+                        "Hi, ${signupModel.fullName}",
                         style: textTheme(context).headline3,
                       ),
                       const Spacer(),

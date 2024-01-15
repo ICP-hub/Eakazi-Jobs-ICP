@@ -26,7 +26,7 @@ class ReconmendedTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed(Routes.freelancercoursesassesment);
+        Get.toNamed(Routes.flCourseDetails);
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 11),
