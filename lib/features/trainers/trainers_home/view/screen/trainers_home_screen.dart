@@ -1,6 +1,7 @@
 import 'package:eakazijobs/constants/assets/images_constants.dart';
 import 'package:eakazijobs/constants/theme/color_selection.dart';
 import 'package:eakazijobs/features/shared_widgets/svgs.dart';
+import 'package:eakazijobs/features/trainers/shared_widgets/createCourse.dart';
 import 'package:eakazijobs/helpers/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -62,7 +63,9 @@ class TrainerssHomeScreen extends StatelessWidget {
                   const SkillAquiListOne(),
                   const MediaListWidget(),
                   const Reconmmended(),
-                  // use {../NoDataEmployers for empty data }
+                  const SizedBox(
+                    height: 10,
+                  ),
                   const JobsTrainersWidgte(),
                 ],
               ),
@@ -112,7 +115,7 @@ class Reconmmended extends StatelessWidget {
           const Spacer(),
           GestureDetector(
             onTap: () {
-              Get.toNamed(Routes.fLJobs);
+              Get.toNamed(Routes.freeLancerCoursers);
             },
             child: Text("See All",
                 //   "Skill Acquisition",
@@ -159,21 +162,13 @@ class SkillAquiListOne extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              Get.toNamed(Routes.freeLancerCoursers);
+              Get.toNamed(Routes.trainerCreateCourse);
             },
-            child: const SkillContainer(
-              tittle: "Skill Acquisition",
+            child: const CreateCourseContainer(
+              tittle: "Create a course",
               subTittle: "Click here to get started",
               icon: IconsAssets.skillAquasition,
             ),
-          ),
-          const SizedBox(
-            width: 17,
-          ),
-          const SkillContainer(
-            tittle: "Bid For Jobs",
-            subTittle: "Click here to get started",
-            icon: IconsAssets.briefcase,
           ),
         ],
       ),

@@ -21,7 +21,7 @@ class FLCoursesDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final tabCtrl = Get.find<FLJobsDetailsCtrl>();
+    final tabCtrl = Get.find<FLCoursesDetailsCtrl>();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Course details"),
@@ -48,11 +48,11 @@ class FLCoursesDetails extends StatelessWidget {
                     height: 25,
                   ),
                   Text(
-                    "UI Designer",
+                    "Visual Designer Course",
                     style: textTheme(context).bodyText1?.copyWith(fontSize: 25),
                   ),
                   Text(
-                    "Jelafrica - Nigeria - Fulltime",
+                    "Jelafrica",
                     style: textTheme(context).overline,
                   ),
                 ],
@@ -84,7 +84,7 @@ class FLCoursesDetails extends StatelessWidget {
                     labelStyle: textTheme(context)
                         .headline6
                         ?.copyWith(fontSize: 14, fontWeight: FontWeight.w400),
-                    // controller: tabCtrl.tabController,
+                    controller: tabCtrl.tabController,
                     indicatorPadding: EdgeInsets.zero,
                     unselectedLabelStyle: textTheme(context)
                         .headline6
@@ -110,13 +110,13 @@ class FLCoursesDetails extends StatelessWidget {
                       Tab(
                         child: TabText(
                           isNotify: false,
-                          tittle: "Asessment",
+                          tittle: "Content",
                         ),
                       ),
                       Tab(
                         child: TabText(
                           isNotify: false,
-                          tittle: "About Us",
+                          tittle: "About",
                         ),
                       ),
 
@@ -129,11 +129,11 @@ class FLCoursesDetails extends StatelessWidget {
           ];
         },
         body: TabBarView(
-          // controller: tabCtrl.tabController,
+          controller: tabCtrl.tabController,
           children: [
-            CourseDescription(title: "Job Description", body: bodyTexxt),
-            CourseDescription(title: "Assessment", body: bodyTexxt),
-            CourseDescription(title: "Assessment", body: bodyTexxt),
+            CourseDescription(title: "Course Description", body: bodyTexxt),
+            CourseDescription(title: "Course Content", body: bodyTexxt),
+            CourseDescription(title: "About Course", body: bodyTexxt),
           ],
         ),
       ),

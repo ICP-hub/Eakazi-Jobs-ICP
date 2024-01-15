@@ -90,7 +90,7 @@ class InputTextNormal2 extends StatelessWidget {
         cursorColor: Colors.black,
         // style:
         //     textTheme(context).bodyText1?.copyWith(color: ColorConst.blackTwo),
-        decoration: InputTExtxHelper(context, hintText, 18.0).decoration2(),
+        decoration: InputTExtxHelper(context, hintText, 16.0).decoration2(),
       ),
     );
   }
@@ -187,7 +187,7 @@ class InputTextArea extends StatelessWidget {
         cursorColor: Colors.black,
         // style:
         //     textTheme(context).bodyText1?.copyWith(color: ColorConst.blackTwo),
-        decoration: InputTExtxHelper(context, hintText, 18.0).decoration2(),
+        decoration: InputTExtxHelper(context, hintText, 16.0).decoration2(),
       ),
     );
   }

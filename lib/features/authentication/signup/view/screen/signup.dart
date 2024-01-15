@@ -42,6 +42,7 @@ import 'package:get/get.dart';
 import 'package:agent_dart/agent_dart.dart';
 import 'package:eakazijobs/features/authentication/login/view/screen/sign_in.dart';
 import 'package:eakazijobs/features/shared_widgets/buttons.dart' as btn;
+import 'package:eakazijobs/services/getStates.dart';
 
 import '../../../../../constants/assets/images_constants.dart';
 import '../../../../../constants/theme/color_selection.dart';
@@ -62,7 +63,7 @@ class SignUp extends StatelessWidget {
   // final TextEditingController emailController = TextEditingController();
 
   submit(context) async {
-
+    Controller c = Get.put(Controller());
     try {
       if (!_formKey.currentState!.validate()) {
         return;
@@ -71,24 +72,16 @@ class SignUp extends StatelessWidget {
       customLoader.showLoader('Creating your account...');
 
       // Use actual values instead of string literals
-      signupModel.fullName = signupModel.firstName! + ' ' + signupModel.lastName!;
-      // signupModel.email = signupModel.email!;
-      // signupModel.role = signupModel.role!;
+      signupModel.fullName =
+          signupModel.firstName! + ' ' + signupModel.lastName!;
+      signupModel.email = signupModel.email!;
+      signupModel.role = signupModel.role!;
 
-      Map<String, dynamic> jsonObject = {
-        "first_name": signupModel.firstName,
-        "last_name": signupModel.lastName,
-        "full_name": signupModel.fullName,
-        "email": signupModel.email,
-        "user_role": signupModel.role,
-        "password": "12345678"
-      };
-
-      SignupModel.fromJson(jsonObject);
+      c.userData.value.userRole = signupModel.role!;
 
       var createUserResult =
           await newActor?.getFunc(FieldsMethod.createUser)?.call([
-            signupModel.fullName,
+        signupModel.fullName,
         signupModel.email,
         signupModel.role,
       ]);
@@ -239,11 +232,14 @@ class SignUp extends StatelessWidget {
                               services: const [
                                 "Freelancer",
                                 "Employer",
+                                "Trainer"
                               ],
                               onSaved: (value) {
                                 String role = value == 'Freelancer'
-                                    ? 'Trainee'
-                                    : 'business';
+                                    ? 'freelancer'
+                                    : value == 'Employer'
+                                        ? 'employer'
+                                        : 'trainer';
                                 signupModel.role = role;
                                 print("value $role");
                                 // ctrl.bussinesCategory.value = value!;

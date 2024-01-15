@@ -12,7 +12,7 @@ abstract class Routes {
   static const freeLancerCoursers = '/freelancercourses';
   static const freelancercoursesassesment = '/freelancerCoursesAssesment';
   static const freeLanceCourseVideos = '/freeLanceCourseVideios';
-
+  static const flCourseSuccessful = '/flCourseSuccessful';
   static const flCourseDetails = '/flCourseDetails';
   static const fLJobs = '/FL_Jobs';
   static const flJobsDetails = '/flJobDetails';
@@ -31,12 +31,16 @@ abstract class Routes {
   static const exchange = '/exchange';
   static const exchange2 = '/exxchange2';
   static const exchangeMarketRatePinPad = '/exchangeMarketRate';
-
   static const exchangeP2p = '/exchangeP2p';
   static const exxchnageP2p2 = '/exxchnageP2p2';
   static const empPostJoBScreen = '/empPostJoBScreen';
   static const empPostJoBScreen2 = '/empPostJoBScreen2';
   static const empPostJoBScreen3 = '/empPostJoBScreen3';
   static const empConfirmDetailsScreen = '/empConfirmDetailsScreen';
-  // static const bookingUser = '/booking_user';
+  static const trainerHomeScreen = '/trainerHomeScreen';
+  static const trainerCreateCourse = '/trainerCreateCourse';
+  static const trainerCreateCourseSecondScreen = '/trainerCreateCourseSecondScreen';
+  static const trainerCreateCourseThirdScreen = '/trainerCreateCourseThirdScreen';
+  static const trainerCreateCourseFourthScreen = '/trainerCreateCourseFourthScreen';
+  static const trainerCreateCourseSuccessful = '/trainerCreateCourseSuccessful';
 }

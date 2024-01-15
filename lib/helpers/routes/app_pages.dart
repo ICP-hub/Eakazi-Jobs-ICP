@@ -18,6 +18,7 @@ import '../../features/employers/employers_home/view/screen/employers_home_scree
 import '../../features/freelancer/chat/view/screen/chat_list.dart';
 import '../../features/freelancer/chat/view/screen/conversations.dart';
 import '../../features/freelancer/courses/binding/assement_course_binding.dart';
+import '../../features/freelancer/courses/binding/freelancer_course_details_binding.dart';
 import '../../features/freelancer/courses/view/assement_courses_sucessful.dart';
 import '../../features/freelancer/courses/view/assement_fullvideo_fl.dart';
 import '../../features/freelancer/courses/view/free_lance_courses.dart';
@@ -37,6 +38,7 @@ import '../../features/splash/view/onboarding/onboarding_3.dart';
 import '../../features/trainers/trainer_create_course/view/screen/trainer_create_course_fouth_screen.dart';
 import '../../features/trainers/trainer_create_course/view/screen/trainer_create_course_screen.dart';
 import '../../features/trainers/trainer_create_course/view/screen/trainer_create_course_sec_screen.dart';
+import '../../features/trainers/trainer_create_course/view/screen/trainer_create_course_successful.dart';
 import '../../features/trainers/trainer_create_course/view/screen/trainer_create_course_third_screen.dart';
 import '../../features/trainers/trainers_home/view/screen/trainers_home_screen.dart';
 import '../../features/wallet/exchange/view/screen/exchange_pinpad.dart';
@@ -66,10 +68,8 @@ class AppPages {
       name: "/",
       binding: BottomNavBarBinding(),
       // page: () => const OnBoardingOne(),
-      // page: () => SignUp(),
-      // page: () => const FLJobsDetails(),
-      page : () => const FreeLancerHome(),
-      // page : () => const FLCoursesDetails(),
+      // page : () =>  SignUp(),
+      page : () => const BottomSheetScreen(),
     ),
     GetPage(
       name: Routes.onBoarding2,
@@ -288,9 +288,42 @@ class AppPages {
     ),
     GetPage(
       name: Routes.flCourseDetails,
-      // binding: MyProfileVendorBinding(),
+      binding: FreeLanceCoursesDetails(),
       page: () => const FLCoursesDetails(),
       // page: () => const MyProfileVendor(),
     ),
+    GetPage(
+      name : Routes.flCourseSuccessful,
+      page : () => const FLSuccessfulDone(),
+    ),
+    GetPage(
+      name: Routes.trainerHomeScreen,
+      // binding: MyProfileVendorBinding(),
+      page: () => const TrainerssHomeScreen(),
+    ),
+    GetPage(
+      name: Routes.trainerCreateCourse,
+      // binding: MyProfileVendorBinding(),
+      page: () => const TrainerCreateCourse(),
+    ),
+    GetPage(
+      name: Routes.trainerCreateCourseSecondScreen,
+      // binding: MyProfileVendorBinding(),
+      page: () => const TrainerCreateCourseSecoundScreen(),
+    ),
+    GetPage(
+      name: Routes.trainerCreateCourseThirdScreen,
+      // binding: MyProfileVendorBinding(),
+      page: () => const TrainerCreateCourseThirdScreen(),
+    ),
+    GetPage(
+      name: Routes.trainerCreateCourseFourthScreen,
+      // binding: MyProfileVendorBinding(),
+      page: () => const TrainerCreateFouthCourse(),
+    ),
+    GetPage(
+      name : Routes.trainerCreateCourseSuccessful,
+      page : () => const TrainerCreateCourseSuccessful(),
+    )
   ];
 }

@@ -14,7 +14,7 @@ class TrainerCreateCourseSuccessful extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Assesment Courses")),
+      appBar: AppBar(),
       body: SafeArea(
         child: Center(
           child: Column(
@@ -27,16 +27,16 @@ class TrainerCreateCourseSuccessful extends StatelessWidget {
                 style: textTheme(context).headline4?.copyWith(fontSize: 35),
               ),
               Spacer(),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 17, vertical: 30),
-                child: AuthBtn(
-                    text: "Take course",
-                    isComplete: true,
-                    onPressed: () {
-                      Get.toNamed(Routes.freelancercoursesassesment);
-                    }),
-              ),
+              // Padding(
+              //   padding:
+              //       const EdgeInsets.symmetric(horizontal: 17, vertical: 30),
+              //   child: AuthBtn(
+              //       text: "Go to course",
+              //       isComplete: true,
+              //       onPressed: () {
+              //         Get.toNamed(Routes.freelancercoursesassesment);
+              //       }),
+              // ),
             ],
           ),
         ),

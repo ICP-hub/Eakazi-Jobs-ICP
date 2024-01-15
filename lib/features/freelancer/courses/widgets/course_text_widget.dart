@@ -40,10 +40,10 @@ class CourseDescription extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                 child: AuthBtn(
-                    text: "Apply Job",
+                    text: "Take Course",
                     isComplete: true,
                     onPressed: () {
-                      Get.toNamed(Routes.successful);
+                      Get.toNamed(Routes.flCourseSuccessful);
                     }),
               ),
             ),

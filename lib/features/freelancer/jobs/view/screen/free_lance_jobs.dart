@@ -27,42 +27,39 @@ class FreeLancerJobs extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Jobs"),
+        title: Text("Available Jobs"),
       ),
       body: SafeArea(
         child: Column(
           children: [
-            SizedBox(
-              height: 2.h,
-            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Text(
-                        "Hi, ${signupModel.fullName}",
-                        style: textTheme(context).headline3,
-                      ),
-                      const Spacer(),
-                      Material(
-                        borderRadius: BorderRadius.circular(50),
-                        elevation: 2,
-                        shadowColor: ColorsConst.black.withOpacity(0.2),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
-                          height: 14,
-                          width: 44,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: const SvgIcon(IconsAssets.navhori),
-                        ),
-                      )
-                    ],
-                  ),
+                  // Row(
+                    // children: [
+                      // Text(
+                      //   "Hi, ${signupModel.fullName}",
+                      //   style: textTheme(context).headline3,
+                      // ),
+                      // const Spacer(),
+                      // Material(
+                      //   borderRadius: BorderRadius.circular(50),
+                      //   elevation: 2,
+                      //   shadowColor: ColorsConst.black.withOpacity(0.2),
+                      //   child: Container(
+                      //     padding: const EdgeInsets.symmetric(horizontal: 12),
+                      //     height: 14,
+                      //     width: 44,
+                      //     decoration: BoxDecoration(
+                      //       color: Colors.white,
+                      //       borderRadius: BorderRadius.circular(50),
+                      //     ),
+                      //     child: const SvgIcon(IconsAssets.navhori),
+                      //   ),
+                      // )
+                    // ],
+                  // ),
                   Container(
                     margin: const EdgeInsets.only(top: 26),
                     padding: const EdgeInsets.symmetric(horizontal: 16),

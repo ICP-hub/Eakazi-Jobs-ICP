@@ -120,10 +120,10 @@ class _PostJobsDropDownState extends State<PostJobsDropDown> {
         dropdownItems: widget.services,
         offset: const Offset(0, -30),
         hintStyle: extraTheme.copyWith(
-            color: colorScheme(context).secondary.withOpacity(0.3),
+            color: colorScheme(context).onSecondary,
             fontSize: 18),
         textStyle: extraTheme.copyWith(
-            color: colorScheme(context).secondary, fontSize: 18),
+            color: colorScheme(context).secondary.withOpacity(0.8), fontSize: 16),
         value: selectedValue,
         onChanged: (value) {
           setState(() {

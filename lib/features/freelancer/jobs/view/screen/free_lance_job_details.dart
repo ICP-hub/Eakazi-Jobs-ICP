@@ -132,7 +132,7 @@ class FLJobsDetails extends StatelessWidget {
           children: [
             JobDescription(title: "Job Description", body: bodyTexxt),
             JobDescription(title: "Assessment", body: bodyTexxt),
-            JobDescription(title: "Assessment", body: bodyTexxt),
+            JobDescription(title: "About Job", body: bodyTexxt),
           ],
         ),
       ),

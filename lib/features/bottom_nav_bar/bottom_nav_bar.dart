@@ -15,6 +15,8 @@ import '../../constants/theme/color_selection.dart';
 import '../employers/employers_home/view/screen/employers_home_screen.dart';
 import '../freelancer/home/view/freelance_home_screen.dart';
 import '../freelancer/profile/view/screen/fl_profile.dart';
+import '../trainers/trainers_home/view/screen/trainers_home_screen.dart';
+import '../trainers/trainers_profile/view/screen/trainer_profile.dart';
 import '../wallet/home/view/screen/wallet_screen.dart';
 import 'controllers/botttom_nav_bar_controller.dart';
 
@@ -96,6 +98,7 @@ class _BottomSheetScreenState extends State<BottomSheetScreen>
   @override
   Widget build(BuildContext context) {
     Controller c = Get.put(Controller());
+    c.userData.value.userRole = "trainer";
     // final controller = Get.find<BottomNavBarCtr>();
 
     // String? uId;
@@ -112,12 +115,19 @@ class _BottomSheetScreenState extends State<BottomSheetScreen>
             builder: (controller) {
               // print("ctrl showbadge  " + controller.showBadge.toString());
               List<Widget> _pages = <Widget>[
-                c.userData.value.userRole == "trainee"
-                    ? const FreeLancerHome()    // apply
-                    : const EmployersHomeScreen(), // create a job, // searching for profile
+                c.userData.value.userRole == "freelancer"
+                    ? const FreeLancerHome()
+                    : c.userData.value.userRole == "employer"
+                    ? const EmployersHomeScreen()
+                    : const TrainerssHomeScreen(),
                 const WalletHomeScreen(),
                 const SizedBox(),
-                const FreeLanceProfile(),
+                // const FreeLanceProfile(),
+                c.userData.value.userRole == "freelancer"
+                    ? const FreeLanceProfile()
+                    : c.userData.value.userRole == "employer"
+                    ? const EmployersHomeScreen()
+                    : const TrannerProfileProfile(),
               ];
               return Scaffold(
                   appBar: AppBar(

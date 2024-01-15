@@ -90,8 +90,8 @@ class ReconmendedListwidget extends StatelessWidget {
       child: ListView(
         shrinkWrap: true,
         children: [
-          const ReconmendedTile(image: ImageAssets.google, tittle: "Googke"),
-          const ReconmendedTile(
+          const ReconmendedTileJobs(image: ImageAssets.google, tittle: "Googke"),
+          const ReconmendedTileJobs(
               image: ImageAssets.visualDesigner, tittle: "Googke"),
         ],
       ),

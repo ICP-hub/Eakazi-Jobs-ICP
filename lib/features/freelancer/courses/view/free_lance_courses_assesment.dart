@@ -26,73 +26,102 @@ class FreeLancerCoursesAssesment extends StatelessWidget {
         title: Text("Available Courses"),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 2.h,
-            ),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 16),
-            //   child: Column(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: [
-            //       // InkWell(
-            //       //   onTap: () {
-            //       //     Get.toNamed(Routes.flProfilePublic);
-            //       //   },
-            //         // child: Row(
-            //         //   children: [
-            //         //     Material(
-            //         //       shape: CircleBorder(),
-            //         //       elevation: 5,
-            //         //       child: CircleAvatar(
-            //         //         radius: 24,
-            //         //         //IconsAssets.skillAquasition),
-            //         //         backgroundColor: ColorsConst.white,
-            //         //         child: Padding(
-            //         //             padding: const EdgeInsets.all(12),
-            //         //             child: Image.asset(
-            //         //                 ImageAssets.jelurida) //ImageAssets.google),
-            //         //             ),
-            //         //       ),
-            //         //     ),
-            //         //     // SizedBox(
-            //         //     //   width: 19,
-            //         //     // ),
-            //         //     // Column(
-            //         //     //   crossAxisAlignment: CrossAxisAlignment.start,
-            //         //     //   children: [
-            //         //     //     Text(
-            //         //     //       "Jelafrica",
-            //         //     //       //   "Skill Acquisition",
-            //         //     //       style: textTheme(context)
-            //         //     //           .headline4
-            //         //     //           ?.copyWith(fontSize: 15),
-            //         //     //     ),
-            //         //     //     Text(
-            //         //     //       "Tutor",
-            //         //     //       //   "Skill Acquisition",
-            //         //     //       style: textTheme(context)
-            //         //     //           .caption
-            //         //     //           ?.copyWith(fontSize: 15),
-            //         //     //     ),
-            //         //     //   ],
-            //         //     // ),
-            //         //   ],
-            //         // ),
-            //       // ),
-            //       ReconmendedListwidget(),
-            //     ],
-            //   ),
-            // ),
-              ReconmendedListwidget(),
-            // Spacer(),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            //   child: AuthBtn(
-            //       text: "Take course", isComplete: true, onPressed: () {}),
-            // ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              // SizedBox(
+              //   height: 2.h,
+              // ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 16),
+              //   child: Column(
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     children: [
+              //       // InkWell(
+              //       //   onTap: () {
+              //       //     Get.toNamed(Routes.flProfilePublic);
+              //       //   },
+              //         // child: Row(
+              //         //   children: [
+              //         //     Material(
+              //         //       shape: CircleBorder(),
+              //         //       elevation: 5,
+              //         //       child: CircleAvatar(
+              //         //         radius: 24,
+              //         //         //IconsAssets.skillAquasition),
+              //         //         backgroundColor: ColorsConst.white,
+              //         //         child: Padding(
+              //         //             padding: const EdgeInsets.all(12),
+              //         //             child: Image.asset(
+              //         //                 ImageAssets.jelurida) //ImageAssets.google),
+              //         //             ),
+              //         //       ),
+              //         //     ),
+              //         //     // SizedBox(
+              //         //     //   width: 19,
+              //         //     // ),
+              //         //     // Column(
+              //         //     //   crossAxisAlignment: CrossAxisAlignment.start,
+              //         //     //   children: [
+              //         //     //     Text(
+              //         //     //       "Jelafrica",
+              //         //     //       //   "Skill Acquisition",
+              //         //     //       style: textTheme(context)
+              //         //     //           .headline4
+              //         //     //           ?.copyWith(fontSize: 15),
+              //         //     //     ),
+              //         //     //     Text(
+              //         //     //       "Tutor",
+              //         //     //       //   "Skill Acquisition",
+              //         //     //       style: textTheme(context)
+              //         //     //           .caption
+              //         //     //           ?.copyWith(fontSize: 15),
+              //         //     //     ),
+              //         //     //   ],
+              //         //     // ),
+              //         //   ],
+              //         // ),
+              //       // ),
+              //       ReconmendedListwidget(),
+              //     ],
+              //   ),
+              // ),
+              Container(
+                margin: const EdgeInsets.only(top: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                height: 47,
+                width: 100.w,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(3),
+                    border: Border.all(
+                      color: ColorsConst.blackFour,
+                    )),
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        "e.g Game development jobs.............",
+                        style: textTheme(context).overline,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    const Spacer(),
+                    const Icon(Icons.search, color: ColorsConst.blackFour)
+                  ],
+                ),
+              ),
+              const MediaListWidget(),
+                ReconmendedListwidget(),
+              // Spacer(),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              //   child: AuthBtn(
+              //       text: "Take course", isComplete: true, onPressed: () {}),
+              // ),
+            ],
+          ),
         ),
       ),
     );
@@ -112,7 +141,7 @@ class ReconmendedListwidget extends StatelessWidget {
         shrinkWrap: true,
         children: [
           ReconmendedTile(
-            image: ImageAssets.jelurida,
+            image: ImageAssets.icpLogo,
             tittle: "JelaAfrica",
             subTittle2: "Intermidates",
             mainTittle: "Visual Designer Course",
@@ -123,7 +152,7 @@ class ReconmendedListwidget extends StatelessWidget {
             ),
           ),
           ReconmendedTile(
-            image: ImageAssets.jelurida,
+            image: ImageAssets.visualDesigner,
             tittle: "Anony",
             subTittle2: "In progress",
             mainTittle: "Visual Designer Course",
