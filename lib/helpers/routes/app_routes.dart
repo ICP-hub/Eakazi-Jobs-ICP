@@ -43,4 +43,6 @@ abstract class Routes {
   static const trainerCreateCourseThirdScreen = '/trainerCreateCourseThirdScreen';
   static const trainerCreateCourseFourthScreen = '/trainerCreateCourseFourthScreen';
   static const trainerCreateCourseSuccessful = '/trainerCreateCourseSuccessful';
+  static const empPostSuccessScreen = '/empPostSuccessScreen';
+  static const empHomeScreen = '/empHomeScreen';
 }

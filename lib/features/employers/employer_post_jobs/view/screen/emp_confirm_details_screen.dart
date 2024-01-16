@@ -107,7 +107,7 @@ class EmployerConfirmDetailsScreen extends StatelessWidget {
                       text: "Next",
                       isComplete: false,
                       onPressed: () {
-                        Get.toNamed(Routes.successful);
+                        Get.toNamed(Routes.empPostSuccessScreen);
                       }),
                 ),
               ),

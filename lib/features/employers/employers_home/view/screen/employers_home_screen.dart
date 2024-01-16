@@ -20,6 +20,7 @@ import '../../../../freelancer/shared_widgets/skill_container.dart';
 import '../widgets/data_employer_jobs.dart';
 import '../widgets/no_data_jobs.dart';
 import 'package:eakazijobs/models/signupModel.dart';
+import '../../../../freelancer/shared_widgets/reconmended_tile.dart';
 
 SignupModel signupModel = SignupModel();
 
@@ -69,9 +70,8 @@ class EmployersHomeScreen extends StatelessWidget {
                   const SkillAquiListOne(),
                   const MediaListWidget(),
                   const Reconmmended(),
-                  // use {../NoDataEmployers for empty data }
-                  // const JobsEmployesrWidgte(),
-                  const NoDataEmployers(),
+                  const ReconmendedListwidget(),
+                  // const NoDataEmployers(),
                 ],
               ),
             )
@@ -94,8 +94,8 @@ class ReconmendedListwidget extends StatelessWidget {
       child: ListView(
         shrinkWrap: true,
         children: [
-          const ReconmendedTile(image: ImageAssets.google, tittle: "Googke"),
-          const ReconmendedTile(
+          const ReconmendedTileJobs(image: ImageAssets.icpLogo, tittle: "Googke"),
+          const ReconmendedTileJobs(
               image: ImageAssets.visualDesigner, tittle: "Googke"),
         ],
       ),
@@ -167,11 +167,11 @@ class SkillAquiListOne extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              Get.toNamed(Routes.freeLancerCoursers);
+              Get.toNamed(Routes.empPostJoBScreen);
             },
             child: const SkillContainer(
-              tittle: "Skill Acquisition",
-              subTittle: "Click here to get started",
+              tittle: "Post a Job",
+              subTittle: "Click here to post a job",
               icon: IconsAssets.skillAquasition,
             ),
           ),
@@ -179,8 +179,8 @@ class SkillAquiListOne extends StatelessWidget {
             width: 17,
           ),
           const SkillContainer(
-            tittle: "Bid For Jobs",
-            subTittle: "Click here to get started",
+            tittle: "Hire a Freelancer",
+            subTittle: "Browse Freelancers",
             icon: IconsAssets.briefcase,
           ),
         ],

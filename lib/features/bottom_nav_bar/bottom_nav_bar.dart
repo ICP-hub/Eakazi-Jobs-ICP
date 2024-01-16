@@ -13,6 +13,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../constants/assets/icon_constans.dart';
 import '../../constants/theme/color_selection.dart';
 import '../employers/employers_home/view/screen/employers_home_screen.dart';
+import '../employers/employers_profile/view/screen/employer_profile.dart';
 import '../freelancer/home/view/freelance_home_screen.dart';
 import '../freelancer/profile/view/screen/fl_profile.dart';
 import '../trainers/trainers_home/view/screen/trainers_home_screen.dart';
@@ -98,7 +99,7 @@ class _BottomSheetScreenState extends State<BottomSheetScreen>
   @override
   Widget build(BuildContext context) {
     Controller c = Get.put(Controller());
-    c.userData.value.userRole = "trainer";
+    c.userData.value.userRole = "freelancer";
     // final controller = Get.find<BottomNavBarCtr>();
 
     // String? uId;
@@ -126,7 +127,7 @@ class _BottomSheetScreenState extends State<BottomSheetScreen>
                 c.userData.value.userRole == "freelancer"
                     ? const FreeLanceProfile()
                     : c.userData.value.userRole == "employer"
-                    ? const EmployersHomeScreen()
+                    ? const EmployerProfileProfile()
                     : const TrannerProfileProfile(),
               ];
               return Scaffold(

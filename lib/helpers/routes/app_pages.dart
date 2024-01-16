@@ -10,6 +10,7 @@ import '../../features/authentication/signup/view/screen/signup.dart';
 import '../../features/bottom_nav_bar/bottom_nav_bar.dart';
 import '../../features/bottom_nav_bar/botttom_nav_bar_binding/botttom_nav_bar_binding.dart';
 import '../../features/employers/employer_post_jobs/view/screen/emp_confirm_details_screen.dart';
+import '../../features/employers/employer_post_jobs/view/screen/emp_course_successful.dart';
 import '../../features/employers/employer_post_jobs/view/screen/emp_post_jobs_final_screen.dart';
 import '../../features/employers/employer_post_jobs/view/screen/emp_post_jobs_screen.dart';
 import '../../features/employers/employer_post_jobs/view/screen/emp_post_jobs_secound_screen.dart';
@@ -324,6 +325,14 @@ class AppPages {
     GetPage(
       name : Routes.trainerCreateCourseSuccessful,
       page : () => const TrainerCreateCourseSuccessful(),
+    ),
+    GetPage(
+      name : Routes.empPostSuccessScreen,
+      page : () => const EmployeeCourseSuccessful(),
+    ),
+    GetPage(
+      name : Routes.empHomeScreen,
+      page : () => const EmployersHomeScreen(),
     )
   ];
 }

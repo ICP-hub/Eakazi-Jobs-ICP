@@ -56,7 +56,7 @@ class TrainerCreateCourseThirdScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 0),
                   child: PostJobsDropDown(
                     hint: "All levels",
-                    services: const ["Programmer", "Team lead", "Trainer"],
+                    services: const ["Beginner", "Intermediate", "Advance"],
                     onSaved: (value) {
                       print("object");
                       // ctrl.bussinesCategory.value = value!;
@@ -86,7 +86,7 @@ class TrainerCreateCourseThirdScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 0),
                   child: PostJobsDropDown(
                     hint: "Paid",
-                    services: const ["Programmer", "Team lead", "Trainer"],
+                    services: const ["Paid", "Free"],
                     onSaved: (value) {
                       print("object");
                       // ctrl.bussinesCategory.value = value!;

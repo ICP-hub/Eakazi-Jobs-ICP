@@ -14,7 +14,7 @@ class EmployeeCourseSuccessful extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Assesment Courses")),
+      appBar: AppBar(),
       body: SafeArea(
         child: Center(
           child: Column(
@@ -31,10 +31,10 @@ class EmployeeCourseSuccessful extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 17, vertical: 30),
                 child: AuthBtn(
-                    text: "Take course",
+                    text: "Continue",
                     isComplete: true,
                     onPressed: () {
-                      Get.toNamed(Routes.freelancercoursesassesment);
+                      Get.toNamed(Routes.empHomeScreen);
                     }),
               ),
             ],

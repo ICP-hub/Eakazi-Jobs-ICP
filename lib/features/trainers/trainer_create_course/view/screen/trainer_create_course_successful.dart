@@ -27,16 +27,16 @@ class TrainerCreateCourseSuccessful extends StatelessWidget {
                 style: textTheme(context).headline4?.copyWith(fontSize: 35),
               ),
               Spacer(),
-              // Padding(
-              //   padding:
-              //       const EdgeInsets.symmetric(horizontal: 17, vertical: 30),
-              //   child: AuthBtn(
-              //       text: "Go to course",
-              //       isComplete: true,
-              //       onPressed: () {
-              //         Get.toNamed(Routes.freelancercoursesassesment);
-              //       }),
-              // ),
+              Padding(
+                padding:
+                const EdgeInsets.symmetric(horizontal: 17, vertical: 30),
+                child: AuthBtn(
+                    text: "Continue",
+                    isComplete: true,
+                    onPressed: () {
+                      Get.toNamed(Routes.trainerHomeScreen);
+                    }),
+              ),
             ],
           ),
         ),
