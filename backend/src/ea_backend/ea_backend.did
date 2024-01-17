@@ -41,4 +41,6 @@ service : {
   getSelf : () -> (Profile) query;
   search : (text) -> (opt Profile) query;
   update : (Profile) -> ();
+  getFullName : () -> (text) query;
+  getRole : () -> (text) query;
 }

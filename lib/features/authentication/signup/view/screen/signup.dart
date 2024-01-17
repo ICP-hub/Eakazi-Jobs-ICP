@@ -56,11 +56,7 @@ class SignUp extends StatelessWidget {
   SignUp({Key? key}) : super(key: key);
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   SignupModel signupModel = SignupModel();
-  // AuthService authService = AuthService();
   CustomLoader customLoader = CustomLoader();
-  // final TextEditingController firstNameController = TextEditingController();
-  // final TextEditingController lastNameController = TextEditingController();
-  // final TextEditingController emailController = TextEditingController();
 
   submit(context) async {
     Controller c = Get.put(Controller());
@@ -71,13 +67,10 @@ class SignUp extends StatelessWidget {
       _formKey.currentState!.save();
       customLoader.showLoader('Creating your account...');
 
-      // Use actual values instead of string literals
       signupModel.fullName =
           signupModel.firstName! + ' ' + signupModel.lastName!;
       signupModel.email = signupModel.email!;
       signupModel.role = signupModel.role!;
-
-      c.userData.value.userRole = signupModel.role!;
 
       var createUserResult =
           await newActor?.getFunc(FieldsMethod.createUser)?.call([
@@ -235,13 +228,20 @@ class SignUp extends StatelessWidget {
                                 "Trainer"
                               ],
                               onSaved: (value) {
-                                String role = value == 'Freelancer'
-                                    ? 'freelancer'
-                                    : value == 'Employer'
-                                        ? 'employer'
-                                        : 'trainer';
-                                signupModel.role = role;
-                                print("value $role");
+                                // String? role = value == "Freelancer"
+                                //     ? "freelancer"
+                                //     : value == "Employer"
+                                //         ? "employer"
+                                //         : "trainer";
+                                if (value == "Freelancer") {
+                                  signupModel.role = "freelancer";
+                                } else if (value == "Employer") {
+                                  signupModel.role = "employer";
+                                } else {
+                                  signupModel.role = "trainer";
+                                }
+                                // signupModel.role = role;
+                                // print("value $role");
                                 // ctrl.bussinesCategory.value = value!;
                               },
                             ),

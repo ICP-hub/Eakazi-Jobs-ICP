@@ -111,8 +111,6 @@ class _SignInState extends State<SignIn> {
             FieldsMethod.idl);
 
         var checkUser = await newActor!.getFunc(FieldsMethod.checkUser)?.call([]);
-          // var checkUser = false;
-        // print("CheckUser : $checkUser");
 
         if (checkUser == true) {
           customLoader.showLoader('Welcome back, please wait...');

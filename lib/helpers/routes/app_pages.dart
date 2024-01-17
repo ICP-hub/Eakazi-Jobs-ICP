@@ -70,7 +70,14 @@ class AppPages {
       binding: BottomNavBarBinding(),
       // page: () => const OnBoardingOne(),
       // page : () =>  SignUp(),
-      page : () => const BottomSheetScreen(),
+      page : () =>  const SplashScreen(),
+      // page : () => const BottomSheetScreen(),
+    ),
+    GetPage(
+      name: Routes.onBoardng1,
+      // binding: MyProfileVendorBinding(),
+      page: () => const OnBoardingOne(),
+      // page: () => const MyProfileVendor(),
     ),
     GetPage(
       name: Routes.onBoarding2,
@@ -333,6 +340,10 @@ class AppPages {
     GetPage(
       name : Routes.empHomeScreen,
       page : () => const EmployersHomeScreen(),
+    ),
+    GetPage(
+      name : Routes.splashScreen,
+      page : () => const SplashScreen(),
     )
   ];
 }

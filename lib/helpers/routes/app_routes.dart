@@ -45,4 +45,5 @@ abstract class Routes {
   static const trainerCreateCourseSuccessful = '/trainerCreateCourseSuccessful';
   static const empPostSuccessScreen = '/empPostSuccessScreen';
   static const empHomeScreen = '/empHomeScreen';
+  static const splashScreen = '/splashScreen';
 }

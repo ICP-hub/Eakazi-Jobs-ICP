@@ -17,10 +17,17 @@ import '../../../../freelancer/shared_widgets/media_container.dart';
 import '../../../../freelancer/shared_widgets/reconmended_tile.dart';
 import '../../../../freelancer/shared_widgets/skill_container.dart';
 import '../widgets/data_trainers_jobs.dart';
+import 'package:eakazijobs/features/authentication/login/view/screen/sign_in.dart';
+import 'package:eakazijobs/integrations.dart';
 
 class TrainerssHomeScreen extends StatelessWidget {
   const TrainerssHomeScreen({Key? key}) : super(key: key);
 
+  Future<String> getName() async {
+    var fullName =
+    await newActor!.getFunc(FieldsMethod.getFullName)?.call([]);
+    return fullName;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,12 +42,23 @@ class TrainerssHomeScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Text(
-                        "Hi, Mary",
-                        style: textTheme(context).headline3,
-                      ),
+    FutureBuilder<String>(
+    future: getName(),
+    builder: (context, snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+    return CircularProgressIndicator();
+    } else if (snapshot.hasError) {
+    return Text('Error: ${snapshot.error}');
+    } else {
+    return Row(
+    children: [
+    Flexible(
+    child: Text(
+    "Hi, ${snapshot.data}",
+    style: textTheme(context).headline3,
+    overflow: TextOverflow.ellipsis,
+    ),
+    ),
                       const Spacer(),
                       Material(
                         borderRadius: BorderRadius.circular(50),
@@ -57,8 +75,11 @@ class TrainerssHomeScreen extends StatelessWidget {
                           child: const SvgIcon(IconsAssets.navhori),
                         ),
                       )
-                    ],
-                  ),
+    ],
+    );
+    }
+    },
+    ),
                   const SearchContainer(),
                   const SkillAquiListOne(),
                   const MediaListWidget(),

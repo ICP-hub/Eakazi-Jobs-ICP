@@ -21,11 +21,18 @@ import '../widgets/data_employer_jobs.dart';
 import '../widgets/no_data_jobs.dart';
 import 'package:eakazijobs/models/signupModel.dart';
 import '../../../../freelancer/shared_widgets/reconmended_tile.dart';
+import 'package:eakazijobs/features/authentication/login/view/screen/sign_in.dart';
+import 'package:eakazijobs/integrations.dart';
 
 SignupModel signupModel = SignupModel();
 
 class EmployersHomeScreen extends StatelessWidget {
   const EmployersHomeScreen({Key? key}) : super(key: key);
+
+  Future<String> getName() async {
+    var fullName = await newActor!.getFunc(FieldsMethod.getFullName)?.call([]);
+    return fullName;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,29 +49,44 @@ class EmployersHomeScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Text(
-                        "Hi, ${signupModel.fullName}",
-                        style: textTheme(context).headline3,
-                      ),
-                      const Spacer(),
-                      Material(
-                        borderRadius: BorderRadius.circular(50),
-                        elevation: 2,
-                        shadowColor: ColorsConst.black.withOpacity(0.2),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
-                          height: 14,
-                          width: 44,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: const SvgIcon(IconsAssets.navhori),
-                        ),
-                      )
-                    ],
+                  FutureBuilder<String>(
+                    future: getName(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        return Row(
+                          children: [
+                            Flexible(
+                              child: Text(
+                                "Hi, ${snapshot.data}",
+                                style: textTheme(context).headline3,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            const Spacer(),
+                            Material(
+                              borderRadius: BorderRadius.circular(50),
+                              elevation: 2,
+                              shadowColor: ColorsConst.black.withOpacity(0.2),
+                              child: Container(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 12),
+                                height: 14,
+                                width: 44,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                child: const SvgIcon(IconsAssets.navhori),
+                              ),
+                            )
+                          ],
+                        );
+                      }
+                    },
                   ),
                   const SearchContainer(),
                   const SkillAquiListOne(),
@@ -94,7 +116,8 @@ class ReconmendedListwidget extends StatelessWidget {
       child: ListView(
         shrinkWrap: true,
         children: [
-          const ReconmendedTileJobs(image: ImageAssets.icpLogo, tittle: "Googke"),
+          const ReconmendedTileJobs(
+              image: ImageAssets.icpLogo, tittle: "Googke"),
           const ReconmendedTileJobs(
               image: ImageAssets.visualDesigner, tittle: "Googke"),
         ],

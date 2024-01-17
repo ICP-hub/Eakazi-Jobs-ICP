@@ -59,6 +59,8 @@ abstract class FieldsMethod {
   static const getSelf = 'getSelf';
   static const search = 'search';
   static const update = 'update';
+  static const getRole = 'getRole';
+  static const getFullName = 'getFullName';
   // define service class
 
   static final ServiceClass idl = IDL.Service({
@@ -87,6 +89,10 @@ abstract class FieldsMethod {
     FieldsMethod.search: IDL.Func([IDL.Text], [IDL.Opt(profile)], ['query']),
 
     FieldsMethod.update: IDL.Func([profile], [], []),
+
+    FieldsMethod.getRole: IDL.Func([], [IDL.Text], ['query']),
+
+    FieldsMethod.getFullName: IDL.Func([], [IDL.Text], ['query']),
   });
 
 }

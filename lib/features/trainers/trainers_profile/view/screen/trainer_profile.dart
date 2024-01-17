@@ -9,9 +9,17 @@ import '../../../../freelancer/shared_widgets/reconmended_tile.dart';
 import '../../../../shared_widgets/linear_percenth_indicator.dart';
 import '../../../trainers_home/view/widgets/data_trainers_jobs.dart';
 import '../widgets/trainer_profile_container.dart';
+import 'package:eakazijobs/features/authentication/login/view/screen/sign_in.dart';
+import 'package:eakazijobs/integrations.dart';
 
 class TrannerProfileProfile extends StatelessWidget {
   const TrannerProfileProfile({super.key});
+
+  Future<String> getName() async {
+    var fullName =
+    await newActor!.getFunc(FieldsMethod.getFullName)?.call([]);
+    return fullName;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,22 +45,34 @@ class TrannerProfileProfile extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Marvelous IK",
-                        style: textTheme(context).subtitle2?.copyWith(
-                            color: ColorsConst.tittleColor, fontSize: 20),
+                      FutureBuilder<String>(
+                        future: getName(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else {
+                            return Text(
+                              snapshot.data ?? "User",
+                              style: textTheme(context).subtitle2?.copyWith(
+                                  color: ColorsConst.tittleColor, fontSize: 20),
+                            );
+                          }
+                        },
                       ),
                       Text(
                         "UI/UX Designer",
                         style: textTheme(context).bodyText2?.copyWith(
-                              color: ColorsConst.tittleColor.withOpacity(0.6),
-                            ),
+                          color: ColorsConst.tittleColor.withOpacity(0.6),
+                        ),
                       ),
                       Text(
                         "Edit profile",
                         style: textTheme(context).caption?.copyWith(
-                              color: ColorsConst.tittleColor,
-                            ),
+                          color: ColorsConst.tittleColor,
+                        ),
                       ),
                     ],
                   )

@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:eakazijobs/integrations.dart';
 
 import '../../constants/assets/icon_constans.dart';
 import '../../constants/theme/color_selection.dart';
@@ -20,6 +21,7 @@ import '../trainers/trainers_home/view/screen/trainers_home_screen.dart';
 import '../trainers/trainers_profile/view/screen/trainer_profile.dart';
 import '../wallet/home/view/screen/wallet_screen.dart';
 import 'controllers/botttom_nav_bar_controller.dart';
+import 'package:eakazijobs/features/authentication/login/view/screen/sign_in.dart';
 
 class BottomSheetScreen extends StatefulWidget {
   static const tag = "BottomSheetScreen";
@@ -32,10 +34,13 @@ class BottomSheetScreen extends StatefulWidget {
 
 class _BottomSheetScreenState extends State<BottomSheetScreen>
     with WidgetsBindingObserver {
+  var role;
   LocalStorage localStorage = LocalStorage();
+
   @override
   void initState() {
     super.initState();
+    userValue();
 // track if paused or resumed etc..
     WidgetsBinding.instance.addObserver(this);
   }
@@ -46,6 +51,17 @@ class _BottomSheetScreenState extends State<BottomSheetScreen>
     WidgetsBinding.instance.removeObserver(this);
   }
 
+  Future<String> userValue() async {
+    var checkFullName =
+    await newActor!.getFunc(FieldsMethod.getFullName)?.call([]);
+    var checkRole = await newActor!.getFunc(FieldsMethod.getRole)?.call([]);
+
+    print("Full Name : $checkFullName");
+    print("Role : $checkRole");
+
+    return checkRole.toString();
+  }
+
   Future<bool> _onWillPop() async {
     // if (_selectedIndex != 0) {
     //   setState(() {
@@ -54,8 +70,9 @@ class _BottomSheetScreenState extends State<BottomSheetScreen>
     //   return false;
     // }
     return (await showDialog(
-          context: context,
-          builder: (context) => BackdropFilter(
+      context: context,
+      builder: (context) =>
+          BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
             child: AlertDialog(
               title: Text(
@@ -92,48 +109,49 @@ class _BottomSheetScreenState extends State<BottomSheetScreen>
               ],
             ),
           ),
-        )) ??
+    )) ??
         false;
   }
 
   @override
   Widget build(BuildContext context) {
     Controller c = Get.put(Controller());
-    c.userData.value.userRole = "freelancer";
-    // final controller = Get.find<BottomNavBarCtr>();
 
-    // String? uId;
-    // if (Get.arguments != null && Get.arguments is String) {
-    //   us = Get.arguments;
-    // }
-    // vendor ??= User.empty();
+    return FutureBuilder<String>(
+      future: userValue(),
+      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+        // Check if the snapshot has data
+        if (snapshot.connectionState == ConnectionState.done &&
+            snapshot.hasData) {
+          c.userData.value.userRole = snapshot.data ?? 'defaultRole';
+        }
 
-    return WillPopScope(
-        onWillPop: _onWillPop,
-        child: GetBuilder<BottomNavBarCtr>(
-            // init: BottomNavBarCtr(mounted),
+        if (!snapshot.hasData) {
+          return Container();
+        }
+
+        return WillPopScope(
+          onWillPop: _onWillPop,
+          child: GetBuilder<BottomNavBarCtr>(
             autoRemove: false,
             builder: (controller) {
-              // print("ctrl showbadge  " + controller.showBadge.toString());
               List<Widget> _pages = <Widget>[
-                c.userData.value.userRole == "freelancer"
+                c.userData.value.userRole == "ADMIN"
                     ? const FreeLancerHome()
-                    : c.userData.value.userRole == "employer"
+                    : c.userData.value.userRole == "EMPLOYER"
                     ? const EmployersHomeScreen()
                     : const TrainerssHomeScreen(),
                 const WalletHomeScreen(),
                 const SizedBox(),
-                // const FreeLanceProfile(),
-                c.userData.value.userRole == "freelancer"
+                c.userData.value.userRole == "ADMIN"
                     ? const FreeLanceProfile()
-                    : c.userData.value.userRole == "employer"
+                    : c.userData.value.userRole == "EMPLOYER"
                     ? const EmployerProfileProfile()
                     : const TrannerProfileProfile(),
               ];
               return Scaffold(
                   appBar: AppBar(
                     toolbarHeight: 0.0,
-                    // title: Text("Scaffold"),
                   ),
                   body: SafeArea(
                     child: _pages.elementAt(controller.tabindex),
@@ -141,9 +159,14 @@ class _BottomSheetScreenState extends State<BottomSheetScreen>
                   bottomNavigationBar: NavBAr(
                     currentIndex: controller.tabindex,
                     onTap: (index) async =>
-                        await controller.changeTabIndex(index, context),
-                  ));
-            }));
+                    await controller.changeTabIndex(index, context),
+                  )
+              );
+            },
+          ),
+        );
+      },
+    );
   }
 }
 
