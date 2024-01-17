@@ -1,6 +1,7 @@
 import 'package:eakazijobs/constants/assets/images_constants.dart';
 import 'package:eakazijobs/constants/theme/color_selection.dart';
 import 'package:eakazijobs/features/shared_widgets/svgs.dart';
+import 'package:eakazijobs/features/trainers/shared_widgets/createCourse.dart';
 import 'package:eakazijobs/helpers/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -16,10 +17,17 @@ import '../../../../freelancer/shared_widgets/media_container.dart';
 import '../../../../freelancer/shared_widgets/reconmended_tile.dart';
 import '../../../../freelancer/shared_widgets/skill_container.dart';
 import '../widgets/data_trainers_jobs.dart';
+import 'package:eakazijobs/features/authentication/login/view/screen/sign_in.dart';
+import 'package:eakazijobs/integrations.dart';
 
 class TrainerssHomeScreen extends StatelessWidget {
   const TrainerssHomeScreen({Key? key}) : super(key: key);
 
+  Future<String> getName() async {
+    var fullName =
+    await newActor!.getFunc(FieldsMethod.getFullName)?.call([]);
+    return fullName;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,12 +42,23 @@ class TrainerssHomeScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Text(
-                        "Hi, Mary",
-                        style: textTheme(context).headline3,
-                      ),
+    FutureBuilder<String>(
+    future: getName(),
+    builder: (context, snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+    return CircularProgressIndicator();
+    } else if (snapshot.hasError) {
+    return Text('Error: ${snapshot.error}');
+    } else {
+    return Row(
+    children: [
+    Flexible(
+    child: Text(
+    "Hi, ${snapshot.data}",
+    style: textTheme(context).headline3,
+    overflow: TextOverflow.ellipsis,
+    ),
+    ),
                       const Spacer(),
                       Material(
                         borderRadius: BorderRadius.circular(50),
@@ -56,13 +75,18 @@ class TrainerssHomeScreen extends StatelessWidget {
                           child: const SvgIcon(IconsAssets.navhori),
                         ),
                       )
-                    ],
-                  ),
+    ],
+    );
+    }
+    },
+    ),
                   const SearchContainer(),
                   const SkillAquiListOne(),
                   const MediaListWidget(),
                   const Reconmmended(),
-                  // use {../NoDataEmployers for empty data }
+                  const SizedBox(
+                    height: 10,
+                  ),
                   const JobsTrainersWidgte(),
                 ],
               ),
@@ -112,7 +136,7 @@ class Reconmmended extends StatelessWidget {
           const Spacer(),
           GestureDetector(
             onTap: () {
-              Get.toNamed(Routes.fLJobs);
+              Get.toNamed(Routes.freeLancerCoursers);
             },
             child: Text("See All",
                 //   "Skill Acquisition",
@@ -159,21 +183,13 @@ class SkillAquiListOne extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              Get.toNamed(Routes.freeLancerCoursers);
+              Get.toNamed(Routes.trainerCreateCourse);
             },
-            child: const SkillContainer(
-              tittle: "Skill Acquisition",
+            child: const CreateCourseContainer(
+              tittle: "Create a course",
               subTittle: "Click here to get started",
               icon: IconsAssets.skillAquasition,
             ),
-          ),
-          const SizedBox(
-            width: 17,
-          ),
-          const SkillContainer(
-            tittle: "Bid For Jobs",
-            subTittle: "Click here to get started",
-            icon: IconsAssets.briefcase,
           ),
         ],
       ),

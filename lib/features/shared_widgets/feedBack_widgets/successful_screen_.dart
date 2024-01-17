@@ -14,7 +14,7 @@ class SuccessfulScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Assesment Courses")),
+      appBar: AppBar(),
       body: SafeArea(
         child: Center(
           child: Column(
@@ -26,17 +26,18 @@ class SuccessfulScreen extends StatelessWidget {
                 "Successful",
                 style: textTheme(context).headline4?.copyWith(fontSize: 35),
               ),
+              // ),
               Spacer(),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 17, vertical: 30),
-                child: AuthBtn(
-                    text: "Take course",
-                    isComplete: true,
-                    onPressed: () {
-                      Get.toNamed(Routes.bottomNavBar);
-                    }),
-              ),
+              // Padding(
+              //   padding:
+              //       const EdgeInsets.symmetric(horizontal: 17, vertical: 30),
+              //   child: AuthBtn(
+              //       text: "Take course",
+              //       isComplete: true,
+              //       onPressed: () {
+              //         Get.toNamed(Routes.bottomNavBar);
+              //       }),
+              // ),
             ],
           ),
         ),

@@ -23,75 +23,105 @@ class FreeLancerCoursesAssesment extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Assessment Course"),
+        title: Text("Available Courses"),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 2.h,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Get.toNamed(Routes.flProfilePublic);
-                    },
-                    child: Row(
-                      children: [
-                        Material(
-                          shape: CircleBorder(),
-                          elevation: 5,
-                          child: CircleAvatar(
-                            radius: 24,
-                            //IconsAssets.skillAquasition),
-                            backgroundColor: ColorsConst.white,
-                            child: Padding(
-                                padding: const EdgeInsets.all(12),
-                                child: Image.asset(
-                                    ImageAssets.jelurida) //ImageAssets.google),
-                                ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 19,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Jelafrica",
-                              //   "Skill Acquisition",
-                              style: textTheme(context)
-                                  .headline4
-                                  ?.copyWith(fontSize: 15),
-                            ),
-                            Text(
-                              "Tutor",
-                              //   "Skill Acquisition",
-                              style: textTheme(context)
-                                  .caption
-                                  ?.copyWith(fontSize: 15),
-                            ),
-                          ],
-                        ),
-                      ],
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              // SizedBox(
+              //   height: 2.h,
+              // ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 16),
+              //   child: Column(
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     children: [
+              //       // InkWell(
+              //       //   onTap: () {
+              //       //     Get.toNamed(Routes.flProfilePublic);
+              //       //   },
+              //         // child: Row(
+              //         //   children: [
+              //         //     Material(
+              //         //       shape: CircleBorder(),
+              //         //       elevation: 5,
+              //         //       child: CircleAvatar(
+              //         //         radius: 24,
+              //         //         //IconsAssets.skillAquasition),
+              //         //         backgroundColor: ColorsConst.white,
+              //         //         child: Padding(
+              //         //             padding: const EdgeInsets.all(12),
+              //         //             child: Image.asset(
+              //         //                 ImageAssets.jelurida) //ImageAssets.google),
+              //         //             ),
+              //         //       ),
+              //         //     ),
+              //         //     // SizedBox(
+              //         //     //   width: 19,
+              //         //     // ),
+              //         //     // Column(
+              //         //     //   crossAxisAlignment: CrossAxisAlignment.start,
+              //         //     //   children: [
+              //         //     //     Text(
+              //         //     //       "Jelafrica",
+              //         //     //       //   "Skill Acquisition",
+              //         //     //       style: textTheme(context)
+              //         //     //           .headline4
+              //         //     //           ?.copyWith(fontSize: 15),
+              //         //     //     ),
+              //         //     //     Text(
+              //         //     //       "Tutor",
+              //         //     //       //   "Skill Acquisition",
+              //         //     //       style: textTheme(context)
+              //         //     //           .caption
+              //         //     //           ?.copyWith(fontSize: 15),
+              //         //     //     ),
+              //         //     //   ],
+              //         //     // ),
+              //         //   ],
+              //         // ),
+              //       // ),
+              //       ReconmendedListwidget(),
+              //     ],
+              //   ),
+              // ),
+              Container(
+                margin: const EdgeInsets.only(top: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                height: 47,
+                width: 100.w,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(3),
+                    border: Border.all(
+                      color: ColorsConst.blackFour,
+                    )),
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        "e.g Game development jobs.............",
+                        style: textTheme(context).overline,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-                  ),
-                  ReconmendedListwidget(),
-                ],
+                    const Spacer(),
+                    const Icon(Icons.search, color: ColorsConst.blackFour)
+                  ],
+                ),
               ),
-            ),
-            Spacer(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-              child: AuthBtn(
-                  text: "Take course", isComplete: true, onPressed: () {}),
-            ),
-          ],
+              const MediaListWidget(),
+                ReconmendedListwidget(),
+              // Spacer(),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              //   child: AuthBtn(
+              //       text: "Take course", isComplete: true, onPressed: () {}),
+              // ),
+            ],
+          ),
         ),
       ),
     );
@@ -110,8 +140,8 @@ class ReconmendedListwidget extends StatelessWidget {
       child: ListView(
         shrinkWrap: true,
         children: [
-          AssessementCoursesTile(
-            image: ImageAssets.jelurida,
+          ReconmendedTile(
+            image: ImageAssets.icpLogo,
             tittle: "JelaAfrica",
             subTittle2: "Intermidates",
             mainTittle: "Visual Designer Course",
@@ -121,9 +151,9 @@ class ReconmendedListwidget extends StatelessWidget {
               style: textTheme(context).caption,
             ),
           ),
-          AssessementCoursesTile(
-            image: ImageAssets.jelurida,
-            tittle: "JelaAfrica",
+          ReconmendedTile(
+            image: ImageAssets.visualDesigner,
+            tittle: "Anony",
             subTittle2: "In progress",
             mainTittle: "Visual Designer Course",
             extraWidget: Column(
@@ -146,29 +176,29 @@ class ReconmendedListwidget extends StatelessWidget {
   }
 }
 
-class Reconmmended extends StatelessWidget {
-  const Reconmmended({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 30),
-      child: Row(
-        children: [
-          Text("Recommended",
-              //   "Skill Acquisition",
-              style: textTheme(context).headline4),
-          const Spacer(),
-          Text("See All",
-              //   "Skill Acquisition",
-              style: textTheme(context).headline4),
-        ],
-      ),
-    );
-  }
-}
+// class Reconmmended extends StatelessWidget {
+//   const Reconmmended({
+//     Key? key,
+//   }) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.only(top: 30),
+//       child: Row(
+//         children: [
+//           Text("Recommended",
+//               //   "Skill Acquisition",
+//               style: textTheme(context).headline4),
+//           const Spacer(),
+//           Text("See All",
+//               //   "Skill Acquisition",
+//               style: textTheme(context).headline4),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 class MediaListWidget extends StatelessWidget {
   const MediaListWidget({
@@ -191,33 +221,33 @@ class MediaListWidget extends StatelessWidget {
   }
 }
 
-class SkillAquiListOne extends StatelessWidget {
-  const SkillAquiListOne({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 134,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: const [
-          SkillContainer(
-            tittle: "Skill Acquisition",
-            subTittle: "Click here to get started",
-            icon: IconsAssets.skillAquasition,
-          ),
-          SizedBox(
-            width: 17,
-          ),
-          SkillContainer(
-            tittle: "Bid For Jobs",
-            subTittle: "Click here to get started",
-            icon: IconsAssets.briefcase,
-          ),
-        ],
-      ),
-    );
-  }
-}
+// class SkillAquiListOne extends StatelessWidget {
+//   const SkillAquiListOne({
+//     Key? key,
+//   }) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return SizedBox(
+//       height: 134,
+//       child: ListView(
+//         scrollDirection: Axis.horizontal,
+//         children: const [
+//           SkillContainer(
+//             tittle: "Skill Acquisition",
+//             subTittle: "Click here to get started",
+//             icon: IconsAssets.skillAquasition,
+//           ),
+//           SizedBox(
+//             width: 17,
+//           ),
+//           SkillContainer(
+//             tittle: "Bid For Jobs",
+//             subTittle: "Click here to get started",
+//             icon: IconsAssets.briefcase,
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }

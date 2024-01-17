@@ -10,6 +10,7 @@ import '../../features/authentication/signup/view/screen/signup.dart';
 import '../../features/bottom_nav_bar/bottom_nav_bar.dart';
 import '../../features/bottom_nav_bar/botttom_nav_bar_binding/botttom_nav_bar_binding.dart';
 import '../../features/employers/employer_post_jobs/view/screen/emp_confirm_details_screen.dart';
+import '../../features/employers/employer_post_jobs/view/screen/emp_course_successful.dart';
 import '../../features/employers/employer_post_jobs/view/screen/emp_post_jobs_final_screen.dart';
 import '../../features/employers/employer_post_jobs/view/screen/emp_post_jobs_screen.dart';
 import '../../features/employers/employer_post_jobs/view/screen/emp_post_jobs_secound_screen.dart';
@@ -18,10 +19,12 @@ import '../../features/employers/employers_home/view/screen/employers_home_scree
 import '../../features/freelancer/chat/view/screen/chat_list.dart';
 import '../../features/freelancer/chat/view/screen/conversations.dart';
 import '../../features/freelancer/courses/binding/assement_course_binding.dart';
+import '../../features/freelancer/courses/binding/freelancer_course_details_binding.dart';
 import '../../features/freelancer/courses/view/assement_courses_sucessful.dart';
 import '../../features/freelancer/courses/view/assement_fullvideo_fl.dart';
 import '../../features/freelancer/courses/view/free_lance_courses.dart';
 import '../../features/freelancer/courses/view/free_lance_courses_assesment.dart';
+import '../../features/freelancer/courses/view/free_course_details.dart';
 import '../../features/freelancer/jobs/view/binding/freelancer_jobs_details_binding.dart';
 import '../../features/freelancer/jobs/view/screen/free_lance_job_details.dart';
 import '../../features/freelancer/jobs/view/screen/free_lance_jobs.dart';
@@ -36,6 +39,7 @@ import '../../features/splash/view/onboarding/onboarding_3.dart';
 import '../../features/trainers/trainer_create_course/view/screen/trainer_create_course_fouth_screen.dart';
 import '../../features/trainers/trainer_create_course/view/screen/trainer_create_course_screen.dart';
 import '../../features/trainers/trainer_create_course/view/screen/trainer_create_course_sec_screen.dart';
+import '../../features/trainers/trainer_create_course/view/screen/trainer_create_course_successful.dart';
 import '../../features/trainers/trainer_create_course/view/screen/trainer_create_course_third_screen.dart';
 import '../../features/trainers/trainers_home/view/screen/trainers_home_screen.dart';
 import '../../features/wallet/exchange/view/screen/exchange_pinpad.dart';
@@ -64,9 +68,16 @@ class AppPages {
     GetPage(
       name: "/",
       binding: BottomNavBarBinding(),
+      // page: () => const OnBoardingOne(),
+      // page : () =>  SignUp(),
+      page : () =>  const SplashScreen(),
+      // page : () => const BottomSheetScreen(),
+    ),
+    GetPage(
+      name: Routes.onBoardng1,
+      // binding: MyProfileVendorBinding(),
       page: () => const OnBoardingOne(),
-      // page: () => const BottomSheetScreen(),
-      // page: () => const FLJobsDetails(),
+      // page: () => const MyProfileVendor(),
     ),
     GetPage(
       name: Routes.onBoarding2,
@@ -277,13 +288,62 @@ class AppPages {
       page: () => SignIn(),
       // page: () => const MyProfileVendor(),
     ),
-
-
     GetPage(
       name: Routes.signup,
       // binding: MyProfileVendorBinding(),
       page: () => SignUp(),
       // page: () => const MyProfileVendor(),
     ),
+    GetPage(
+      name: Routes.flCourseDetails,
+      binding: FreeLanceCoursesDetails(),
+      page: () => const FLCoursesDetails(),
+      // page: () => const MyProfileVendor(),
+    ),
+    GetPage(
+      name : Routes.flCourseSuccessful,
+      page : () => const FLSuccessfulDone(),
+    ),
+    GetPage(
+      name: Routes.trainerHomeScreen,
+      // binding: MyProfileVendorBinding(),
+      page: () => const TrainerssHomeScreen(),
+    ),
+    GetPage(
+      name: Routes.trainerCreateCourse,
+      // binding: MyProfileVendorBinding(),
+      page: () => const TrainerCreateCourse(),
+    ),
+    GetPage(
+      name: Routes.trainerCreateCourseSecondScreen,
+      // binding: MyProfileVendorBinding(),
+      page: () => const TrainerCreateCourseSecoundScreen(),
+    ),
+    GetPage(
+      name: Routes.trainerCreateCourseThirdScreen,
+      // binding: MyProfileVendorBinding(),
+      page: () => const TrainerCreateCourseThirdScreen(),
+    ),
+    GetPage(
+      name: Routes.trainerCreateCourseFourthScreen,
+      // binding: MyProfileVendorBinding(),
+      page: () => const TrainerCreateFouthCourse(),
+    ),
+    GetPage(
+      name : Routes.trainerCreateCourseSuccessful,
+      page : () => const TrainerCreateCourseSuccessful(),
+    ),
+    GetPage(
+      name : Routes.empPostSuccessScreen,
+      page : () => const EmployeeCourseSuccessful(),
+    ),
+    GetPage(
+      name : Routes.empHomeScreen,
+      page : () => const EmployersHomeScreen(),
+    ),
+    GetPage(
+      name : Routes.splashScreen,
+      page : () => const SplashScreen(),
+    )
   ];
 }

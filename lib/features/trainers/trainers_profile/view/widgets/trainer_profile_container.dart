@@ -110,8 +110,8 @@ class NftCertificates extends StatelessWidget {
     return Container(
       height: 80,
       width: 183,
-      margin: EdgeInsets.only(right: 10),
-      padding: EdgeInsets.only(right: 10, left: 10),
+      margin: const EdgeInsets.only(right: 10),
+      padding: const EdgeInsets.only(right: 10, left: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         color: ColorsConst.secoundary,
@@ -120,37 +120,36 @@ class NftCertificates extends StatelessWidget {
         children: [
           Expanded(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center, // Center content
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 10),
-                  child: Text(
-                    "EA KAZI NFT CERTIFICATE",
-                    style: textTheme(context).headline4?.copyWith(
-                        color: ColorsConst.white,
-                        fontSize: 15,
-                        letterSpacing: 1),
-                  ),
+                Text(
+                  "EA KAZI NFT CERTIFICATE",
+                  style: textTheme(context).headline4?.copyWith(
+                      color: ColorsConst.white, fontSize: 12, letterSpacing: 1),
+                  overflow: TextOverflow.ellipsis,
                 ),
+                const SizedBox(height: 4), // Adjust spacing
                 Text(
                   "Ui/ux design fundamental",
                   style: textTheme(context).bodyText2?.copyWith(
-                      color: ColorsConst.white, fontSize: 10, letterSpacing: 1),
+                      color: ColorsConst.white, fontSize: 9, letterSpacing: 1),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
           ),
           Material(
-            shape: CircleBorder(),
+            shape: const CircleBorder(),
             elevation: 0.5,
             child: CircleAvatar(
               radius: 24,
-              //IconsAssets.skillAquasition),
               backgroundColor: ColorsConst.white,
               child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child:
-                      Image.asset(ImageAssets.jelurida) //ImageAssets.google),
-                  ),
+                padding: const EdgeInsets.all(12),
+                child:
+                Image.asset(ImageAssets.jelurida), // Adjust the image asset
+              ),
             ),
           ),
         ],

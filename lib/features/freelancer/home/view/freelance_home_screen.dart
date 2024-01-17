@@ -16,15 +16,25 @@ import '../../courses/view/free_lance_courses.dart';
 import '../../shared_widgets/media_container.dart';
 import '../../shared_widgets/reconmended_tile.dart';
 import '../../shared_widgets/skill_container.dart';
+import 'package:eakazijobs/models/signupModel.dart';
+import 'package:eakazijobs/features/authentication/login/view/screen/sign_in.dart';
+import 'package:eakazijobs/integrations.dart';
+
+SignupModel signupModel = SignupModel();
 
 class FreeLancerHome extends StatelessWidget {
   const FreeLancerHome({Key? key}) : super(key: key);
+
+  Future<String> getName() async {
+    var fullName =
+        await newActor!.getFunc(FieldsMethod.getFullName)?.call([]);
+    return fullName;
+  }
 
   @override
   Widget build(BuildContext context) {
     Controller c = Get.put(Controller());
     return Scaffold(
-      // appBar: AppBar(),
       body: SafeArea(
         child: Column(
           children: [
@@ -35,30 +45,45 @@ class FreeLancerHome extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Text(
-                        "Hi, ${c.userData.value.firstName}",
-                        style: textTheme(context).headline3,
-                      ),
-                      const Spacer(),
-                      // Menu bar icon
-                      Material(
-                        borderRadius: BorderRadius.circular(50),
-                        elevation: 2,
-                        shadowColor: ColorsConst.black.withOpacity(0.2),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
-                          height: 14,
-                          width: 44,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: const SvgIcon(IconsAssets.navhori),
-                        ),
-                      )
-                    ],
+                  FutureBuilder<String>(
+                    future: getName(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        return Row(
+                          children: [
+                            Flexible(
+                              child: Text(
+                                "Hi, ${snapshot.data}",
+                                style: textTheme(context).headline3,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            const Spacer(),
+                            // Menu bar icon
+                            Material(
+                              borderRadius: BorderRadius.circular(50),
+                              elevation: 2,
+                              shadowColor: ColorsConst.black.withOpacity(0.2),
+                              child: Container(
+                                padding:
+                                const EdgeInsets.symmetric(horizontal: 12),
+                                height: 14,
+                                width: 44,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                child: const SvgIcon(IconsAssets.navhori),
+                              ),
+                            )
+                          ],
+                        );
+                      }
+                    },
                   ),
                   const SearchContainer(),
                   const SkillAquiListOne(),
@@ -87,8 +112,8 @@ class ReconmendedListwidget extends StatelessWidget {
       child: ListView(
         shrinkWrap: true,
         children: [
-          const ReconmendedTile(image: ImageAssets.google, tittle: "Googke"),
-          const ReconmendedTile(
+          const ReconmendedTileJobs(image: ImageAssets.google, tittle: "Googke"),
+          const ReconmendedTileJobs(
               image: ImageAssets.visualDesigner, tittle: "Googke"),
         ],
       ),
@@ -160,7 +185,7 @@ class SkillAquiListOne extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              Get.toNamed(Routes.freeLancerCoursers);
+              Get.toNamed(Routes.freelancercoursesassesment);
             },
             child: const SkillContainer(
               tittle: "Skill Acquisition",
@@ -171,10 +196,15 @@ class SkillAquiListOne extends StatelessWidget {
           const SizedBox(
             width: 17,
           ),
-          const SkillContainer(
-            tittle: "Bid For Jobs",
-            subTittle: "Click here to get started",
-            icon: IconsAssets.briefcase,
+          GestureDetector(
+            onTap: () {
+              Get.toNamed(Routes.fLJobs);
+            },
+            child: const SkillContainer(
+              tittle: "Bid For Jobs",
+              subTittle: "Click here to get started",
+              icon: IconsAssets.briefcase,
+            ),
           ),
         ],
       ),

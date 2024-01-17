@@ -75,7 +75,8 @@ thread_local! {
 }
 
 #[update]
-async fn checkUser(user: Principal) -> bool {
+async fn checkUser() -> bool {
+    let user = ic_cdk::api::caller();
     let exists = CHECK_USER_STORE.with(|check_user_store| {
         check_user_store
             .borrow()
@@ -88,9 +89,9 @@ async fn checkUser(user: Principal) -> bool {
         CHECK_USER_STORE.with(|check_user_store| {
             check_user_store.borrow_mut().push(CheckUser { user });
         });
-        true
-    } else {
         false
+    } else {
+        true
     }
 }
 
@@ -104,7 +105,7 @@ async fn createUser(fullname: String, email: String, role: String) -> Profile {
     let uid = raw_rand().await.unwrap().0;
     let uid = format!("{:x}", Sha256::digest(&uid));
     // let uid = String::from_utf8(uid).unwrap();
-    
+
     // let uid = String::from_utf8(uid).unwrap_or_else(|err| {
     //     String::from_utf8_lossy(&err.into_bytes()).into_owned()
     // });
@@ -142,6 +143,32 @@ async fn createUser(fullname: String, email: String, role: String) -> Profile {
         ..Default::default()
     }
 }
+
+#[query]
+fn getFullName() -> String {
+    let principal_id = ic_cdk::api::caller();
+    PROFILE_STORE.with(|profile_store| {
+        profile_store
+            .borrow()
+            .get(&principal_id)
+            .map(|profile| profile.fullname.clone())
+            .unwrap_or_default() // Return an empty string if not found
+    })
+}
+
+#[query]
+fn getRole() -> String {
+    let principal_id = ic_cdk::api::caller();
+    PROFILE_STORE.with(|profile_store| {
+        profile_store
+            .borrow()
+            .get(&principal_id)
+            .map(|profile| format!("{:?}", profile.role))// Assuming `role` can be converted to String
+            .unwrap_or_default() // Return an empty string if not found
+    })
+}
+
+
 #[query(name = "getSelf")]
 fn get_self() -> Profile {
     let id = ic_cdk::api::caller();
@@ -236,7 +263,7 @@ async fn createCourse(title: String) -> Course {
         applicants: vec![],
     }
 
-    
+
         // .unwrap_or_else(|| {
         //     panic!("Failed to insert course"); // Replace with more robust error handling if needed
         //   })
@@ -313,18 +340,18 @@ fn getAllJobs() -> JobStore {
 }
 #[derive(CandidType, Deserialize, Debug, Default, Clone, PartialEq)]
 pub enum Roles {
-    TRAINER,
+    FREELANCER,
     #[default]
-    TRAINEE,
     EMPLOYER,
+    TRAINER,
     ADMIN,
 }
 impl Roles {
     pub fn from_str(el: &str) -> Roles {
-        match el {
-            "Trainer" => Roles::TRAINER,
-            "Trainee" => Roles::TRAINEE,
-            "Employer" => Roles::EMPLOYER,
+        match el.to_lowercase().as_str() {
+            "trainee" => Roles::FREELANCER,
+            "employer" => Roles::EMPLOYER,
+            "trainer" => Roles::TRAINER,
             _ => Roles::ADMIN,
         }
     }

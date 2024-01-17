@@ -2,6 +2,8 @@ import 'package:eakazijobs/helpers/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
+import '../../../../../helpers/routes/app_pages.dart';
 
 import '../../../../../helpers/theme/theme.dart';
 import '../../../../shared_widgets/buttons.dart';
@@ -39,7 +41,7 @@ class TrainerCreateCourseSecoundScreen extends StatelessWidget {
                   services: const ["Programmer", "Team lead", "Trainer"],
                   onSaved: (value) {
                     print("object");
-                    // ctrl.bussinesCategory.value = value!;
+                    // ctrl.bussinesCategory.value = value!;\
                   },
 
                   // validator: (value) {
@@ -52,6 +54,21 @@ class TrainerCreateCourseSecoundScreen extends StatelessWidget {
                   // validator:,
                 ),
               ),
+              SizedBox(
+                height: 29,
+              ),
+          SafeArea(
+            child: Padding(
+              padding:
+              const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+              child: AuthBtn(
+                  text: "Next",
+                  isComplete: false,
+                  onPressed: () {
+                    Get.toNamed(Routes.trainerCreateCourseThirdScreen);
+                  }),
+            ),
+          ),
             ],
           ),
         ));

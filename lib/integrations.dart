@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:agent_dart/agent_dart.dart';
 import 'init.dart';
 
@@ -38,9 +40,14 @@ final RecordClass profile = IDL.Record({
 
 });
 
+final CheckUser = IDL.Record({
+  'user' : IDL.Principal,
+});
+
 abstract class FieldsMethod {
   /// use staic const as method name
   static const applyCourse = 'applyCourse';
+  static const checkUser = 'checkUser';
   static const applyJobs = 'applyJobs';
   static const createCourse = 'createCourse';
   static const createJob = 'createJob';
@@ -52,12 +59,16 @@ abstract class FieldsMethod {
   static const getSelf = 'getSelf';
   static const search = 'search';
   static const update = 'update';
+  static const getRole = 'getRole';
+  static const getFullName = 'getFullName';
   // define service class
 
   static final ServiceClass idl = IDL.Service({
     FieldsMethod.applyCourse: IDL.Func([IDL.Text], [], []),
 
     FieldsMethod.applyJobs: IDL.Func([IDL.Principal], [], []),
+
+    FieldsMethod.checkUser: IDL.Func([], [IDL.Bool], []),
 
     FieldsMethod.createCourse: IDL.Func([IDL.Text], [course], []),
 
@@ -78,6 +89,10 @@ abstract class FieldsMethod {
     FieldsMethod.search: IDL.Func([IDL.Text], [IDL.Opt(profile)], ['query']),
 
     FieldsMethod.update: IDL.Func([profile], [], []),
+
+    FieldsMethod.getRole: IDL.Func([], [IDL.Text], ['query']),
+
+    FieldsMethod.getFullName: IDL.Func([], [IDL.Text], ['query']),
   });
 
 }
@@ -97,6 +112,10 @@ class Fields extends ActorHook {
     actor = _actor;
   }
 
+  Future<Bool> checkUser({id = Principal}) async {
+    final res = await actor.getFunc(FieldsMethod.checkUser)!([id]);
+    return res as Bool;
+  }
 
   Future<Record> createUser({fullname = String, email = String, role = String}) async {
     final res = await actor.getFunc(FieldsMethod.createUser)!([fullname, email, role]);
@@ -110,7 +129,7 @@ class Fields extends ActorHook {
 
   Future<Record> get({id = String}) async {
     final res = await actor.getFunc(FieldsMethod.get)!([id]);
-    return res as Record; 
+    return res as Record;
   }
 
   Future<void> update({profile = Record}) async {

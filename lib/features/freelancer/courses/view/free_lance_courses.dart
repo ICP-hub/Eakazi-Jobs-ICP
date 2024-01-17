@@ -13,6 +13,9 @@ import '../../../../constants/assets/icon_constans.dart';
 import '../../shared_widgets/media_container.dart';
 import '../../shared_widgets/reconmended_tile.dart';
 import '../../shared_widgets/skill_container.dart';
+import 'package:eakazijobs/models/signupModel.dart';
+
+SignupModel signupModel = SignupModel();
 
 class FreeLancerCourses extends StatelessWidget {
   const FreeLancerCourses({Key? key}) : super(key: key);
@@ -36,7 +39,7 @@ class FreeLancerCourses extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        "Hi, ${fullName}",
+                        "Hi, ${signupModel.fullName}",
                         style: textTheme(context).headline3,
                       ),
                       const Spacer(),
