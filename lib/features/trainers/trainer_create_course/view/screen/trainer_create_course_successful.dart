@@ -34,7 +34,7 @@ class TrainerCreateCourseSuccessful extends StatelessWidget {
                     text: "Continue",
                     isComplete: true,
                     onPressed: () {
-                      Get.toNamed(Routes.trainerHomeScreen);
+                      Get.toNamed(Routes.home);
                     }),
               ),
             ],

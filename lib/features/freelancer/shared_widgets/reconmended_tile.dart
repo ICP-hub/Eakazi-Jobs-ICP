@@ -115,10 +115,10 @@ class ReconmendedTile extends StatelessWidget {
 class ReconmendedTileJobs extends StatelessWidget {
   const ReconmendedTileJobs({
     Key? key,
-    required this.tittle,
+    this.tittle = "",
     required this.image,
     this.subTittle2 = "Remote",
-    this.mainTittle = "Visual Designer - UI Designer",
+    required this.mainTittle,
     this.extraWidget,
   }) : super(key: key);
 

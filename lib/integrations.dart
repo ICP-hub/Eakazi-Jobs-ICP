@@ -61,6 +61,8 @@ abstract class FieldsMethod {
   static const update = 'update';
   static const getRole = 'getRole';
   static const getFullName = 'getFullName';
+  static const getCourseByCreator = 'getCoursesByCreator';
+  static const getJobsByCreator = 'getJobsByCreator';
   // define service class
 
   static final ServiceClass idl = IDL.Service({
@@ -80,7 +82,7 @@ abstract class FieldsMethod {
 
     FieldsMethod.getAllCourse: IDL.Func([], [IDL.Vec(IDL.Record({'id': IDL.Text,'jobs': jobs}))], ['query']),
 
-    FieldsMethod.getAllJobs: IDL.Func([], [IDL.Vec(IDL.Record({'id': IDL.Principal,'jobs': jobs}))], ['query']),
+    FieldsMethod.getAllJobs: IDL.Func([], [IDL.Vec(IDL.Record({'id': IDL.Text,'jobs': jobs}))], ['query']),
 
     FieldsMethod.getCourse: IDL.Func([IDL.Text], [jobs], ['query']),
 
@@ -93,6 +95,10 @@ abstract class FieldsMethod {
     FieldsMethod.getRole: IDL.Func([], [IDL.Text], ['query']),
 
     FieldsMethod.getFullName: IDL.Func([], [IDL.Text], ['query']),
+
+    FieldsMethod.getCourseByCreator : IDL.Func([], [IDL.Vec(course)], []),
+
+    FieldsMethod.getJobsByCreator : IDL.Func([], [IDL.Vec(jobs)], []),
   });
 
 }

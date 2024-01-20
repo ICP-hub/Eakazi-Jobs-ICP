@@ -9,7 +9,7 @@ abstract class Routes {
   static const internetIdentity = '/internetIdentity';
   static const signup = '/siignup';
   static const home = '/Home';
-  static const freeLancerCoursers = '/freelancercourses';
+  static const trainerCoursers = '/trainerCoursers';
   static const freelancercoursesassesment = '/freelancerCoursesAssesment';
   static const freeLanceCourseVideos = '/freeLanceCourseVideios';
   static const flCourseSuccessful = '/flCourseSuccessful';
@@ -46,4 +46,5 @@ abstract class Routes {
   static const empPostSuccessScreen = '/empPostSuccessScreen';
   static const empHomeScreen = '/empHomeScreen';
   static const splashScreen = '/splashScreen';
+  static const employerJobs = '/employerJobs';
 }

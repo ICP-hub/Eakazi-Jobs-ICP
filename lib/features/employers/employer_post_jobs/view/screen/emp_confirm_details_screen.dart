@@ -17,6 +17,7 @@ class EmployerConfirmDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String? jobTitle = Get.arguments ?? "Job Title";
     return Scaffold(
         appBar: AppBar(
           title: const Text("Confirm Details"),
@@ -60,7 +61,8 @@ class EmployerConfirmDetailsScreen extends StatelessWidget {
                 height: 32,
               ),
               Text(
-                "UX Design Project", style: textTheme(context).headline1,
+                // job title should be fetched here
+                jobTitle!, style: textTheme(context).headline1,
                 // ?.copyWith(color: ColorsConst.white),
               ),
               SizedBox(
@@ -84,7 +86,7 @@ class EmployerConfirmDetailsScreen extends StatelessWidget {
                 height: 10,
               ),
               Text(
-                "Create ui/ux design  prototype for our mobile app",
+                "Create $jobTitle  prototype for us",
                 style: textTheme(context)
                     .headline4
                     ?.copyWith(color: ColorsConst.black.withOpacity(0.6)),
@@ -93,7 +95,7 @@ class EmployerConfirmDetailsScreen extends StatelessWidget {
                 height: 19,
               ),
               Text(
-                "UI/UX Design skills reuired",
+                "$jobTitle skills reuired",
                 style: textTheme(context)
                     .headline4
                     ?.copyWith(color: ColorsConst.black.withOpacity(0.6)),

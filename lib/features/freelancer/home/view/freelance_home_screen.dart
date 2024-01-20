@@ -12,7 +12,7 @@ import 'package:sizer/sizer.dart';
 import '../../../../constants/assets/icon_constans.dart';
 import '../../../../helpers/routes/app_pages.dart';
 import '../../../shared_widgets/search_container.dart';
-import '../../courses/view/free_lance_courses.dart';
+import '../../../trainers/trainers_home/view/screen/trainer_courses.dart';
 import '../../shared_widgets/media_container.dart';
 import '../../shared_widgets/reconmended_tile.dart';
 import '../../shared_widgets/skill_container.dart';
@@ -105,17 +105,59 @@ class ReconmendedListwidget extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
+  Future<List<dynamic>> jobsCreatorList() async {
+    try {
+      var jobs = await newActor!.getFunc(FieldsMethod.getJobsByCreator)?.call([]);
+      print(jobs);
+      return jobs;
+    } catch (e) {
+      print('Error fetching courses: $e');
+      return [];
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 26, right: 0),
-      child: ListView(
-        shrinkWrap: true,
-        children: [
-          const ReconmendedTileJobs(image: ImageAssets.google, tittle: "Googke"),
-          const ReconmendedTileJobs(
-              image: ImageAssets.visualDesigner, tittle: "Googke"),
-        ],
+      child: SingleChildScrollView(
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            FutureBuilder<List<dynamic>>(
+              future: jobsCreatorList(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState ==
+                    ConnectionState.done &&
+                    snapshot.hasData &&
+                    snapshot.data!.isNotEmpty) {
+                  var jobsToShow = snapshot.data!
+                      .take(4)
+                      .toList();
+                  return Column(
+                    children: jobsToShow.map((jobs) {
+                      return ReconmendedTileJobs(
+                        tittle:  jobs['title'],
+                          image: ImageAssets.icpLogo,
+                          mainTittle: jobs['title']);
+                    }).toList(),
+                  );
+                } else {
+                  return Center(
+                    child: SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth:
+                        2,
+                      ),
+                    ),
+                  );
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

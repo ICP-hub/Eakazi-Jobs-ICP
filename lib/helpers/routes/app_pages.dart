@@ -15,6 +15,7 @@ import '../../features/employers/employer_post_jobs/view/screen/emp_post_jobs_fi
 import '../../features/employers/employer_post_jobs/view/screen/emp_post_jobs_screen.dart';
 import '../../features/employers/employer_post_jobs/view/screen/emp_post_jobs_secound_screen.dart';
 import '../../features/employers/employers_chat/view/screen/employer_chat_list.dart';
+import '../../features/employers/employers_home/view/screen/employer_jobs.dart';
 import '../../features/employers/employers_home/view/screen/employers_home_screen.dart';
 import '../../features/freelancer/chat/view/screen/chat_list.dart';
 import '../../features/freelancer/chat/view/screen/conversations.dart';
@@ -22,7 +23,7 @@ import '../../features/freelancer/courses/binding/assement_course_binding.dart';
 import '../../features/freelancer/courses/binding/freelancer_course_details_binding.dart';
 import '../../features/freelancer/courses/view/assement_courses_sucessful.dart';
 import '../../features/freelancer/courses/view/assement_fullvideo_fl.dart';
-import '../../features/freelancer/courses/view/free_lance_courses.dart';
+import '../../features/trainers/trainers_home/view/screen/trainer_courses.dart';
 import '../../features/freelancer/courses/view/free_lance_courses_assesment.dart';
 import '../../features/freelancer/courses/view/free_course_details.dart';
 import '../../features/freelancer/jobs/view/binding/freelancer_jobs_details_binding.dart';
@@ -152,7 +153,7 @@ class AppPages {
       name: Routes.empPostJoBScreen,
       // binding: MyProfileVendorBinding(),
       // binding: FreeLanceAssementCourseVd(),
-      page: () => const EmployePostJobsScreen(),
+      page: () => EmployePostJobsScreen(),
       // page: () => const MyProfileVendor(),
     ),
     GetPage(
@@ -271,9 +272,9 @@ class AppPages {
       // page: () => const MyProfileVendor(),
     ),
     GetPage(
-      name: Routes.freeLancerCoursers,
+      name: Routes.trainerCoursers,
       // binding: MyProfileVendorBinding(),
-      page: () => const FreeLancerCourses(),
+      page: () => const TrainerCourses(),
       // page: () => const MyProfileVendor(),
     ),
     GetPage(
@@ -312,7 +313,7 @@ class AppPages {
     GetPage(
       name: Routes.trainerCreateCourse,
       // binding: MyProfileVendorBinding(),
-      page: () => const TrainerCreateCourse(),
+      page: () => TrainerCreateCourse(),
     ),
     GetPage(
       name: Routes.trainerCreateCourseSecondScreen,
@@ -344,6 +345,10 @@ class AppPages {
     GetPage(
       name : Routes.splashScreen,
       page : () => const SplashScreen(),
-    )
+    ),
+    GetPage(
+      name : Routes.employerJobs,
+      page : () => const EmployerJobs(),
+    ),
   ];
 }

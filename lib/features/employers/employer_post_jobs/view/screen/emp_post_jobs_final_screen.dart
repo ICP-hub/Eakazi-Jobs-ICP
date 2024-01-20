@@ -15,6 +15,7 @@ class EmployePostJobsFinalScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String jobTitle = Get.arguments ?? "Job Title";
     return Scaffold(
         appBar: AppBar(
           title: const Text("Post Jobs"),
@@ -131,8 +132,7 @@ class EmployePostJobsFinalScreen extends StatelessWidget {
                       text: "Post project",
                       isComplete: false,
                       onPressed: () {
-                        Get.toNamed(Routes.empConfirmDetailsScreen);
-                        // Get.toNamed(Routes.freelancercoursesassesment);
+                        Get.toNamed(Routes.empConfirmDetailsScreen, arguments: jobTitle);
                       }),
                 ),
               ),

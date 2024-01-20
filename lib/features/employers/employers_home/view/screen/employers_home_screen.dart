@@ -13,14 +13,13 @@ import 'package:eakazijobs/features/authentication/login/view/screen/sign_in.dar
 import '../../../../../constants/assets/icon_constans.dart';
 import '../../../../../helpers/routes/app_pages.dart';
 import '../../../../shared_widgets/search_container.dart';
-import '../../../../freelancer/courses/view/free_lance_courses.dart';
+import '../../../../trainers/trainers_home/view/screen/trainer_courses.dart';
 import '../../../../freelancer/shared_widgets/media_container.dart';
-import '../../../../freelancer/shared_widgets/reconmended_tile.dart';
+import '../../../../employers/shared_widgets/reconmended_tile.dart';
 import '../../../../freelancer/shared_widgets/skill_container.dart';
 import '../widgets/data_employer_jobs.dart';
 import '../widgets/no_data_jobs.dart';
 import 'package:eakazijobs/models/signupModel.dart';
-import '../../../../freelancer/shared_widgets/reconmended_tile.dart';
 import 'package:eakazijobs/features/authentication/login/view/screen/sign_in.dart';
 import 'package:eakazijobs/integrations.dart';
 
@@ -34,9 +33,20 @@ class EmployersHomeScreen extends StatelessWidget {
     return fullName;
   }
 
+  Future<void> jobCreator() async {
+    try {
+      var jobByCreator =
+          await newActor!.getFunc(FieldsMethod.getJobsByCreator)?.call([]);
+      print(jobByCreator);
+    } catch (e) {
+      print('Error fetching courses: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Controller c = Get.put(Controller());
+    jobCreator();
     return Scaffold(
       // appBar: AppBar(),
       body: SafeArea(
@@ -109,18 +119,59 @@ class ReconmendedListwidget extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
+  Future<List<dynamic>> jobsCreatorList() async {
+    try {
+      var jobs =
+          await newActor!.getFunc(FieldsMethod.getJobsByCreator)?.call([]);
+      print(jobs);
+      return jobs;
+    } catch (e) {
+      print('Error fetching courses: $e');
+      return [];
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 26, right: 0),
-      child: ListView(
-        shrinkWrap: true,
-        children: [
-          const ReconmendedTileJobs(
-              image: ImageAssets.icpLogo, tittle: "Googke"),
-          const ReconmendedTileJobs(
-              image: ImageAssets.visualDesigner, tittle: "Googke"),
-        ],
+      padding: const EdgeInsets.only(top: 20, right: 0),
+      child: SingleChildScrollView(
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            FutureBuilder<List<dynamic>>(
+              future: jobsCreatorList(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done &&
+                    snapshot.hasData &&
+                    snapshot.data!.isNotEmpty) {
+                  var jobsToShow = snapshot.data!.take(3).toList();
+                  return Column(
+                    children: jobsToShow.map((jobs) {
+                      return ReconmendedTileJobs(
+                          tittle: "${jobs['title']} skills required",
+                          image: ImageAssets.icpLogo,
+                          mainTittle: jobs['title']);
+                    }).toList(),
+                  );
+                } else if (snapshot.connectionState !=
+                    ConnectionState.waiting) {
+                  return NoDataEmployers();
+                } else {
+                  return Center(
+                    child: SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                      ),
+                    ),
+                  );
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -143,7 +194,7 @@ class Reconmmended extends StatelessWidget {
           const Spacer(),
           GestureDetector(
             onTap: () {
-              Get.toNamed(Routes.fLJobs);
+              Get.toNamed(Routes.employerJobs);
             },
             child: Text("See All",
                 //   "Skill Acquisition",
