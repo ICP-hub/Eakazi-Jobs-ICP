@@ -9,11 +9,12 @@ import '../../../helpers/utils/utils.dart';
 class ReconmendedTile extends StatelessWidget {
   const ReconmendedTile({
     Key? key,
-    required this.tittle,
+    this.tittle = " ",
     required this.image,
     this.subTittle2 = "Remote",
-    this.mainTittle = "Visual Designer - UI Designer",
+    required this.mainTittle,
     this.extraWidget,
+    this.id,
   }) : super(key: key);
 
   final String tittle;
@@ -22,11 +23,12 @@ class ReconmendedTile extends StatelessWidget {
   final String image;
   final String mainTittle;
   final Widget? extraWidget;
+  final String? id;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed(Routes.flCourseDetails);
+        Get.toNamed(Routes.flCourseDetails, arguments: [mainTittle, tittle, image, id]);
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 11),
@@ -120,6 +122,7 @@ class ReconmendedTileJobs extends StatelessWidget {
     this.subTittle2 = "Remote",
     required this.mainTittle,
     this.extraWidget,
+    this.id,
   }) : super(key: key);
 
   final String tittle;
@@ -128,11 +131,12 @@ class ReconmendedTileJobs extends StatelessWidget {
   final String image;
   final String mainTittle;
   final Widget? extraWidget;
+  final String? id;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed(Routes.flJobsDetails);
+        Get.toNamed(Routes.flJobsDetails, arguments: [mainTittle, tittle, image, id]);
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 11),

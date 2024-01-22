@@ -9,15 +9,30 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+import 'package:eakazijobs/features/authentication/login/view/screen/sign_in.dart';
 
 import '../../../../constants/assets/icon_constans.dart';
 import '../../../../helpers/routes/app_pages.dart';
+import '../../../trainers/trainers_home/view/widgets/data_trainers_jobs.dart';
 import '../../shared_widgets/media_container.dart';
 import '../../shared_widgets/reconmended_tile.dart';
 import '../../shared_widgets/skill_container.dart';
+import 'package:eakazijobs/integrations.dart';
 
 class FreeLancerCoursesAssesment extends StatelessWidget {
   const FreeLancerCoursesAssesment({Key? key}) : super(key: key);
+
+  Future<List<dynamic>> getAllCourses() async {
+    try {
+      var allCourses =
+          await newActor!.getFunc(FieldsMethod.getAllCourse)?.call([]);
+      print('All courses: $allCourses');
+      return allCourses ?? [];
+    } catch (e) {
+      print('Error fetching courses: $e');
+      return [];
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,102 +41,71 @@ class FreeLancerCoursesAssesment extends StatelessWidget {
         title: Text("Available Courses"),
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              // SizedBox(
-              //   height: 2.h,
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 16),
-              //   child: Column(
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: [
-              //       // InkWell(
-              //       //   onTap: () {
-              //       //     Get.toNamed(Routes.flProfilePublic);
-              //       //   },
-              //         // child: Row(
-              //         //   children: [
-              //         //     Material(
-              //         //       shape: CircleBorder(),
-              //         //       elevation: 5,
-              //         //       child: CircleAvatar(
-              //         //         radius: 24,
-              //         //         //IconsAssets.skillAquasition),
-              //         //         backgroundColor: ColorsConst.white,
-              //         //         child: Padding(
-              //         //             padding: const EdgeInsets.all(12),
-              //         //             child: Image.asset(
-              //         //                 ImageAssets.jelurida) //ImageAssets.google),
-              //         //             ),
-              //         //       ),
-              //         //     ),
-              //         //     // SizedBox(
-              //         //     //   width: 19,
-              //         //     // ),
-              //         //     // Column(
-              //         //     //   crossAxisAlignment: CrossAxisAlignment.start,
-              //         //     //   children: [
-              //         //     //     Text(
-              //         //     //       "Jelafrica",
-              //         //     //       //   "Skill Acquisition",
-              //         //     //       style: textTheme(context)
-              //         //     //           .headline4
-              //         //     //           ?.copyWith(fontSize: 15),
-              //         //     //     ),
-              //         //     //     Text(
-              //         //     //       "Tutor",
-              //         //     //       //   "Skill Acquisition",
-              //         //     //       style: textTheme(context)
-              //         //     //           .caption
-              //         //     //           ?.copyWith(fontSize: 15),
-              //         //     //     ),
-              //         //     //   ],
-              //         //     // ),
-              //         //   ],
-              //         // ),
-              //       // ),
-              //       ReconmendedListwidget(),
-              //     ],
-              //   ),
-              // ),
-              Container(
-                margin: const EdgeInsets.only(top: 8),
+        child: ListView.builder(
+          itemCount: 2,
+          itemBuilder: (context, index) {
+            if (index == 0) {
+              return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                height: 47,
-                width: 100.w,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(3),
-                    border: Border.all(
-                      color: ColorsConst.blackFour,
-                    )),
-                child: Row(
+                child: Column(
                   children: [
-                    Flexible(
-                      child: Text(
-                        "e.g Game development jobs.............",
-                        style: textTheme(context).overline,
-                        overflow: TextOverflow.ellipsis,
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      height: 47,
+                      width: 100.w,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(3),
+                        border: Border.all(
+                          color: ColorsConst.blackFour,
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Flexible(
+                            child: Text(
+                              "e.g Game development jobs.............",
+                              style: textTheme(context).overline,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          const Spacer(),
+                          const Icon(Icons.search, color: ColorsConst.blackFour)
+                        ],
                       ),
                     ),
-                    const Spacer(),
-                    const Icon(Icons.search, color: ColorsConst.blackFour)
+                    const MediaListWidget(),
+                    SizedBox(height: 20.0),
                   ],
                 ),
-              ),
-              const MediaListWidget(),
-                ReconmendedListwidget(),
-              // Spacer(),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-              //   child: AuthBtn(
-              //       text: "Take course", isComplete: true, onPressed: () {}),
-              // ),
-            ],
-          ),
+              );
+            } else {
+              return Padding(
+                padding: const EdgeInsets.only(
+                    top: 0, bottom: 40, left: 16, right: 16),
+                child: FutureBuilder<List<dynamic>>(
+                  future: getAllCourses(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        snapshot.hasData) {
+                      return Column(
+                        children: snapshot.data!.map((course) {
+                          return ReconmendedTile(
+                            image: ImageAssets.google,
+                            id: course['id'],
+                            tittle: course['creator_fullname'],
+                            mainTittle: course['title'],
+                          );
+                        }).toList(),
+                      );
+                    } else {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                  },
+                ),
+              );
+            }
+          },
         ),
       ),
     );

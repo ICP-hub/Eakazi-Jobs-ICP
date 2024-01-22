@@ -8,7 +8,6 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../../constants/assets/icon_constans.dart';
 import '../../../../helpers/routes/app_pages.dart';
 import '../../../shared_widgets/search_container.dart';
@@ -26,8 +25,7 @@ class FreeLancerHome extends StatelessWidget {
   const FreeLancerHome({Key? key}) : super(key: key);
 
   Future<String> getName() async {
-    var fullName =
-        await newActor!.getFunc(FieldsMethod.getFullName)?.call([]);
+    var fullName = await newActor!.getFunc(FieldsMethod.getFullName)?.call([]);
     return fullName;
   }
 
@@ -70,7 +68,7 @@ class FreeLancerHome extends StatelessWidget {
                               shadowColor: ColorsConst.black.withOpacity(0.2),
                               child: Container(
                                 padding:
-                                const EdgeInsets.symmetric(horizontal: 12),
+                                    const EdgeInsets.symmetric(horizontal: 12),
                                 height: 14,
                                 width: 44,
                                 decoration: BoxDecoration(
@@ -105,11 +103,10 @@ class ReconmendedListwidget extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  Future<List<dynamic>> jobsCreatorList() async {
+  Future<List<dynamic>> getAllJobs() async {
     try {
-      var jobs = await newActor!.getFunc(FieldsMethod.getJobsByCreator)?.call([]);
-      print(jobs);
-      return jobs;
+      var allJobs = await newActor!.getFunc(FieldsMethod.getAllJobs)?.call([]);
+      return allJobs ?? [];
     } catch (e) {
       print('Error fetching courses: $e');
       return [];
@@ -119,27 +116,26 @@ class ReconmendedListwidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 26, right: 0),
+      padding: const EdgeInsets.only(top: 20, right: 0),
       child: SingleChildScrollView(
         child: ListView(
           shrinkWrap: true,
           children: [
             FutureBuilder<List<dynamic>>(
-              future: jobsCreatorList(),
+              future: getAllJobs(),
               builder: (context, snapshot) {
-                if (snapshot.connectionState ==
-                    ConnectionState.done &&
+                if (snapshot.connectionState == ConnectionState.done &&
                     snapshot.hasData &&
                     snapshot.data!.isNotEmpty) {
-                  var jobsToShow = snapshot.data!
-                      .take(4)
-                      .toList();
+                  var jobsToShow = snapshot.data!.take(3).toList();
                   return Column(
                     children: jobsToShow.map((jobs) {
                       return ReconmendedTileJobs(
-                        tittle:  jobs['title'],
-                          image: ImageAssets.icpLogo,
-                          mainTittle: jobs['title']);
+                        image: ImageAssets.visualDesigner,
+                        id: jobs['id'],
+                        tittle: jobs['creator_fullname'],
+                        mainTittle: jobs['title'],
+                      );
                     }).toList(),
                   );
                 } else {
@@ -148,8 +144,7 @@ class ReconmendedListwidget extends StatelessWidget {
                       height: 20,
                       width: 20,
                       child: CircularProgressIndicator(
-                        strokeWidth:
-                        2,
+                        strokeWidth: 2,
                       ),
                     ),
                   );
@@ -174,7 +169,7 @@ class Reconmmended extends StatelessWidget {
       padding: const EdgeInsets.only(top: 30),
       child: Row(
         children: [
-          Text("Recommended",
+          Text("Recommended Jobs",
               //   "Skill Acquisition",
               style: textTheme(context).headline4),
           const Spacer(),

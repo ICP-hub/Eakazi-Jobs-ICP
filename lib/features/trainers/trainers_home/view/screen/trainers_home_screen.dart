@@ -158,27 +158,6 @@ class TrainerssHomeScreen extends StatelessWidget {
   }
 }
 
-class ReconmendedListwidget extends StatelessWidget {
-  const ReconmendedListwidget({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 26, right: 0),
-      child: ListView(
-        shrinkWrap: true,
-        children: [
-          const ReconmendedTile(image: ImageAssets.google, tittle: "Googke"),
-          const ReconmendedTile(
-              image: ImageAssets.visualDesigner, tittle: "Googke"),
-        ],
-      ),
-    );
-  }
-}
-
 class Reconmmended extends StatelessWidget {
   const Reconmmended({
     Key? key,

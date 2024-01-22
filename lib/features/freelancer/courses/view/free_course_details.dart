@@ -22,6 +22,10 @@ class FLCoursesDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tabCtrl = Get.find<FLCoursesDetailsCtrl>();
+    final courseName = Get.arguments[0];
+    final author = Get.arguments[1];
+    final image = Get.arguments[2];
+    final courseId = Get.arguments[3];
     return Scaffold(
       appBar: AppBar(
         title: const Text("Course details"),
@@ -40,7 +44,7 @@ class FLCoursesDetails extends StatelessWidget {
                       //IconsAssets.skillAquasition),
                       backgroundColor: ColorsConst.white,
                       child: Image.asset(
-                        ImageAssets.jelurida,
+                        image,
                       ),
                     ),
                   ),
@@ -48,11 +52,11 @@ class FLCoursesDetails extends StatelessWidget {
                     height: 25,
                   ),
                   Text(
-                    "Visual Designer Course",
+                    courseName ?? "Course Name",
                     style: textTheme(context).bodyText1?.copyWith(fontSize: 25),
                   ),
                   Text(
-                    "Jelafrica",
+                    author ?? "Author",
                     style: textTheme(context).overline,
                   ),
                 ],
@@ -131,9 +135,9 @@ class FLCoursesDetails extends StatelessWidget {
         body: TabBarView(
           controller: tabCtrl.tabController,
           children: [
-            CourseDescription(title: "Course Description", body: bodyTexxt),
-            CourseDescription(title: "Course Content", body: bodyTexxt),
-            CourseDescription(title: "About Course", body: bodyTexxt),
+            CourseDescription(title: "Course Description", body: bodyTexxt, courseId: courseId),
+            CourseDescription(title: "Course Content", body: bodyTexxt, courseId: courseId),
+            CourseDescription(title: "About Course", body: bodyTexxt, courseId: courseId),
           ],
         ),
       ),

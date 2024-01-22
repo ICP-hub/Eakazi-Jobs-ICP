@@ -21,6 +21,10 @@ class FLJobsDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tabCtrl = Get.find<FLJobsDetailsCtrl>();
+    final jobPost = Get.arguments[0];
+    final jobAuthor = Get.arguments[1];
+    final image = Get.arguments[2];
+    final jobId = Get.arguments[3];
     return Scaffold(
       appBar: AppBar(
         title: const Text("Job details"),
@@ -39,7 +43,7 @@ class FLJobsDetails extends StatelessWidget {
                       //IconsAssets.skillAquasition),
                       backgroundColor: ColorsConst.white,
                       child: Image.asset(
-                        ImageAssets.jelurida,
+                        image,
                       ),
                     ),
                   ),
@@ -47,11 +51,11 @@ class FLJobsDetails extends StatelessWidget {
                     height: 25,
                   ),
                   Text(
-                    "UI Designer",
+                    jobPost ?? "Job Title",
                     style: textTheme(context).bodyText1?.copyWith(fontSize: 25),
                   ),
                   Text(
-                    "Jelafrica - Nigeria - Fulltime",
+                    jobAuthor ?? "Job Author",
                     style: textTheme(context).overline,
                   ),
                 ],
@@ -130,9 +134,9 @@ class FLJobsDetails extends StatelessWidget {
         body: TabBarView(
           controller: tabCtrl.tabController,
           children: [
-            JobDescription(title: "Job Description", body: bodyTexxt),
-            JobDescription(title: "Assessment", body: bodyTexxt),
-            JobDescription(title: "About Job", body: bodyTexxt),
+            JobDescription(title: "Job Description", body: bodyTexxt, jobId: jobId),
+            JobDescription(title: "Assessment", body: bodyTexxt, jobId: jobId),
+            JobDescription(title: "About Job", body: bodyTexxt, jobId: jobId),
           ],
         ),
       ),
