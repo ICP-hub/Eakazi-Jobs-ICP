@@ -2,23 +2,17 @@
 
 # Steps to follow
 
-1. Clone one copy of this repository in WSL ubuntu location and other in your Windows location
+1. Clone this repository in your desired location
 
-2. Set up adb in your device, then run the following commands
+2. Open your command prompt and run the following commands
 
     `adb devices`
 
     `adb reverse tcp:4943 tcp:4943`
 
-3. For the repository cloned in WSL run the following commands :
+   If facing any issue with the above commands, follow this link: [ADB Setup](https://developer.android.com/tools/adb)
 
-    `cd backend`
-
-    `dfx start --background`
-
-    `dfx deploy`
-
-4. For the repository cloned in your windows follow these commands:
+3. Now open the project in your IDE and run the following commands in the terminal:
 
    `flutter pub get`
 

@@ -75,6 +75,19 @@ class _SignInState extends State<SignIn> {
     super.dispose();
   }
 
+  Future<bool> checkDetails() async {
+    var fullName = await newActor!.getFunc(FieldsMethod.getFullName)?.call([]);
+    var role = await newActor!.getFunc(FieldsMethod.getRole)?.call([]);
+
+    if (fullName == "" && role == "") {
+      return false;
+    } else if (fullName != "" && role != "") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   // ---------------- Receiving Query Params ----------------
 
   Future<void> initUniLinks() async {
@@ -95,23 +108,26 @@ class _SignInState extends State<SignIn> {
         HttpAgent newAgent = HttpAgent(
           options: HttpAgentOptions(
             identity: _delegationIdentity,
+            // ---- Uncomment the following line to use main-net replica ----
+            host: 'icp-api.io',
           ),
-          defaultHost: 'localhost',
-          defaultPort: 4943,
-          defaultProtocol: 'http',
+          // ---- Uncomment the following 3 lines to use a local replica ----
+          // defaultHost: 'localhost',
+          // defaultPort: 4943,
+          // defaultProtocol: 'https',
         );
 
         // Creating Canister Actor -----------------------
         newActor = CanisterActor(
             ActorConfig(
-              canisterId: Principal.fromText('br5f7-7uaaa-aaaaa-qaaca-cai'),
+              canisterId: Principal.fromText('c7oiy-yqaaa-aaaag-qc6sa-cai'),
               agent: newAgent,
             ),
             FieldsMethod.idl);
 
         var checkUser = await newActor!.getFunc(FieldsMethod.checkUser)?.call([]);
 
-        if (checkUser == true) {
+        if (checkUser == true && await checkDetails()) {
           customLoader.showLoader('Welcome back, please wait...');
           Future.delayed(Duration(seconds: 1), () {
             customLoader.dismissLoader();
@@ -138,9 +154,12 @@ class _SignInState extends State<SignIn> {
       var publicKeyDer = publicKey.toDer();
       publicKeyString = bytesToHex(publicKeyDer);
 
-      const baseUrl = 'http://localhost:4943';
+      // const baseUrl = 'http://localhost:4943';
+      // final url =
+      //     '$baseUrl?sessionkey=$publicKeyString&canisterId=bd3sg-teaaa-aaaaa-qaaba-cai';
+      const baseUrl = 'https://ckjzv-zyaaa-aaaag-qc6rq-cai.icp0.io';
       final url =
-          '$baseUrl?sessionkey=$publicKeyString&canisterId=bd3sg-teaaa-aaaaa-qaaba-cai';
+          '$baseUrl?sessionkey=$publicKeyString';
       await launch(
         url,
         customTabsOption: CustomTabsOption(

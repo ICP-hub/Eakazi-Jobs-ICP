@@ -60,11 +60,20 @@ class SignUp extends StatelessWidget {
 
   submit(context) async {
     Controller c = Get.put(Controller());
+    ValidateInputController e = Get.find();
     try {
       if (!_formKey.currentState!.validate()) {
         return;
       }
       _formKey.currentState!.save();
+
+      if (!e.isRoleSelected.value) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Please enter all the details")),
+        );
+        return;
+      }
+
       customLoader.showLoader('Creating your account...');
 
       signupModel.fullName =
@@ -228,21 +237,19 @@ class SignUp extends StatelessWidget {
                                 "Trainer"
                               ],
                               onSaved: (value) {
-                                // String? role = value == "Freelancer"
-                                //     ? "freelancer"
-                                //     : value == "Employer"
-                                //         ? "employer"
-                                //         : "trainer";
-                                if (value == "Freelancer") {
-                                  signupModel.role = "freelancer";
-                                } else if (value == "Employer") {
-                                  signupModel.role = "employer";
+                                if (value != null && value.isNotEmpty) {
+                                  c.isRoleSelected.value = true;
+                                  // Assign role to signupModel
+                                  if (value == "Freelancer") {
+                                    signupModel.role = "freelancer";
+                                  } else if (value == "Employer") {
+                                    signupModel.role = "employer";
+                                  } else {
+                                    signupModel.role = "trainer";
+                                  }
                                 } else {
-                                  signupModel.role = "trainer";
+                                  c.isRoleSelected.value = false;
                                 }
-                                // signupModel.role = role;
-                                // print("value $role");
-                                // ctrl.bussinesCategory.value = value!;
                               },
                             ),
                           ),
@@ -289,6 +296,7 @@ class SignUp extends StatelessWidget {
 
 class ValidateInputController extends GetxController {
   RxBool isValidated = false.obs;
+  RxBool isRoleSelected = false.obs;
   void updateValidateStatus(state) => isValidated.value = state;
 }
 
