@@ -13,6 +13,8 @@ class EmployePostJobsSecScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String jobTitle = Get.arguments ?? "Job Title";
+
     return Scaffold(
         appBar: AppBar(
           title: const Text("Post Jobs"),
@@ -48,8 +50,7 @@ class EmployePostJobsSecScreen extends StatelessWidget {
                       text: "Next",
                       isComplete: false,
                       onPressed: () {
-                        Get.toNamed(Routes.empPostJoBScreen3);
-                        // Get.toNamed(Routes.freelancercoursesassesment);
+                        Get.toNamed(Routes.empPostJoBScreen3, arguments: jobTitle);
                       }),
                 ),
               ),

@@ -2,6 +2,7 @@ import 'package:eakazijobs/constants/assets/images_constants.dart';
 import 'package:eakazijobs/constants/theme/color_selection.dart';
 import 'package:eakazijobs/features/shared_widgets/svgs.dart';
 import 'package:eakazijobs/features/trainers/shared_widgets/createCourse.dart';
+import 'package:eakazijobs/features/trainers/trainers_home/view/widgets/no_data_jobs_trainers.dart';
 import 'package:eakazijobs/helpers/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -12,7 +13,7 @@ import 'package:sizer/sizer.dart';
 import '../../../../../constants/assets/icon_constans.dart';
 import '../../../../../helpers/routes/app_pages.dart';
 import '../../../../shared_widgets/search_container.dart';
-import '../../../../freelancer/courses/view/free_lance_courses.dart';
+import 'trainer_courses.dart';
 import '../../../../freelancer/shared_widgets/media_container.dart';
 import '../../../../freelancer/shared_widgets/reconmended_tile.dart';
 import '../../../../freelancer/shared_widgets/skill_container.dart';
@@ -23,15 +24,35 @@ import 'package:eakazijobs/integrations.dart';
 class TrainerssHomeScreen extends StatelessWidget {
   const TrainerssHomeScreen({Key? key}) : super(key: key);
 
+  Future<void> courseCreator() async {
+    try {
+      var course = await newActor!.getFunc(FieldsMethod.getCourseByCreator)?.call([]);
+      print(course);
+    } catch (e) {
+      print('Error fetching courses: $e');
+    }
+  }
+
   Future<String> getName() async {
-    var fullName =
-    await newActor!.getFunc(FieldsMethod.getFullName)?.call([]);
+    var fullName = await newActor!.getFunc(FieldsMethod.getFullName)?.call([]);
     return fullName;
   }
+
+  Future<List<dynamic>> courseCreatorList() async {
+    try {
+      var courses = await newActor!.getFunc(FieldsMethod.getCourseByCreator)?.call([]);
+      print(courses);
+      return courses;
+    } catch (e) {
+      print('Error fetching courses: $e');
+      return [];
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    courseCreator();
     return Scaffold(
-      // appBar: AppBar(),
       body: SafeArea(
         child: Column(
           children: [
@@ -42,78 +63,96 @@ class TrainerssHomeScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 children: [
-    FutureBuilder<String>(
-    future: getName(),
-    builder: (context, snapshot) {
-    if (snapshot.connectionState == ConnectionState.waiting) {
-    return CircularProgressIndicator();
-    } else if (snapshot.hasError) {
-    return Text('Error: ${snapshot.error}');
-    } else {
-    return Row(
-    children: [
-    Flexible(
-    child: Text(
-    "Hi, ${snapshot.data}",
-    style: textTheme(context).headline3,
-    overflow: TextOverflow.ellipsis,
-    ),
-    ),
-                      const Spacer(),
-                      Material(
-                        borderRadius: BorderRadius.circular(50),
-                        elevation: 2,
-                        shadowColor: ColorsConst.black.withOpacity(0.2),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
-                          height: 14,
-                          width: 44,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: const SvgIcon(IconsAssets.navhori),
-                        ),
-                      )
-    ],
-    );
-    }
-    },
-    ),
+                  FutureBuilder<String>(
+                    future: getName(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        return Row(
+                          children: [
+                            Flexible(
+                              child: Text(
+                                "Hi, ${snapshot.data}",
+                                style: textTheme(context).headline3,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            const Spacer(),
+                            Material(
+                              borderRadius: BorderRadius.circular(50),
+                              elevation: 2,
+                              shadowColor: ColorsConst.black.withOpacity(0.2),
+                              child: Container(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 12),
+                                height: 14,
+                                width: 44,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                child: const SvgIcon(IconsAssets.navhori),
+                              ),
+                            )
+                          ],
+                        );
+                      }
+                    },
+                  ),
                   const SearchContainer(),
                   const SkillAquiListOne(),
                   const MediaListWidget(),
                   const Reconmmended(),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const JobsTrainersWidgte(),
+                  SingleChildScrollView(
+                    child: Column(children: [
+                      ListView(
+                        shrinkWrap: true,
+                        children: [
+                          FutureBuilder<List<dynamic>>(
+                            future: courseCreatorList(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done &&
+                                  snapshot.hasData &&
+                                  snapshot.data!.isNotEmpty) {
+                                var coursesToShow = snapshot.data!
+                                    .take(4)
+                                    .toList();
+                                return Column(
+                                  children: coursesToShow.map((course) {
+                                    return JobsTrainersWidgte(
+                                        tittle: course['title']);
+                                  }).toList(),
+                                );
+                              } else if (snapshot.connectionState !=
+                                  ConnectionState.waiting) {
+                                return NoTrainersEmployers();
+                              } else {
+                                return Center(
+                                  child: SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth:
+                                      2,
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    ]),
+                  )
                 ],
               ),
             )
           ],
         ),
-      ),
-    );
-  }
-}
-
-class ReconmendedListwidget extends StatelessWidget {
-  const ReconmendedListwidget({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 26, right: 0),
-      child: ListView(
-        shrinkWrap: true,
-        children: [
-          const ReconmendedTile(image: ImageAssets.google, tittle: "Googke"),
-          const ReconmendedTile(
-              image: ImageAssets.visualDesigner, tittle: "Googke"),
-        ],
       ),
     );
   }
@@ -136,7 +175,7 @@ class Reconmmended extends StatelessWidget {
           const Spacer(),
           GestureDetector(
             onTap: () {
-              Get.toNamed(Routes.freeLancerCoursers);
+              Get.toNamed(Routes.trainerCoursers);
             },
             child: Text("See All",
                 //   "Skill Acquisition",

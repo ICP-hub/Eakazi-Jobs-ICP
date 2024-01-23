@@ -7,6 +7,7 @@ final RecordClass course = IDL.Record({
   'id' : IDL.Text,
   'title' : IDL.Text,
   'creator' : IDL.Principal,
+  'creator_fullname' : IDL.Text,
   'applicants' : IDL.Vec(IDL.Principal),
 });
 
@@ -14,6 +15,7 @@ final RecordClass jobs = IDL.Record({
   'id' : IDL.Text,
   'title' : IDL.Text,
   'creator' : IDL.Principal,
+  'creator_fullname' : IDL.Text,
   'applicants' : IDL.Vec(IDL.Principal),
 });
 
@@ -53,7 +55,7 @@ abstract class FieldsMethod {
   static const createJob = 'createJob';
   static const createUser = 'createUser';
   static const get = 'get';
-  static const getAllCourse = 'getAllCourse';
+  static const getAllCourse = 'getAllCourses';
   static const getAllJobs = 'getAllJobs';
   static const getCourse = 'getCourse';
   static const getSelf = 'getSelf';
@@ -61,12 +63,19 @@ abstract class FieldsMethod {
   static const update = 'update';
   static const getRole = 'getRole';
   static const getFullName = 'getFullName';
+  static const getCourseByCreator = 'getCoursesByCreator';
+  static const getJobsByCreator = 'getJobsByCreator';
+  static const checkAppliedJob = 'checkAppliedJob';
+  static const checkAppliedCourse = 'checkAppliedCourse';
+  static const getJobsAppliedCount = 'getJobsAppliedCount';
+
+  static const getCoursesRegisteredByUser = 'getCoursesRegisteredByUser';
   // define service class
 
   static final ServiceClass idl = IDL.Service({
     FieldsMethod.applyCourse: IDL.Func([IDL.Text], [], []),
 
-    FieldsMethod.applyJobs: IDL.Func([IDL.Principal], [], []),
+    FieldsMethod.applyJobs: IDL.Func([IDL.Text], [], []),
 
     FieldsMethod.checkUser: IDL.Func([], [IDL.Bool], []),
 
@@ -78,9 +87,9 @@ abstract class FieldsMethod {
 
     FieldsMethod.get: IDL.Func([IDL.Text], [profile], ['query']),
 
-    FieldsMethod.getAllCourse: IDL.Func([], [IDL.Vec(IDL.Record({'id': IDL.Text,'jobs': jobs}))], ['query']),
+    FieldsMethod.getAllCourse: IDL.Func([], [IDL.Vec(course)], ['query']),
 
-    FieldsMethod.getAllJobs: IDL.Func([], [IDL.Vec(IDL.Record({'id': IDL.Principal,'jobs': jobs}))], ['query']),
+    FieldsMethod.getAllJobs: IDL.Func([], [IDL.Vec(jobs)], ['query']),
 
     FieldsMethod.getCourse: IDL.Func([IDL.Text], [jobs], ['query']),
 
@@ -93,13 +102,21 @@ abstract class FieldsMethod {
     FieldsMethod.getRole: IDL.Func([], [IDL.Text], ['query']),
 
     FieldsMethod.getFullName: IDL.Func([], [IDL.Text], ['query']),
+
+    FieldsMethod.getCourseByCreator : IDL.Func([], [IDL.Vec(course)], []),
+
+    FieldsMethod.getJobsByCreator : IDL.Func([], [IDL.Vec(jobs)], []),
+
+    FieldsMethod.checkAppliedJob : IDL.Func([IDL.Text], [IDL.Bool], ['query']),
+
+    FieldsMethod.checkAppliedCourse : IDL.Func([IDL.Text], [IDL.Bool], ['query']),
+
+    FieldsMethod.getJobsAppliedCount : IDL.Func([], [IDL.Nat32], ['query']),
+
+    FieldsMethod.getCoursesRegisteredByUser : IDL.Func([], [IDL.Vec(course)], []),
   });
 
 }
-// define all record and variant class here
-
-
-
 
 class Fields extends ActorHook {
   Fields();

@@ -14,6 +14,7 @@ import '../../../shared_widgets/media_container.dart';
 import '../../../shared_widgets/reconmended_tile.dart';
 import '../../../shared_widgets/skill_container.dart';
 import 'package:eakazijobs/models/signupModel.dart';
+import 'package:eakazijobs/integrations.dart';
 
 SignupModel signupModel = SignupModel();
 
@@ -21,7 +22,17 @@ class FreeLancerJobs extends StatelessWidget {
 
   const FreeLancerJobs({Key? key}) : super(key: key);
 
-
+  Future<List<dynamic>> getAllJobs() async {
+    try {
+      var allJobs =
+      await newActor!.getFunc(FieldsMethod.getAllJobs)?.call([]);
+      return allJobs ?? [];
+      print(allJobs);
+    } catch (e) {
+      print('Error fetching courses: $e');
+      return [];
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,67 +41,71 @@ class FreeLancerJobs extends StatelessWidget {
         title: Text("Available Jobs"),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                children: [
-                  // Row(
-                    // children: [
-                      // Text(
-                      //   "Hi, ${signupModel.fullName}",
-                      //   style: textTheme(context).headline3,
-                      // ),
-                      // const Spacer(),
-                      // Material(
-                      //   borderRadius: BorderRadius.circular(50),
-                      //   elevation: 2,
-                      //   shadowColor: ColorsConst.black.withOpacity(0.2),
-                      //   child: Container(
-                      //     padding: const EdgeInsets.symmetric(horizontal: 12),
-                      //     height: 14,
-                      //     width: 44,
-                      //     decoration: BoxDecoration(
-                      //       color: Colors.white,
-                      //       borderRadius: BorderRadius.circular(50),
-                      //     ),
-                      //     child: const SvgIcon(IconsAssets.navhori),
-                      //   ),
-                      // )
-                    // ],
-                  // ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 26),
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    height: 47,
-                    width: 100.w,
-                    decoration: BoxDecoration(
+        child: ListView.builder(
+          itemCount: 2,
+          itemBuilder: (context, index) {
+            if (index == 0) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      height: 47,
+                      width: 100.w,
+                      decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(3),
                         border: Border.all(
                           color: ColorsConst.blackFour,
-                        )),
-                    child: Row(
-                      children: [
-                        Flexible(
-                          child: Text(
-                            "e.g Game development jobs.............",
-                            style: textTheme(context).overline,
-                            overflow: TextOverflow.ellipsis,
-                          ),
                         ),
-                        const Spacer(),
-                        const Icon(Icons.search, color: ColorsConst.blackFour)
-                      ],
+                      ),
+                      child: Row(
+                        children: [
+                          Flexible(
+                            child: Text(
+                              "e.g Game development jobs.............",
+                              style: textTheme(context).overline,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          const Spacer(),
+                          const Icon(Icons.search, color: ColorsConst.blackFour)
+                        ],
+                      ),
                     ),
-                  ),
-                  const MediaListWidget(),
-                  ReconmendedListwidget(),
-                ],
-              ),
-            )
-          ],
+                    const MediaListWidget(),
+                    SizedBox(height: 20.0),
+                  ],
+                ),
+              );
+            } else {
+              return Padding(
+                padding: const EdgeInsets.only(
+                    top: 0, bottom: 40, left: 16, right: 16),
+                child: FutureBuilder<List<dynamic>>(
+                  future: getAllJobs(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        snapshot.hasData) {
+                      return Column(
+                        children: snapshot.data!.map((jobs) {
+                          return ReconmendedTileJobs(
+                            image: ImageAssets.visualDesigner,
+                            id: jobs['id'],
+                            tittle: jobs['creator_fullname'],
+                            mainTittle: jobs['title'],
+                          );
+                        }).toList(),
+                      );
+                    } else {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                  },
+                ),
+              );
+            }
+          },
         ),
       ),
     );

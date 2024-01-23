@@ -151,3 +151,48 @@ class AuthBtnBorder extends StatelessWidget {
         ));
   }
 }
+
+class DisabledBtn extends StatelessWidget {
+  const DisabledBtn({
+    required this.text,
+    this.isComplete,
+    Key? key,
+    this.onPressed,
+    this.borderRadius,
+    this.color,
+    this.textStyle,
+  }) : super(key: key);
+  final ButtonCallback? onPressed;
+  final String text;
+  final bool? isComplete;
+  final Color? color;
+  final BorderRadiusGeometry? borderRadius;
+  final TextStyle? textStyle;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: null,
+      style: TextButton.styleFrom(
+        // minimumSize: Size.zero,
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        maximumSize: Size(width(context), 50),
+
+        minimumSize: Size(width(context), 50),
+        backgroundColor: isComplete == null || isComplete == true
+            ? color ?? Colors.grey
+        // : Theme.of(context).colorScheme.primaryVariant,
+            : Theme.of(context).colorScheme.onSecondary,
+
+        shape: RoundedRectangleBorder(
+            borderRadius: borderRadius ?? smallBoxCornerRadius),
+        textStyle: textStyle ?? Theme.of(context).textTheme.button,
+        // onPrimary: Theme.of(context).colorScheme.onSecondary,
+        // elevation: 2.0,
+        // minimumSize: Size(width(context), height(context) * 0.08),
+      ),
+      child: FittedBox(
+          child: Text(text, style: textStyle ?? textTheme(context).button)),
+    );
+  }
+}

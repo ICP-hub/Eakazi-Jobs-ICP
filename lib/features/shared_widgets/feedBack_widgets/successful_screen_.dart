@@ -28,16 +28,16 @@ class SuccessfulScreen extends StatelessWidget {
               ),
               // ),
               Spacer(),
-              // Padding(
-              //   padding:
-              //       const EdgeInsets.symmetric(horizontal: 17, vertical: 30),
-              //   child: AuthBtn(
-              //       text: "Take course",
-              //       isComplete: true,
-              //       onPressed: () {
-              //         Get.toNamed(Routes.bottomNavBar);
-              //       }),
-              // ),
+              Padding(
+                padding:
+                const EdgeInsets.symmetric(horizontal: 17, vertical: 30),
+                child: AuthBtn(
+                    text: "Continue",
+                    isComplete: true,
+                    onPressed: () {
+                      Get.toNamed(Routes.home);
+                    }),
+              ),
             ],
           ),
         ),

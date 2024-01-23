@@ -8,11 +8,10 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../../constants/assets/icon_constans.dart';
 import '../../../../helpers/routes/app_pages.dart';
 import '../../../shared_widgets/search_container.dart';
-import '../../courses/view/free_lance_courses.dart';
+import '../../../trainers/trainers_home/view/screen/trainer_courses.dart';
 import '../../shared_widgets/media_container.dart';
 import '../../shared_widgets/reconmended_tile.dart';
 import '../../shared_widgets/skill_container.dart';
@@ -26,8 +25,7 @@ class FreeLancerHome extends StatelessWidget {
   const FreeLancerHome({Key? key}) : super(key: key);
 
   Future<String> getName() async {
-    var fullName =
-        await newActor!.getFunc(FieldsMethod.getFullName)?.call([]);
+    var fullName = await newActor!.getFunc(FieldsMethod.getFullName)?.call([]);
     return fullName;
   }
 
@@ -70,7 +68,7 @@ class FreeLancerHome extends StatelessWidget {
                               shadowColor: ColorsConst.black.withOpacity(0.2),
                               child: Container(
                                 padding:
-                                const EdgeInsets.symmetric(horizontal: 12),
+                                    const EdgeInsets.symmetric(horizontal: 12),
                                 height: 14,
                                 width: 44,
                                 decoration: BoxDecoration(
@@ -105,17 +103,56 @@ class ReconmendedListwidget extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
+  Future<List<dynamic>> getAllJobs() async {
+    try {
+      var allJobs = await newActor!.getFunc(FieldsMethod.getAllJobs)?.call([]);
+      return allJobs ?? [];
+    } catch (e) {
+      print('Error fetching courses: $e');
+      return [];
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 26, right: 0),
-      child: ListView(
-        shrinkWrap: true,
-        children: [
-          const ReconmendedTileJobs(image: ImageAssets.google, tittle: "Googke"),
-          const ReconmendedTileJobs(
-              image: ImageAssets.visualDesigner, tittle: "Googke"),
-        ],
+      padding: const EdgeInsets.only(top: 20, right: 0),
+      child: SingleChildScrollView(
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            FutureBuilder<List<dynamic>>(
+              future: getAllJobs(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done &&
+                    snapshot.hasData &&
+                    snapshot.data!.isNotEmpty) {
+                  var jobsToShow = snapshot.data!.take(3).toList();
+                  return Column(
+                    children: jobsToShow.map((jobs) {
+                      return ReconmendedTileJobs(
+                        image: ImageAssets.visualDesigner,
+                        id: jobs['id'],
+                        tittle: jobs['creator_fullname'],
+                        mainTittle: jobs['title'],
+                      );
+                    }).toList(),
+                  );
+                } else {
+                  return Center(
+                    child: SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                      ),
+                    ),
+                  );
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -132,7 +169,7 @@ class Reconmmended extends StatelessWidget {
       padding: const EdgeInsets.only(top: 30),
       child: Row(
         children: [
-          Text("Recommended",
+          Text("Recommended Jobs",
               //   "Skill Acquisition",
               style: textTheme(context).headline4),
           const Spacer(),

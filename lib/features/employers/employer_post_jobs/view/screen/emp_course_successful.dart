@@ -34,7 +34,7 @@ class EmployeeCourseSuccessful extends StatelessWidget {
                     text: "Continue",
                     isComplete: true,
                     onPressed: () {
-                      Get.toNamed(Routes.empHomeScreen);
+                      Get.toNamed(Routes.home);
                     }),
               ),
             ],

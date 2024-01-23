@@ -49,7 +49,6 @@ import 'dart:convert';
 
 // Global variables --------------------------
 CanisterActor? newActor;
-// var fullName;
 
 class SignIn extends StatefulWidget {
   SignIn({Key? key}) : super(key: key);
@@ -129,10 +128,6 @@ class _SignInState extends State<SignIn> {
 
       }
     });
-  }
-
-  Future<void> newDelegation(decodedDelegation) async {
-
   }
 
   // ---------------- Authentication ----------------

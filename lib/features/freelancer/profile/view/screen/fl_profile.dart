@@ -7,7 +7,6 @@ import '../../../../shared_widgets/linear_percenth_indicator.dart';
 import '../../../shared_widgets/reconmended_tile.dart';
 import '../widgets/profile_container.dart';
 import 'package:eakazijobs/models/signupModel.dart';
-import 'package:eakazijobs/features/authentication/login/view/screen/sign_in.dart';
 import 'package:eakazijobs/integrations.dart';
 
 SignupModel signupModel = SignupModel();
@@ -19,6 +18,19 @@ class FreeLanceProfile extends StatelessWidget {
     var fullName =
     await newActor!.getFunc(FieldsMethod.getFullName)?.call([]);
     return fullName;
+  }
+
+  Future<int> countJobsApplied() async {
+    var countJobsApplied = await newActor!.getFunc(FieldsMethod.getJobsAppliedCount)?.call([]);
+    print(countJobsApplied);
+    return countJobsApplied;
+  }
+
+  Future<List<dynamic>> getRegisteredCourses() async {
+    var registeredCourses =
+    await newActor!.getFunc(FieldsMethod.getCoursesRegisteredByUser)?.call([]);
+    print(registeredCourses);
+    return registeredCourses;
   }
 
   @override
@@ -50,14 +62,28 @@ class FreeLanceProfile extends StatelessWidget {
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return CircularProgressIndicator();
+                            return Text(
+                              'Loading...', // You can replace this with a more appropriate loading message
+                              style: textTheme(context).subtitle2?.copyWith(
+                                color: ColorsConst.tittleColor,
+                                fontSize: 20,
+                              ),
+                            );
                           } else if (snapshot.hasError) {
-                            return Text('Error: ${snapshot.error}');
+                            return Text(
+                              'Error: ${snapshot.error}',
+                              style: textTheme(context).subtitle2?.copyWith(
+                                color: ColorsConst.tittleColor,
+                                fontSize: 20,
+                              ),
+                            );
                           } else {
                             return Text(
                               snapshot.data ?? "User",
                               style: textTheme(context).subtitle2?.copyWith(
-                                  color: ColorsConst.tittleColor, fontSize: 20),
+                                color: ColorsConst.tittleColor,
+                                fontSize: 20,
+                              ),
                             );
                           }
                         },
@@ -72,6 +98,7 @@ class FreeLanceProfile extends StatelessWidget {
                         "Edit profile",
                         style: textTheme(context).caption?.copyWith(
                           color: ColorsConst.tittleColor,
+                          decoration: TextDecoration.underline,
                         ),
                       ),
                     ],
@@ -130,14 +157,44 @@ class FreeLanceProfile extends StatelessWidget {
                 height: 70,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
-                  children: const [
+                  children: [
                     OverviewContainer(
-                      text: "N20,600",
+                      text: "0",
                       subText: "Current balance",
                     ),
-                    OverviewContainer(
-                      text: "58",
-                      subText: "Jobs Applied",
+                    FutureBuilder<int>(
+                      future: countJobsApplied(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return Text(
+                            'Loading...', // You can replace this with a more appropriate loading message
+                            style: textTheme(context).bodyText2?.copyWith(
+                              color: ColorsConst.tittleColor,
+                            ),
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text(
+                            'Error: ${snapshot.error}',
+                            style: textTheme(context).bodyText2?.copyWith(
+                              color: ColorsConst.tittleColor,
+                            ),
+                          );
+                        } else if (snapshot.hasData) {
+                          // Use snapshot.data which is of type int
+                          return OverviewContainer(
+                            text: snapshot.data.toString(), // Convert the int to String
+                            subText: "Jobs Applied",
+                          );
+                        } else {
+                          // Handle the case when there's no data
+                          return Text(
+                            "0",
+                            style: textTheme(context).bodyText2?.copyWith(
+                              color: ColorsConst.tittleColor,
+                            ),
+                          );
+                        }
+                      },
                     ),
                   ],
                 ),
@@ -172,7 +229,7 @@ class FreeLanceProfile extends StatelessWidget {
                 height: 24,
               ),
               Text(
-                "Portfolio projects",
+                "Certificates",
                 style: textTheme(context).bodyText1?.copyWith(
                       color: ColorsConst.tittleColor2,
                     ),
@@ -205,26 +262,66 @@ class FreeLanceProfile extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 16),
-                child: ReconmendedTile(
-                  image: ImageAssets.jelurida,
-                  tittle: "JelaAfrica",
-                  subTittle2: "In progress",
-                  mainTittle: "Visual Designer Course",
-                  extraWidget: Column(
-                    children: [
-                      Text(
-                        "60% Completed",
-                        //   "Skill Acquisition",
-                        style: textTheme(context).caption,
-                      ),
-                      SizedBox(
-                        height: 3,
-                      ),
-                      LinerPercentIndicator(),
-                    ],
-                  ),
+                child: FutureBuilder<List<dynamic>>(
+                  future: getRegisteredCourses(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          var course = snapshot.data![index];
+                          return ReconmendedTile(
+                            image: ImageAssets.jelurida,
+                            id: course['id'],
+                            tittle: course['creator_fullname'],
+                            mainTittle: course['title'],
+                            extraWidget: Column(
+                              children: [
+                                Text(
+                                  "50% Completed",
+                                  style: textTheme(context).caption,
+                                ),
+                                SizedBox(height: 3),
+                                LinerPercentIndicator(),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    } else {
+                      return Text("No courses registered");
+                    }
+                  },
                 ),
               ),
+              // Padding(
+              //   padding: const EdgeInsets.only(right: 16),
+              //   child: ReconmendedTile(
+              //     image: ImageAssets.jelurida,
+              //     tittle: "JelaAfrica",
+              //     subTittle2: "In progress",
+              //     mainTittle: "Visual Designer Course",
+              //     extraWidget: Column(
+              //       children: [
+              //         Text(
+              //           "60% Completed",
+              //           //   "Skill Acquisition",
+              //           style: textTheme(context).caption,
+              //         ),
+              //         SizedBox(
+              //           height: 3,
+              //         ),
+              //         LinerPercentIndicator(),
+              //       ],
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
