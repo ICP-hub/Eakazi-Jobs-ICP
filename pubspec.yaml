@@ -36,6 +36,7 @@ dependencies:
   flutter_web_auth: ^0.5.0
   webview_flutter: ^4.4.2
   blurhash_dart: ^1.2.1
+  fluttertoast: ^8.2.4
 
 
 dev_dependencies:
