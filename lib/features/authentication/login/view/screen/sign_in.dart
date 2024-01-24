@@ -110,19 +110,21 @@ class _SignInState extends State<SignIn> {
           options: HttpAgentOptions(
             identity: _delegationIdentity,
             // ---- Uncomment the following line to use main-net replica ----
-            // https://icp-api.io?canister:c7oiy-yqaaa-aaaag-qc6sa-cai/api/v2/call
             host: 'icp-api.io',
           ),
           // ---- Uncomment the following 3 lines to use a local replica ----
           // defaultHost: 'localhost',
           // defaultPort: 4943,
-          // defaultProtocol: 'https',
+          // defaultProtocol: 'http',
         );
 
         // Creating Canister Actor -----------------------
         newActor = CanisterActor(
             ActorConfig(
+              // Main-net replica
               canisterId: Principal.fromText('c7oiy-yqaaa-aaaag-qc6sa-cai'),
+              // Local replica
+              // canisterId: Principal.fromText('br5f7-7uaaa-aaaaa-qaaca-cai'),
               agent: newAgent,
             ),
             FieldsMethod.idl);

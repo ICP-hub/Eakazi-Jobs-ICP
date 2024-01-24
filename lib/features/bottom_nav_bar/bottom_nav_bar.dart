@@ -13,6 +13,7 @@ import 'package:eakazijobs/integrations.dart';
 
 import '../../constants/assets/icon_constans.dart';
 import '../../constants/theme/color_selection.dart';
+import '../alerts/view/alert_screen.dart';
 import '../employers/employers_home/view/screen/employers_home_screen.dart';
 import '../employers/employers_profile/view/screen/employer_profile.dart';
 import '../freelancer/home/view/freelance_home_screen.dart';
@@ -142,7 +143,7 @@ class _BottomSheetScreenState extends State<BottomSheetScreen>
                     ? const EmployersHomeScreen()
                     : const TrainerssHomeScreen(),
                 const WalletHomeScreen(),
-                const SizedBox(),
+                const AlertScreen(),
                 c.userData.value.userRole == "ADMIN"
                     ? const FreeLanceProfile()
                     : c.userData.value.userRole == "EMPLOYER"

@@ -139,15 +139,7 @@ class ReconmendedListwidget extends StatelessWidget {
                     }).toList(),
                   );
                 } else {
-                  return Center(
-                    child: SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                      ),
-                    ),
-                  );
+                  return Center(child: Text("No jobs available"));
                 }
               },
             ),
