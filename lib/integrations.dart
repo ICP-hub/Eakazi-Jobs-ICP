@@ -4,46 +4,44 @@ import 'package:agent_dart/agent_dart.dart';
 import 'init.dart';
 
 final RecordClass course = IDL.Record({
-  'id' : IDL.Text,
-  'title' : IDL.Text,
-  'creator' : IDL.Principal,
-  'creator_fullname' : IDL.Text,
-  'applicants' : IDL.Vec(IDL.Principal),
+  'id': IDL.Text,
+  'title': IDL.Text,
+  'creator': IDL.Principal,
+  'creator_fullname': IDL.Text,
+  'applicants': IDL.Vec(IDL.Principal),
 });
 
 final RecordClass jobs = IDL.Record({
-  'id' : IDL.Text,
-  'title' : IDL.Text,
-  'creator' : IDL.Principal,
-  'creator_fullname' : IDL.Text,
-  'applicants' : IDL.Vec(IDL.Principal),
+  'id': IDL.Text,
+  'title': IDL.Text,
+  'creator': IDL.Principal,
+  'creator_fullname': IDL.Text,
+  'applicants': IDL.Vec(IDL.Principal),
 });
 
 final VariantClass roles = IDL.Variant({
   'TRAINEE': IDL.Null,
   'TRAINER': IDL.Null,
-  'ADMIN' : IDL.Null,
-  'EMPLOYER' : IDL.Null,
-
+  'ADMIN': IDL.Null,
+  'EMPLOYER': IDL.Null,
 });
 
 final RecordClass profile = IDL.Record({
-  'id' : IDL.Text,
-  'occupation' : IDL.Text,
-  'resume' : IDL.Vec(IDL.Nat8),
-  'role' : roles,
-  'description' : IDL.Text,
-  'email' : IDL.Text,
-  'fullname' : IDL.Text,
-  'keywords' : IDL.Vec(IDL.Text),
-  'organization' : IDL.Text,
-  'skills' : IDL.Vec(IDL.Text),
-  'location' : IDL.Text,
-
+  'id': IDL.Text,
+  'occupation': IDL.Text,
+  'resume': IDL.Vec(IDL.Nat8),
+  'role': roles,
+  'description': IDL.Text,
+  'email': IDL.Text,
+  'fullname': IDL.Text,
+  'keywords': IDL.Vec(IDL.Text),
+  'organization': IDL.Text,
+  'skills': IDL.Vec(IDL.Text),
+  'location': IDL.Text,
 });
 
 final CheckUser = IDL.Record({
-  'user' : IDL.Principal,
+  'user': IDL.Principal,
 });
 
 abstract class FieldsMethod {
@@ -68,54 +66,38 @@ abstract class FieldsMethod {
   static const checkAppliedJob = 'checkAppliedJob';
   static const checkAppliedCourse = 'checkAppliedCourse';
   static const getJobsAppliedCount = 'getJobsAppliedCount';
-
   static const getCoursesRegisteredByUser = 'getCoursesRegisteredByUser';
+  static const getCourseApplicants = 'getCourseApplicants';
   // define service class
 
   static final ServiceClass idl = IDL.Service({
     FieldsMethod.applyCourse: IDL.Func([IDL.Text], [], []),
-
     FieldsMethod.applyJobs: IDL.Func([IDL.Text], [], []),
-
     FieldsMethod.checkUser: IDL.Func([], [IDL.Bool], []),
-
     FieldsMethod.createCourse: IDL.Func([IDL.Text], [course], []),
-
     FieldsMethod.createJob: IDL.Func([IDL.Text], [jobs], []),
-
-    FieldsMethod.createUser: IDL.Func([IDL.Text,IDL.Text,IDL.Text], [profile], []),
-
+    FieldsMethod.createUser:
+        IDL.Func([IDL.Text, IDL.Text, IDL.Text], [profile], []),
     FieldsMethod.get: IDL.Func([IDL.Text], [profile], ['query']),
-
     FieldsMethod.getAllCourse: IDL.Func([], [IDL.Vec(course)], ['query']),
-
     FieldsMethod.getAllJobs: IDL.Func([], [IDL.Vec(jobs)], ['query']),
-
     FieldsMethod.getCourse: IDL.Func([IDL.Text], [jobs], ['query']),
-
     FieldsMethod.getSelf: IDL.Func([], [profile], ['query']),
-
     FieldsMethod.search: IDL.Func([IDL.Text], [IDL.Opt(profile)], ['query']),
-
     FieldsMethod.update: IDL.Func([profile], [], []),
-
     FieldsMethod.getRole: IDL.Func([], [IDL.Text], ['query']),
-
     FieldsMethod.getFullName: IDL.Func([], [IDL.Text], ['query']),
-
-    FieldsMethod.getCourseByCreator : IDL.Func([], [IDL.Vec(course)], []),
-
-    FieldsMethod.getJobsByCreator : IDL.Func([], [IDL.Vec(jobs)], []),
-
-    FieldsMethod.checkAppliedJob : IDL.Func([IDL.Text], [IDL.Bool], ['query']),
-
-    FieldsMethod.checkAppliedCourse : IDL.Func([IDL.Text], [IDL.Bool], ['query']),
-
-    FieldsMethod.getJobsAppliedCount : IDL.Func([], [IDL.Nat32], ['query']),
-
-    FieldsMethod.getCoursesRegisteredByUser : IDL.Func([], [IDL.Vec(course)], []),
+    FieldsMethod.getCourseByCreator: IDL.Func([], [IDL.Vec(course)], []),
+    FieldsMethod.getJobsByCreator: IDL.Func([], [IDL.Vec(jobs)], []),
+    FieldsMethod.checkAppliedJob: IDL.Func([IDL.Text], [IDL.Bool], ['query']),
+    FieldsMethod.checkAppliedCourse:
+        IDL.Func([IDL.Text], [IDL.Bool], ['query']),
+    FieldsMethod.getJobsAppliedCount: IDL.Func([], [IDL.Nat32], ['query']),
+    FieldsMethod.getCoursesRegisteredByUser:
+        IDL.Func([], [IDL.Vec(course)], []),
+    FieldsMethod.getCourseApplicants:
+        IDL.Func([IDL.Text], [IDL.Vec(profile)], [])
   });
-
 }
 
 class Fields extends ActorHook {
@@ -134,8 +116,10 @@ class Fields extends ActorHook {
     return res as Bool;
   }
 
-  Future<Record> createUser({fullname = String, email = String, role = String}) async {
-    final res = await actor.getFunc(FieldsMethod.createUser)!([fullname, email, role]);
+  Future<Record> createUser(
+      {fullname = String, email = String, role = String}) async {
+    final res =
+        await actor.getFunc(FieldsMethod.createUser)!([fullname, email, role]);
     return res as Record;
   }
 
@@ -190,8 +174,4 @@ class Fields extends ActorHook {
   Future<void> applyJobs({id = Principal}) async {
     await actor.getFunc(FieldsMethod.applyJobs)!([id]);
   }
-
-
 }
-
-

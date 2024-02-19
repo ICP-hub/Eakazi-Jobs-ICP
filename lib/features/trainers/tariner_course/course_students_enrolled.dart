@@ -13,10 +13,10 @@ class StudentsEnrolled extends StatelessWidget {
 
   final courseId = Get.arguments;
 
-  Future<dynamic> getCourse() async {
-    var course = await newActor!.getFunc(FieldsMethod.getCourse)?.call([courseId]);
-    print(course);
-    return course;
+  Future<List<dynamic>> getCourseApplicants() async {
+    var applicants = await newActor!.getFunc(FieldsMethod.getCourseApplicants)?.call([courseId]);
+    print(applicants);
+    return applicants;
   }
 
   @override
@@ -63,100 +63,120 @@ class StudentsEnrolled extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            OverviewContainer(
-              text: "100",
-              subText: "Students Enrolled",
+            FutureBuilder<List<dynamic>>(
+              future: getCourseApplicants(),
+              builder: (context, snapshot) {
+                int applicantsCount = snapshot.data?.length ?? 0;
+                return OverviewContainer(
+                  text: applicantsCount.toString(),
+                  subText: "Students Enrolled",
+                );
+              },
             ),
             const SizedBox(height: 20),
             Expanded(
-              child: ListView.builder(
-                itemCount: 8,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 10),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            color: ColorsConst.blackFour,
-                            width: 0.1,
-                          ),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 24),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                CircleAvatar(
-                                  backgroundImage:
-                                      AssetImage(ImageAssets.studentImage),
-                                  radius: 19,
+              child: FutureBuilder<List<dynamic>>(
+                future: getCourseApplicants(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Text("Error: ${snapshot.error}");
+                  } else if (snapshot.hasData) {
+                    return ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        var applicant = snapshot.data![index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 10),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: ColorsConst.blackFour,
+                                  width: 0.1,
                                 ),
-                                const SizedBox(width: 12),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          "Obi Derrick",
-                                          style: TextStyle(
-                                            fontSize: 11.sp,
-                                            fontWeight: FontWeight.w800,
-                                            color: ColorsConst.black,
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 24),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      CircleAvatar(
+                                        backgroundImage:
+                                        AssetImage(ImageAssets.studentImage),
+                                        radius: 19,
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Text(
+                                                applicant['fullname'],
+                                                style: TextStyle(
+                                                  fontSize: 11.sp,
+                                                  fontWeight: FontWeight.w800,
+                                                  color: ColorsConst.black,
+                                                ),
+                                              ),
+                                              const SizedBox(width: 4),
+                                              Icon(
+                                                Icons.circle,
+                                                size: 7.sp,
+                                                color: ColorsConst.green,
+                                              ),
+                                            ],
                                           ),
-                                        ),
-                                        const SizedBox(width: 4),
-                                        Icon(
-                                          Icons.circle,
-                                          size: 7.sp,
-                                          color: ColorsConst.green,
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      "UI/UX Designer",
-                                      style: TextStyle(
-                                        fontSize: 8.sp,
-                                        fontWeight: FontWeight.w400,
+                                          const SizedBox(height: 4),
+                                          Text(
+                                            "UI/UX Designer",
+                                            style: TextStyle(
+                                              fontSize: 8.sp,
+                                              fontWeight: FontWeight.w400,
+                                              color: ColorsConst.blackFour,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  Container(
+                                    padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                    height: 4.h,
+                                    decoration: BoxDecoration(
+                                      // color: ColorsConst.white,
+                                      borderRadius: BorderRadius.circular(3),
+                                      border: Border.all(
                                         color: ColorsConst.blackFour,
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Container(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              height: 4.h,
-                              decoration: BoxDecoration(
-                                // color: ColorsConst.white,
-                                borderRadius: BorderRadius.circular(3),
-                                border: Border.all(
-                                  color: ColorsConst.blackFour,
-                                ),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  "Contact",
-                                  style: TextStyle(
-                                    fontSize: 8.sp,
-                                    color: ColorsConst.black,
+                                    child: Center(
+                                      child: Text(
+                                        "Contact",
+                                        style: TextStyle(
+                                          fontSize: 8.sp,
+                                          color: ColorsConst.black,
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                ],
                               ),
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
+                          ),
+                        );
+                      },
+                    );
+                  } else {
+                    return const Text("No data available");
+                  }
                 },
               ),
             ),

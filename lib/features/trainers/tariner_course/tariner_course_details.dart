@@ -5,11 +5,21 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import '../../../../../constants/theme/color_selection.dart';
 import '../../../../../helpers/utils/utils.dart';
+import '../../../integrations.dart';
+import '../../authentication/login/view/screen/sign_in.dart' as SignIn;
 import '../../employers/employers_profile/view/widgets/employer_profile_container.dart';
 import '../../shared_widgets/buttons.dart';
 
 class TrCourseDetail extends StatelessWidget {
   TrCourseDetail({Key? key}) : super(key: key);
+
+  final courseId = Get.arguments[4];
+
+  Future<List<dynamic>> getCourseApplicants() async {
+    var applicants = await SignIn.newActor!.getFunc(FieldsMethod.getCourseApplicants)?.call([courseId]);
+    print(applicants);
+    return applicants;
+  }
 
   var bodyText =
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed .";
@@ -20,7 +30,6 @@ class TrCourseDetail extends StatelessWidget {
     final rating = Get.arguments[1];
     final aboutAuthor = Get.arguments[2];
     final status = Get.arguments[3];
-    final courseId = Get.arguments[4];
     return Scaffold(
       appBar: AppBar(
         title: Text(title ?? "Course details"),
@@ -52,9 +61,15 @@ class TrCourseDetail extends StatelessWidget {
                             onTap: () {
                               Get.toNamed(Routes.trainerCourseStudentsEnrolled, arguments: courseId);
                             },
-                            child: OverviewContainer(
-                              text: "100",
-                              subText: "Students Enrolled",
+                            child: FutureBuilder<List<dynamic>>(
+                              future: getCourseApplicants(),
+                              builder: (context, snapshot) {
+                                int applicantsCount = snapshot.data?.length ?? 0;
+                                return OverviewContainer(
+                                  text: applicantsCount.toString(),
+                                  subText: "Students Enrolled",
+                                );
+                              },
                             ),
                           ),
                           const SizedBox(
