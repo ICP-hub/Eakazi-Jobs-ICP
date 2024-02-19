@@ -74,15 +74,6 @@ class TrainerCreateFouthCourse extends StatelessWidget {
                       print("object");
                       // ctrl.bussinesCategory.value = value!;
                     },
-            
-                    // validator: (value) {
-                    //   if (ctrl.catalogues!.isEmpty) {
-                    //     return "service is null";
-                    //   } else {
-                    //     return null;
-                    //   }
-                    // },
-                    // validator:,
                   ),
                 ),
                 SizedBox(

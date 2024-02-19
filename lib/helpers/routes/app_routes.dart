@@ -47,4 +47,8 @@ abstract class Routes {
   static const empHomeScreen = '/empHomeScreen';
   static const splashScreen = '/splashScreen';
   static const employerJobs = '/employerJobs';
+  static const trainerCourseDetails = '/trainerCourseDetails';
+  static const trainerCourseStudentsEnrolled = '/trainerCourseStudentsEnrolled';
+  static const trainerCertificateIssued = '/trainerCertificateIssued';
+  static const trainerEditCourse = '/trainerEditCourse';
 }

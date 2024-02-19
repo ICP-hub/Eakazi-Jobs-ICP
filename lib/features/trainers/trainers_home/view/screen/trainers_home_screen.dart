@@ -26,7 +26,8 @@ class TrainerssHomeScreen extends StatelessWidget {
 
   Future<void> courseCreator() async {
     try {
-      var course = await newActor!.getFunc(FieldsMethod.getCourseByCreator)?.call([]);
+      var course =
+          await newActor!.getFunc(FieldsMethod.getCourseByCreator)?.call([]);
       print(course);
     } catch (e) {
       print('Error fetching courses: $e');
@@ -36,17 +37,6 @@ class TrainerssHomeScreen extends StatelessWidget {
   Future<String> getName() async {
     var fullName = await newActor!.getFunc(FieldsMethod.getFullName)?.call([]);
     return fullName;
-  }
-
-  Future<List<dynamic>> courseCreatorList() async {
-    try {
-      var courses = await newActor!.getFunc(FieldsMethod.getCourseByCreator)?.call([]);
-      print(courses);
-      return courses;
-    } catch (e) {
-      print('Error fetching courses: $e');
-      return [];
-    }
   }
 
   @override
@@ -106,53 +96,77 @@ class TrainerssHomeScreen extends StatelessWidget {
                   const SkillAquiListOne(),
                   const MediaListWidget(),
                   const Reconmmended(),
-                  SingleChildScrollView(
-                    child: Column(children: [
-                      ListView(
-                        shrinkWrap: true,
-                        children: [
-                          FutureBuilder<List<dynamic>>(
-                            future: courseCreatorList(),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.done &&
-                                  snapshot.hasData &&
-                                  snapshot.data!.isNotEmpty) {
-                                var coursesToShow = snapshot.data!
-                                    .take(4)
-                                    .toList();
-                                return Column(
-                                  children: coursesToShow.map((course) {
-                                    return JobsTrainersWidgte(
-                                        tittle: course['title']);
-                                  }).toList(),
-                                );
-                              } else if (snapshot.connectionState !=
-                                  ConnectionState.waiting) {
-                                return NoTrainersEmployers();
-                              } else {
-                                return Center(
-                                  child: SizedBox(
-                                    height: 20,
-                                    width: 20,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth:
-                                      2,
-                                    ),
-                                  ),
-                                );
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-                    ]),
-                  )
+                  const ReconmendedListwidget(),
                 ],
               ),
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ReconmendedListwidget extends StatelessWidget {
+  const ReconmendedListwidget({
+    Key? key,
+  }) : super(key: key);
+
+  Future<List<dynamic>> courseCreatorList() async {
+    try {
+      var courses =
+          await newActor!.getFunc(FieldsMethod.getCourseByCreator)?.call([]);
+      print(courses);
+      return courses;
+    } catch (e) {
+      print('Error fetching courses: $e');
+      return [];
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 20, right: 0),
+      child: SingleChildScrollView(
+        child: Column(children: [
+          ListView(
+            shrinkWrap: true,
+            children: [
+              FutureBuilder<List<dynamic>>(
+                future: courseCreatorList(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done &&
+                      snapshot.hasData &&
+                      snapshot.data!.isNotEmpty) {
+                    var coursesToShow = snapshot.data!.take(4).toList();
+                    return Column(
+                      children: coursesToShow.map(
+                        (course) {
+                          return JobsTrainersWidgte(
+                              title: course['title'], id: course['id']);
+                        },
+                      ).toList(),
+                    );
+                  } else if (snapshot.connectionState !=
+                      ConnectionState.waiting) {
+                    return NoTrainersEmployers();
+                  } else {
+                    return Center(
+                      child: SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                        ),
+                      ),
+                    );
+                  }
+                },
+              ),
+            ],
+          ),
+        ]),
       ),
     );
   }
@@ -230,6 +244,13 @@ class SkillAquiListOne extends StatelessWidget {
               icon: IconsAssets.skillAquasition,
             ),
           ),
+          const SizedBox(
+            width: 17,
+          ),
+          const CreateCourseContainer(
+              tittle: "Create a test",
+              subTittle: "Click here to get started",
+              icon: IconsAssets.briefcase)
         ],
       ),
     );

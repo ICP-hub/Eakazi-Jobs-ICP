@@ -139,14 +139,14 @@ class TrannerProfileProfile extends StatelessWidget {
                   ],
                 ),
               ),
-              // const SizedBox(
-              //   height: 24,
-              // ),
               Padding(
                   padding: const EdgeInsets.only(right: 36.0, left: 4),
                   child: Column(
                     children: [
                       const Reconmmended(),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       SingleChildScrollView(
                         child: Column(children: [
                           ListView(
@@ -166,7 +166,7 @@ class TrannerProfileProfile extends StatelessWidget {
                                     return Column(
                                       children: coursesToShow.map((course) {
                                         return JobsTrainersWidgte(
-                                            tittle: course['title']);
+                                            title: course['title']);
                                       }).toList(),
                                     );
                                   } else if (snapshot.connectionState !=
@@ -192,38 +192,6 @@ class TrannerProfileProfile extends StatelessWidget {
                       )
                     ],
                   )),
-
-              // Text(
-              //   "Registered Courses",
-              //   style: textTheme(context).bodyText1?.copyWith(
-              //         color: ColorsConst.tittleColor2,
-              //       ),
-              // ),
-              // const SizedBox(
-              //   height: 12,
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.only(right: 16),
-              //   child: ReconmendedTile(
-              //     image: ImageAssets.jelurida,
-              //     tittle: "JelaAfrica",
-              //     subTittle2: "In progress",
-              //     mainTittle: "Visual Designer Course",
-              //     extraWidget: Column(
-              //       children: [
-              //         Text(
-              //           "60% Completed",
-              //           //   "Skill Acquisition",
-              //           style: textTheme(context).caption,
-              //         ),
-              //         SizedBox(
-              //           height: 3,
-              //         ),
-              //         LinerPercentIndicator(),
-              //       ],
-              //     ),
-              //   ),
-              // ),
             ],
           ),
         ),

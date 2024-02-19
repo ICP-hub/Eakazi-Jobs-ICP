@@ -208,3 +208,70 @@ class _WalletsDropDownState extends State<WalletsDropDown> {
     );
   }
 }
+
+class PostJobsDropDown2 extends StatefulWidget {
+  const PostJobsDropDown2({
+    Key? key,
+    required this.services,
+    this.validator,
+    required this.onSaved,
+    this.hint = 'sign up as ',
+  }) : super(key: key);
+
+  final List<String> services;
+  final String? Function(String?)? validator;
+  final void Function(String?) onSaved;
+  final String hint;
+  @override
+  State<PostJobsDropDown2> createState() => _PostJobsDropDownState2();
+}
+
+class _PostJobsDropDownState2 extends State<PostJobsDropDown2> {
+  String? selectedValue;
+  // List<String> items = [
+  //   'Item1',
+  //   'Item2',
+  //   'Item3',
+  //   'Item4',
+  //   'Item5',
+  //   'Item6',
+  //   'Item7',
+  //   'Item8',
+  // ];
+
+  @override
+  Widget build(BuildContext context) {
+    // Log.d("serviceInfoOne", "lists ${widget.services}");
+    // final ctrl = Get.find<BookingCtrl>();
+    // Log.d("serviceInfoOne", "lists ${ctrl.services}");
+    return Padding(
+      padding: const EdgeInsets.only(top: 0),
+      child: CustomDropdownButton2(
+        // validator: widget.validator,
+        onSaved: widget.onSaved,
+        hint: widget.hint,
+        dropdownElevation: 1,
+        // icon: Icon(
+        //   Icons.arrow_drop_down,
+        //   size: 20,
+        // ),
+        iconSize: 20,
+
+        dropdownItems: widget.services,
+        offset: const Offset(0, -30),
+        hintStyle: extraTheme.copyWith(
+            color: colorScheme(context).onSecondary,
+            fontSize: 14),
+        textStyle: extraTheme.copyWith(
+            color: colorScheme(context).secondary.withOpacity(0.8), fontSize: 14),
+        value: selectedValue,
+        onChanged: (value) {
+          setState(() {
+            print("value tapped");
+            selectedValue = value as String;
+          });
+        },
+      ),
+    );
+  }
+}

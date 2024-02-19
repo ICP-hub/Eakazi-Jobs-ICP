@@ -1,6 +1,7 @@
 // ignore: avoid_classes_with_only_static_members
 
 import 'package:eakazijobs/features/freelancer/home/view/freelance_home_screen.dart';
+import 'package:eakazijobs/features/trainers/tariner_course/course_students_enrolled.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -23,6 +24,9 @@ import '../../features/freelancer/courses/binding/assement_course_binding.dart';
 import '../../features/freelancer/courses/binding/freelancer_course_details_binding.dart';
 import '../../features/freelancer/courses/view/assement_courses_sucessful.dart';
 import '../../features/freelancer/courses/view/assement_fullvideo_fl.dart';
+import '../../features/trainers/tariner_course/certificates_issued.dart';
+import '../../features/trainers/tariner_course/tariner_course_details.dart';
+import '../../features/trainers/tariner_course/trainer_edit_course.dart';
 import '../../features/trainers/trainers_home/view/screen/trainer_courses.dart';
 import '../../features/freelancer/courses/view/free_lance_courses_assesment.dart';
 import '../../features/freelancer/courses/view/free_course_details.dart';
@@ -69,71 +73,46 @@ class AppPages {
     GetPage(
       name: "/",
       binding: BottomNavBarBinding(),
-      // page: () => const OnBoardingOne(),
-      // page : () =>  SignUp(),
-      page : () =>  const SplashScreen(),
-      // page : () => const BottomSheetScreen(),
+      // page : () =>  const SplashScreen(),
+      page: () => SignIn(),
     ),
     GetPage(
       name: Routes.onBoardng1,
-      // binding: MyProfileVendorBinding(),
       page: () => const OnBoardingOne(),
-      // page: () => const MyProfileVendor(),
     ),
     GetPage(
       name: Routes.onBoarding2,
-      // binding: MyProfileVendorBinding(),
       page: () => const OnBoardingTwo(),
-      // page: () => const MyProfileVendor(),
     ),
     GetPage(
       name: Routes.freeLanceCourseVideos,
-      // binding: MyProfileVendorBinding(),
       binding: FreeLanceAssementCourseVd(),
       page: () => const FLAssesmentVideo(),
-      // page: () => const MyProfileVendor(),
     ),
     GetPage(
       name: Routes.flProfilePublic,
-      // binding: MyProfileVendorBinding(),
-      // binding: FreeLanceAssementCourseVd(),
       page: () => const FreeLanceProfilePublic(),
-      // page: () => const MyProfileVendor(),
     ),
     GetPage(
       name: Routes.flChatList,
-      // binding: MyProfileVendorBinding(),
-      // binding: FreeLanceAssementCourseVd(),
       page: () => const ChatLists(),
-      // page: () => const MyProfileVendor(),
     ),
     GetPage(
       name: Routes.bottomNavBar,
       binding: BottomNavBarBinding(),
-      // binding: FreeLanceAssementCourseVd(),
       page: () => const BottomSheetScreen(),
-      // page: () => const MyProfileVendor(),
     ),
     GetPage(
       name: Routes.send,
-      // binding: MyProfileVendorBinding(),
-      // binding: FreeLanceAssementCourseVd(),
       page: () => const WalletSendScreen(),
-      // page: () => const MyProfileVendor(),
     ),
     GetPage(
       name: Routes.send2,
-      // binding: MyProfileVendorBinding(),
-      // binding: FreeLanceAssementCourseVd(),
       page: () => const WalletSendSecoundScreen(),
-      // page: () => const MyProfileVendor(),
     ),
     GetPage(
       name: Routes.sendPinpad,
-      // binding: MyProfileVendorBinding(),
-      // binding: FreeLanceAssementCourseVd(),
       page: () => const SendPinPad(),
-      // page: () => const MyProfileVendor(),
     ),
     GetPage(
       name: Routes.exchange,
@@ -349,6 +328,22 @@ class AppPages {
     GetPage(
       name : Routes.employerJobs,
       page : () => const EmployerJobs(),
+    ),
+    GetPage(
+      name : Routes.trainerCourseDetails,
+      page : () => TrCourseDetail(),
+    ),
+    GetPage(
+      name : Routes.trainerCourseStudentsEnrolled,
+      page : () => StudentsEnrolled(),
+    ),
+    GetPage(
+      name : Routes.trainerCertificateIssued,
+      page : () => CertificateIssued(),
+    ),
+    GetPage(
+      name : Routes.trainerEditCourse,
+      page : () => TrEditCourse(),
     ),
   ];
 }

@@ -33,72 +33,73 @@ class TrainerCreateCourse extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Create Course"),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 22),
-          child: Form(
-            key: _formKey,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 50,
+      appBar: AppBar(
+        title: const Text("Create Course"),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 22),
+        child: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 50,
+                ),
+                Text(
+                  "What is the name of the course you want to create ?",
+                  style: textTheme(context).bodyText1?.copyWith(fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(
+                  height: 29,
+                ),
+                InputTextNormal2(
+                    // controller: signUpCtrl.usernameController,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    onSave: (value) {
+                      title = value;
+                    },
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter course title';
+                      }
+                      return null;
+                    },
+                    hintText: "Enter course title",
+                    textInputAction: TextInputAction.next,
+                    keyboardType: TextInputType.name),
+                SizedBox(
+                  height: 29,
+                ),
+                const InputTextArea(
+                    // controller: signUpCtrl.usernameController,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    // validator: signUpCtrl.usernameValidator,
+                    hintText: "Enter description",
+                    textInputAction: TextInputAction.next,
+                    keyboardType: TextInputType.name),
+                SizedBox(
+                  height: 29,
+                ),
+                SafeArea(
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                    child: AuthBtn(
+                        text: "Next",
+                        isComplete: false,
+                        onPressed: () {
+                          submit();
+                          Get.toNamed(Routes.trainerCreateCourseSecondScreen);
+                        }),
                   ),
-                  Text(
-                    "What is the name of the course you want to create ?",
-                    style: textTheme(context).bodyText1?.copyWith(fontSize: 18),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(
-                    height: 29,
-                  ),
-                  InputTextNormal2(
-                      // controller: signUpCtrl.usernameController,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      onSave: (value) {
-                        title = value;
-                      },
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter course title';
-                        }
-                        return null;
-                      },
-                      hintText: "Enter course title",
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.name),
-                  SizedBox(
-                    height: 29,
-                  ),
-                  const InputTextArea(
-                      // controller: signUpCtrl.usernameController,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      // validator: signUpCtrl.usernameValidator,
-                      hintText: "Enter description",
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.name),
-                  SizedBox(
-                    height: 29,
-                  ),
-                  SafeArea(
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                      child: AuthBtn(
-                          text: "Next",
-                          isComplete: false,
-                          onPressed: () {
-                            submit();
-                            Get.toNamed(Routes.trainerCreateCourseSecondScreen);
-                          }),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

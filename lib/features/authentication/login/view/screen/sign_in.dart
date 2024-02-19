@@ -110,21 +110,21 @@ class _SignInState extends State<SignIn> {
           options: HttpAgentOptions(
             identity: _delegationIdentity,
             // ---- Uncomment the following line to use main-net replica ----
-            host: 'icp-api.io',
+            // host: 'icp-api.io',
           ),
           // ---- Uncomment the following 3 lines to use a local replica ----
-          // defaultHost: 'localhost',
-          // defaultPort: 4943,
-          // defaultProtocol: 'http',
+          defaultHost: 'localhost',
+          defaultPort: 4943,
+          defaultProtocol: 'http',
         );
 
         // Creating Canister Actor -----------------------
         newActor = CanisterActor(
             ActorConfig(
               // Main-net replica
-              canisterId: Principal.fromText('c7oiy-yqaaa-aaaag-qc6sa-cai'),
+              // canisterId: Principal.fromText('c7oiy-yqaaa-aaaag-qc6sa-cai'),
               // Local replica
-              // canisterId: Principal.fromText('br5f7-7uaaa-aaaaa-qaaca-cai'),
+              canisterId: Principal.fromText('bw4dl-smaaa-aaaaa-qaacq-cai'),
               agent: newAgent,
             ),
             FieldsMethod.idl);
@@ -171,11 +171,11 @@ class _SignInState extends State<SignIn> {
       var publicKeyDer = publicKey.toDer();
       publicKeyString = bytesToHex(publicKeyDer);
 
-      // const baseUrl = 'http://localhost:4943';
-      // final url =
-      //     '$baseUrl?sessionkey=$publicKeyString&canisterId=bd3sg-teaaa-aaaaa-qaaba-cai';
-      const baseUrl = 'https://ckjzv-zyaaa-aaaag-qc6rq-cai.icp0.io';
-      final url = '$baseUrl?sessionkey=$publicKeyString';
+      const baseUrl = 'http://localhost:4943';
+      final url =
+          '$baseUrl?sessionkey=$publicKeyString&canisterId=asrmz-lmaaa-aaaaa-qaaeq-cai';
+      // const baseUrl = 'https://ckjzv-zyaaa-aaaag-qc6rq-cai.icp0.io';
+      // final url = '$baseUrl?sessionkey=$publicKeyString';
       await launch(
         url,
         customTabsOption: CustomTabsOption(

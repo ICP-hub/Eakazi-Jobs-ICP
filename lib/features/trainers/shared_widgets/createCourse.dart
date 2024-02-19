@@ -23,7 +23,7 @@ class CreateCourseContainer extends StatelessWidget {
       margin: const EdgeInsets.only(top: 26),
       padding: const EdgeInsets.all(26),
       height: 126,
-      width: 92.w,
+      width: 79.w,
       decoration: BoxDecoration(
         color: ColorsConst.primary.withOpacity(0.08),
         borderRadius: BorderRadius.circular(12),

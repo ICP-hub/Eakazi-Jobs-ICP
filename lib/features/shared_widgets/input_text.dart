@@ -9,6 +9,7 @@ import '../../helpers/theme/theme.dart';
 import '../../helpers/utils/utils.dart';
 import 'svgs.dart';
 import 'widget_helper/input_text_helper.dart';
+import 'package:sizer/sizer.dart';
 
 typedef SaveCallBack = void Function(String? value);
 typedef ValidateCallBack = String? Function(String? value);
@@ -300,5 +301,103 @@ class InputPasswordText extends StatelessWidget {
                 color: colorScheme(context).secondary.withOpacity(0.3)),
           ),
         )));
+  }
+}
+
+class InputTextNormal4 extends StatelessWidget {
+  final String hintText;
+  final TextInputAction textInputAction;
+  final TextInputType keyboardType;
+
+  // final TextEditingController controller;
+  //TODO: learn how to use voidcallback here
+  final dynamic onSave;
+  final String? Function(String?)? validator;
+  final TextEditingController? controller;
+  final AutovalidateMode? autovalidateMode;
+  const InputTextNormal4({
+    Key? key,
+    required this.hintText,
+    required this.textInputAction,
+    required this.keyboardType,
+    this.onSave,
+    this.validator,
+    this.controller,
+    this.autovalidateMode,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 8.h,
+      child: TextFormField(
+        // controller: controller,
+        key: key,
+
+        onChanged: (change) {},
+        onSaved: onSave,
+        validator: validator,
+        keyboardType: keyboardType,
+        textInputAction: textInputAction,
+        autovalidateMode: autovalidateMode,
+        controller: controller,
+        style: extraTheme.copyWith(
+            color: colorScheme(context).secondary, fontSize: 14),
+        cursorColor: Colors.black,
+        // style:
+        //     textTheme(context).bodyText1?.copyWith(color: ColorConst.blackTwo),
+        decoration: InputTExtxHelper(context, hintText, 14.0).decoration2(),
+      ),
+    );
+  }
+}
+
+class InputTextArea2 extends StatelessWidget {
+  final String hintText;
+  final TextInputAction textInputAction;
+  final TextInputType keyboardType;
+
+  // final TextEditingController controller;
+  //TODO: learn how to use voidcallback here
+  final dynamic onSave;
+  final String? Function(String?)? validator;
+  final TextEditingController? controller;
+  final AutovalidateMode? autovalidateMode;
+  const InputTextArea2({
+    Key? key,
+    required this.hintText,
+    required this.textInputAction,
+    required this.keyboardType,
+    this.onSave,
+    this.validator,
+    this.controller,
+    this.autovalidateMode,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 18.h,
+      child: TextFormField(
+        // controller: controller,
+        key: key,
+
+        maxLines: 14,
+
+        onChanged: (change) {},
+        onSaved: onSave,
+        validator: validator,
+        keyboardType: keyboardType,
+        textInputAction: textInputAction,
+        autovalidateMode: autovalidateMode,
+        controller: controller,
+        style: extraTheme.copyWith(
+            color: colorScheme(context).secondary, fontSize: 14),
+        cursorColor: Colors.black,
+        // style:
+        //     textTheme(context).bodyText1?.copyWith(color: ColorConst.blackTwo),
+        decoration: InputTExtxHelper(context, hintText, 14.0).decoration2(),
+      ),
+    );
   }
 }
