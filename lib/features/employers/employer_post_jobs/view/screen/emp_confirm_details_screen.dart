@@ -1,7 +1,6 @@
 import 'package:eakazijobs/helpers/utils/utils.dart';
 import 'package:eakazijobs/constants/assets/images_constants.dart';
 import 'package:eakazijobs/constants/theme/color_selection.dart';
-import 'package:eakazijobs/helpers/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -10,7 +9,6 @@ import 'package:sizer/sizer.dart';
 import '../../../../../helpers/routes/app_pages.dart';
 import '../../../../shared_widgets/buttons.dart';
 import 'package:get/get.dart';
-import '../../../../shared_widgets/input_text.dart';
 
 class EmployerConfirmDetailsScreen extends StatelessWidget {
   const EmployerConfirmDetailsScreen({Key? key}) : super(key: key);

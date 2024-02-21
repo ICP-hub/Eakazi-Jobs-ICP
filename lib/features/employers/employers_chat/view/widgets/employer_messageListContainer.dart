@@ -1,4 +1,3 @@
-import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
@@ -7,7 +6,6 @@ import '../../../../../constants/theme/color_selection.dart';
 import '../../../../../helpers/theme/theme.dart';
 import '../../../../../helpers/utils/simple_formaters.dart';
 import '../../../../../helpers/utils/utils.dart';
-import '../../../../shared_widgets/badges.dart';
 import '../../../../shared_widgets/image_avatars.dart';
 
 class MessagesContainer extends StatelessWidget {

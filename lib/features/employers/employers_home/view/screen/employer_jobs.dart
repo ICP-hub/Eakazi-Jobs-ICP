@@ -1,7 +1,5 @@
 import 'package:eakazijobs/constants/assets/images_constants.dart';
 import 'package:eakazijobs/constants/theme/color_selection.dart';
-import 'package:eakazijobs/features/shared_widgets/linear_percenth_indicator.dart';
-import 'package:eakazijobs/features/shared_widgets/svgs.dart';
 import 'package:eakazijobs/helpers/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -13,10 +11,6 @@ import '../../../../../constants/assets/icon_constans.dart';
 import '../../../../../integrations.dart';
 import '../../../../freelancer/shared_widgets/media_container.dart';
 import '../../../shared_widgets/reconmended_tile.dart';
-import '../../../../freelancer/shared_widgets/skill_container.dart';
-import 'package:eakazijobs/models/signupModel.dart';
-
-SignupModel signupModel = SignupModel();
 
 class EmployerJobs extends StatelessWidget {
   const EmployerJobs({Key? key}) : super(key: key);
@@ -90,9 +84,11 @@ class EmployerJobs extends StatelessWidget {
                       return Column(
                         children: snapshot.data!.map((jobs) {
                           return ReconmendedTileJobs(
-                              tittle: "${jobs['title']} skills required",
-                              image: ImageAssets.icpLogo,
-                              mainTittle: jobs['title']);
+                            tittle: "${jobs['title']} skills required",
+                            image: ImageAssets.jobImage,
+                            mainTittle: jobs['title'],
+                            id: jobs['id'],
+                          );
                         }).toList(),
                       );
                     } else {
@@ -104,59 +100,6 @@ class EmployerJobs extends StatelessWidget {
             }
           },
         ),
-      ),
-    );
-  }
-}
-
-class ReconmendedListwidget extends StatelessWidget {
-  const ReconmendedListwidget({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 26, right: 0),
-      child: ListView(
-        shrinkWrap: true,
-        children: [
-          ReconmendedTileJobs(
-            image: ImageAssets.jelurida,
-            tittle: "JelaAfrica",
-            subTittle2: "Ui/Ux Design Certificate required",
-            mainTittle: "UI/UX Designer",
-            extraWidget: Text(
-              "200,00",
-              //   "Skill Acquisition",
-              style: textTheme(context).caption,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class Reconmmended extends StatelessWidget {
-  const Reconmmended({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 30),
-      child: Row(
-        children: [
-          Text("Recommended",
-              //   "Skill Acquisition",
-              style: textTheme(context).headline4),
-          const Spacer(),
-          Text("See All",
-              //   "Skill Acquisition",
-              style: textTheme(context).headline4),
-        ],
       ),
     );
   }
@@ -177,37 +120,6 @@ class MediaListWidget extends StatelessWidget {
           MediaContaier(icon: IconsAssets.media, tittle: "Media"),
           MediaContaier(icon: IconsAssets.design, tittle: "Design"),
           MediaContaier(icon: IconsAssets.devOpps, tittle: "DevOps"),
-        ],
-      ),
-    );
-  }
-}
-
-class SkillAquiListOne extends StatelessWidget {
-  const SkillAquiListOne({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 134,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: const [
-          SkillContainer(
-            tittle: "Skill Acquisition",
-            subTittle: "Click here to get started",
-            icon: IconsAssets.skillAquasition,
-          ),
-          SizedBox(
-            width: 17,
-          ),
-          SkillContainer(
-            tittle: "Bid For Jobs",
-            subTittle: "Click here to get started",
-            icon: IconsAssets.briefcase,
-          ),
         ],
       ),
     );

@@ -1,13 +1,9 @@
-import 'dart:io';
-import 'package:agent_dart/agent_dart.dart';
-import 'package:eakazijobs/helpers/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:sizer/sizer.dart';
-import 'package:go_router/go_router.dart';
 import 'constants/theme/color_selection.dart';
 import 'helpers/routes/app_pages.dart';
 import 'helpers/theme/theme.dart';

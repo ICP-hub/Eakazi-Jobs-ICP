@@ -120,6 +120,7 @@ class ReconmendedTileJobs extends StatelessWidget {
     this.subTittle2 = "Remote",
     required this.mainTittle,
     this.extraWidget,
+    this.id,
   }) : super(key: key);
 
   final String tittle;
@@ -128,97 +129,108 @@ class ReconmendedTileJobs extends StatelessWidget {
   final String image;
   final String mainTittle;
   final Widget? extraWidget;
+  final String? id;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 11),
-      child: Container(
-        // margin: const EdgeInsets.only(top: 26, right: 11),
-        padding: const EdgeInsets.all(8),
-        height: 80,
-        width: 100.w,
-        // width: 97,
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-                color: Color(0xFF587CF4).withOpacity(0.12),
-                blurRadius: 13,
-                offset: Offset(0, 10))
-          ],
-          color: ColorsConst.white,
-          border: Border.all(color: ColorsConst.primary.withOpacity(0.08)),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Row(
-          children: [
-            Material(
-              shape: CircleBorder(),
-              elevation: 0.5,
-              child: CircleAvatar(
-                radius: 24,
-                //IconsAssets.skillAquasition),
-                backgroundColor: ColorsConst.white,
-                child: Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Image.asset(image) //ImageAssets.google),
-                    ),
-              ),
-            ),
-            // const Spacer(),s
-            const SizedBox(
-              width: 8,
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return GestureDetector(
+      onTap: () {
+        Get.toNamed(Routes.empJobDetails, arguments: [mainTittle, image, id]);
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 11),
+        child: Container(
+          padding: const EdgeInsets.all(14),
+          height: 117,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Color(0xFF587CF4).withOpacity(0.1),
+                blurRadius: 4,
+                offset: Offset(0, 4),
+              )
+            ],
+            color: ColorsConst.white,
+            border: Border.all(color: ColorsConst.primary.withOpacity(0.08)),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Stack(
+            children: [
+              Row(
                 children: [
-                  Text(
-                    tittle,
-                    //   "Skill Acquisition",
-                    style: textTheme(context).button?.copyWith(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w600,
-                        color: ColorsConst.secoundary.withOpacity(0.6)),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(6),
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: Image.asset(
+                        image,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          mainTittle,
-                          overflow: TextOverflow.ellipsis,
-                          //   "Skill Acquisition",
-                          style: textTheme(context).headline4,
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Flexible(
+                              child: Text(
+                                mainTittle,
+                                style: TextStyle(
+                                  fontSize: 12.3,
+                                  fontWeight: FontWeight.bold,
+                                  color: ColorsConst.black,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              "2h ago",
+                              style: TextStyle(
+                                fontSize: 10.5,
+                                color: ColorsConst.black,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      extraWidget ??
-                          Text(
-                            "3hrs Ago .",
-                            //   "Skill Acquisition",
-                            style: textTheme(context).caption,
+                        const SizedBox(height: 2),
+                        Text(
+                          "BiotLabs Africa",
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: ColorsConst.black,
+                            fontWeight: FontWeight.bold,
                           ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        subTittle2, // "Remote",
-                        //   "Skill Acquisition",
-                        style: textTheme(context).caption?.copyWith(
-                            fontSize: 12, fontWeight: FontWeight.w400),
-                      ),
-                      Spacer(),
-                      Text(
-                        "Today", // "Remote",
-                        //   "Skill Acquisition",
-                        style: textTheme(context).caption?.copyWith(
-                            fontSize: 10, fontWeight: FontWeight.w400),
-                      ),
-                    ],
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          "Lagos,Nigeria . Certification Required . Freelance",
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: Colors.grey.shade700,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          "\$500 Per Month",
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: ColorsConst.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

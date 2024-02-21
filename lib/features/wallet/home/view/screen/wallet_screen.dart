@@ -1,13 +1,4 @@
-import 'package:eakazijobs/constants/assets/icon_constans.dart';
-import 'package:eakazijobs/constants/theme/color_selection.dart';
-import 'package:eakazijobs/features/shared_widgets/svgs.dart';
-import 'package:eakazijobs/helpers/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
-import '../../../../../helpers/routes/app_pages.dart';
-import '../widgets/wallet_home_container.dart';
-
 class WalletHomeScreen extends StatelessWidget {
   const WalletHomeScreen({super.key});
 

@@ -5,9 +5,7 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../constants/theme/color_selection.dart';
-import '../../../../helpers/routes/app_pages.dart';
 import '../../../../helpers/utils/utils.dart';
-import '../../../authentication/login/view/screen/sign_in.dart';
 import '../../../shared_widgets/tab_text.dart';
 import '../../shared_widgets/reconmended_tile.dart';
 import '../controller/assement_course_ctrl_vd.dart';

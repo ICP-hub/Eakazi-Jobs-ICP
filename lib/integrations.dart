@@ -68,36 +68,67 @@ abstract class FieldsMethod {
   static const getJobsAppliedCount = 'getJobsAppliedCount';
   static const getCoursesRegisteredByUser = 'getCoursesRegisteredByUser';
   static const getCourseApplicants = 'getCourseApplicants';
-  // define service class
+  static const getJobApplicants = 'getJobApplicants';
+  static const getAllFreelancers = 'getAllFreelancers';
 
-  static final ServiceClass idl = IDL.Service({
-    FieldsMethod.applyCourse: IDL.Func([IDL.Text], [], []),
-    FieldsMethod.applyJobs: IDL.Func([IDL.Text], [], []),
-    FieldsMethod.checkUser: IDL.Func([], [IDL.Bool], []),
-    FieldsMethod.createCourse: IDL.Func([IDL.Text], [course], []),
-    FieldsMethod.createJob: IDL.Func([IDL.Text], [jobs], []),
-    FieldsMethod.createUser:
-        IDL.Func([IDL.Text, IDL.Text, IDL.Text], [profile], []),
-    FieldsMethod.get: IDL.Func([IDL.Text], [profile], ['query']),
-    FieldsMethod.getAllCourse: IDL.Func([], [IDL.Vec(course)], ['query']),
-    FieldsMethod.getAllJobs: IDL.Func([], [IDL.Vec(jobs)], ['query']),
-    FieldsMethod.getCourse: IDL.Func([IDL.Text], [jobs], ['query']),
-    FieldsMethod.getSelf: IDL.Func([], [profile], ['query']),
-    FieldsMethod.search: IDL.Func([IDL.Text], [IDL.Opt(profile)], ['query']),
-    FieldsMethod.update: IDL.Func([profile], [], []),
-    FieldsMethod.getRole: IDL.Func([], [IDL.Text], ['query']),
-    FieldsMethod.getFullName: IDL.Func([], [IDL.Text], ['query']),
-    FieldsMethod.getCourseByCreator: IDL.Func([], [IDL.Vec(course)], []),
-    FieldsMethod.getJobsByCreator: IDL.Func([], [IDL.Vec(jobs)], []),
-    FieldsMethod.checkAppliedJob: IDL.Func([IDL.Text], [IDL.Bool], ['query']),
-    FieldsMethod.checkAppliedCourse:
-        IDL.Func([IDL.Text], [IDL.Bool], ['query']),
-    FieldsMethod.getJobsAppliedCount: IDL.Func([], [IDL.Nat32], ['query']),
-    FieldsMethod.getCoursesRegisteredByUser:
-        IDL.Func([], [IDL.Vec(course)], []),
-    FieldsMethod.getCourseApplicants:
-        IDL.Func([IDL.Text], [IDL.Vec(profile)], [])
-  });
+  static final ServiceClass idl = IDL.Service(
+    {
+      FieldsMethod.applyCourse: IDL.Func([IDL.Text], [], []),
+
+      FieldsMethod.applyJobs: IDL.Func([IDL.Text], [], []),
+
+      FieldsMethod.checkUser: IDL.Func([], [IDL.Bool], []),
+
+      FieldsMethod.createCourse: IDL.Func([IDL.Text], [course], []),
+
+      FieldsMethod.createJob: IDL.Func([IDL.Text], [jobs], []),
+
+      FieldsMethod.createUser:
+          IDL.Func([IDL.Text, IDL.Text, IDL.Text], [profile], []),
+
+      FieldsMethod.get: IDL.Func([IDL.Text], [profile], ['query']),
+
+      FieldsMethod.getAllCourse: IDL.Func([], [IDL.Vec(course)], ['query']),
+
+      FieldsMethod.getAllJobs: IDL.Func([], [IDL.Vec(jobs)], ['query']),
+
+      FieldsMethod.getCourse: IDL.Func([IDL.Text], [jobs], ['query']),
+
+      FieldsMethod.getSelf: IDL.Func([], [profile], ['query']),
+
+      FieldsMethod.search: IDL.Func([IDL.Text], [IDL.Opt(profile)], ['query']),
+
+      FieldsMethod.update: IDL.Func([profile], [], []),
+
+      FieldsMethod.getRole: IDL.Func([], [IDL.Text], ['query']),
+
+      FieldsMethod.getFullName: IDL.Func([], [IDL.Text], ['query']),
+
+      FieldsMethod.getCourseByCreator: IDL.Func([], [IDL.Vec(course)], []),
+
+      FieldsMethod.getJobsByCreator: IDL.Func([], [IDL.Vec(jobs)], []),
+
+      FieldsMethod.checkAppliedJob: IDL.Func([IDL.Text], [IDL.Bool], ['query']),
+
+      FieldsMethod.checkAppliedCourse:
+          IDL.Func([IDL.Text], [IDL.Bool], ['query']),
+
+      FieldsMethod.getJobsAppliedCount: IDL.Func([], [IDL.Nat32], ['query']),
+
+      FieldsMethod.getCoursesRegisteredByUser:
+          IDL.Func([], [IDL.Vec(course)], []),
+
+      FieldsMethod.getCourseApplicants:
+          IDL.Func([IDL.Text], [IDL.Vec(profile)], ['query']),
+
+      FieldsMethod.getJobApplicants:
+      IDL.Func([IDL.Text], [IDL.Vec(profile)], ['query']),
+
+      FieldsMethod.getAllFreelancers:
+      IDL.Func([], [IDL.Vec(profile)], ['query']),
+
+    },
+  );
 }
 
 class Fields extends ActorHook {

@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import '../../../../../helpers/routes/app_pages.dart';
 
-import '../../../../../helpers/theme/theme.dart';
+import '../../../../../helpers/routes/app_pages.dart';
 import '../../../../shared_widgets/buttons.dart';
 import '../../../../shared_widgets/input_text.dart';
 import '../../../../shared_widgets/options_drop_down.dart';

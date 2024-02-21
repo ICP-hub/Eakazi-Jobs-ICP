@@ -1,9 +1,3 @@
-import 'package:badges/badges.dart';
-import 'package:eakazijobs/constants/theme/color_selection.dart';
-import 'package:flutter/material.dart';
-
-import '../../helpers/utils/utils.dart';
-
 // class ChatBadges extends StatelessWidget {
 //   const ChatBadges({
 //     Key? key,

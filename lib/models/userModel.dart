@@ -3,10 +3,10 @@ class UserModel {
   String? firstName;
   String? lastName;
   String? email;
-  Null? bio;
+  Null bio;
   String? password;
   String? userRole;
-  Null? verifiedAt;
+  Null verifiedAt;
   String? createdAt;
   String? updatedAt;
 

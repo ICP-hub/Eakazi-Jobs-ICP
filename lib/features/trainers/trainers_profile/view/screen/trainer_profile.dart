@@ -5,8 +5,6 @@ import 'package:get/get.dart';
 import '../../../../../helpers/routes/app_pages.dart';
 
 import '../../../../../constants/assets/images_constants.dart';
-import '../../../../freelancer/shared_widgets/reconmended_tile.dart';
-import '../../../../shared_widgets/linear_percenth_indicator.dart';
 import '../../../trainers_home/view/widgets/data_trainers_jobs.dart';
 import '../widgets/trainer_profile_container.dart';
 import 'package:eakazijobs/features/authentication/login/view/screen/sign_in.dart';

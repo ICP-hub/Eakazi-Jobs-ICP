@@ -1,6 +1,4 @@
 import 'dart:ui';
-
-import 'package:badges/badges.dart';
 import 'package:eakazijobs/helpers/utils/utils.dart';
 import 'package:eakazijobs/services/getStates.dart';
 import 'package:eakazijobs/services/localStorage.dart';
@@ -183,7 +181,7 @@ class NavBAr extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ctrl = Get.find<BottomNavBarCtr>();
+    // final ctrl = Get.find<BottomNavBarCtr>();
     return BottomNavigationBar(
       // fixedColor: colorScheme(context).secondary,
       onTap: onTap,

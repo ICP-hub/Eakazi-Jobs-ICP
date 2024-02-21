@@ -1,17 +1,14 @@
-import 'package:dotted_border/dotted_border.dart';
 import 'package:eakazijobs/helpers/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:sizer/sizer.dart';
 import 'package:get/get.dart';
-import '../../../../../helpers/routes/app_pages.dart';
 
+import '../../../../../helpers/routes/app_pages.dart';
 import '../../../../shared_widgets/buttons.dart';
 import '../../../../shared_widgets/dotted_border.dart';
 import '../../../../shared_widgets/input_text.dart';
 import '../../../../shared_widgets/options_drop_down.dart';
-
 class TrainerCreateFouthCourse extends StatelessWidget {
   const TrainerCreateFouthCourse({Key? key}) : super(key: key);
 

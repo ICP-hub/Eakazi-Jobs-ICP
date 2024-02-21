@@ -1,7 +1,3 @@
-import 'package:eakazijobs/constants/assets/icon_constans.dart';
-import 'package:eakazijobs/constants/theme/color_selection.dart';
-import 'package:eakazijobs/features/shared_widgets/svgs.dart';
-import 'package:eakazijobs/helpers/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/trainer_wallet_container_fl.dart';

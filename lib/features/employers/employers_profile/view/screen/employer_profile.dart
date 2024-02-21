@@ -2,17 +2,14 @@ import 'package:eakazijobs/constants/theme/color_selection.dart';
 import 'package:eakazijobs/helpers/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../../helpers/routes/app_pages.dart';
-
-import '../../../../../constants/assets/images_constants.dart';
-import '../../../../employers/shared_widgets/reconmended_tile.dart';
-import '../../../../shared_widgets/linear_percenth_indicator.dart';
-import '../../../employers_home/view/widgets/data_employer_jobs.dart';
-import '../../../employers_home/view/widgets/no_data_jobs.dart';
-import '../widgets/employer_profile_container.dart';
 import 'package:eakazijobs/features/authentication/login/view/screen/sign_in.dart';
 import 'package:eakazijobs/integrations.dart';
 
+import '../../../../../helpers/routes/app_pages.dart';
+import '../../../../../constants/assets/images_constants.dart';
+import '../../../../employers/shared_widgets/reconmended_tile.dart';
+import '../../../employers_home/view/widgets/no_data_jobs.dart';
+import '../widgets/employer_profile_container.dart';
 class EmployerProfileProfile extends StatelessWidget {
   const EmployerProfileProfile({super.key});
 
@@ -195,9 +192,11 @@ class ReconmendedListwidget extends StatelessWidget {
                   return Column(
                     children: jobsToShow.map((jobs) {
                       return ReconmendedTileJobs(
-                          tittle: "${jobs['title']} skills required",
-                          image: ImageAssets.icpLogo,
-                          mainTittle: jobs['title']);
+                        tittle: "${jobs['title']} skills required",
+                        image: ImageAssets.jobImage,
+                        mainTittle: jobs['title'],
+                        id: jobs['id'],
+                      );
                     }).toList(),
                   );
                 } else if (snapshot.connectionState !=

@@ -1,9 +1,11 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:eakazijobs/helpers/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import '../../../../../services/getStates.dart';
+
 import '../../../../shared_widgets/buttons.dart';
 import '../../../../shared_widgets/input_text.dart';
 import '../../../../../helpers/routes/app_pages.dart';
@@ -18,7 +20,7 @@ class TrainerCreateCourse extends StatelessWidget {
   String? title = " ";
 
   submit() async {
-    Controller c = Get.put(Controller());
+    // Controller c = Get.put(Controller());
     if (!_formKey.currentState!.validate()) {
       return;
     }

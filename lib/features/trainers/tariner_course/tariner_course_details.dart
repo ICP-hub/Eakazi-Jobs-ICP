@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:eakazijobs/helpers/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -325,13 +327,14 @@ class TrCourseDetail extends StatelessWidget {
 
 Widget singleButton(BuildContext context) {
   final title = Get.arguments[0];
+  final courseId = Get.arguments[4];
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 8),
     child: AuthBtn(
       text: "Edit Course",
       isComplete: true,
       onPressed: () {
-        Get.toNamed(Routes.trainerEditCourse, arguments: title);
+        Get.toNamed(Routes.trainerEditCourse, arguments: [title, courseId]);
       },
     ),
   );

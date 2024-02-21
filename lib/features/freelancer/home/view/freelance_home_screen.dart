@@ -2,22 +2,21 @@ import 'package:eakazijobs/constants/assets/images_constants.dart';
 import 'package:eakazijobs/constants/theme/color_selection.dart';
 import 'package:eakazijobs/features/shared_widgets/svgs.dart';
 import 'package:eakazijobs/helpers/utils/utils.dart';
-import 'package:eakazijobs/services/getStates.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import '../../../../constants/assets/icon_constans.dart';
-import '../../../../helpers/routes/app_pages.dart';
-import '../../../shared_widgets/search_container.dart';
-import '../../../trainers/trainers_home/view/screen/trainer_courses.dart';
-import '../../shared_widgets/media_container.dart';
-import '../../shared_widgets/reconmended_tile.dart';
-import '../../shared_widgets/skill_container.dart';
 import 'package:eakazijobs/models/signupModel.dart';
 import 'package:eakazijobs/features/authentication/login/view/screen/sign_in.dart';
 import 'package:eakazijobs/integrations.dart';
+
+import '../../../../constants/assets/icon_constans.dart';
+import '../../../../helpers/routes/app_pages.dart';
+import '../../../shared_widgets/search_container.dart';
+import '../../shared_widgets/media_container.dart';
+import '../../shared_widgets/reconmended_tile.dart';
+import '../../shared_widgets/skill_container.dart';
 
 SignupModel signupModel = SignupModel();
 
@@ -31,7 +30,7 @@ class FreeLancerHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Controller c = Get.put(Controller());
+    // Controller c = Get.put(Controller());
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -52,6 +51,7 @@ class FreeLancerHome extends StatelessWidget {
                         return Text('Error: ${snapshot.error}');
                       } else {
                         return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Flexible(
                               child: Text(
@@ -60,7 +60,7 @@ class FreeLancerHome extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                            const Spacer(),
+                            // const Spacer(),
                             // Menu bar icon
                             Material(
                               borderRadius: BorderRadius.circular(50),

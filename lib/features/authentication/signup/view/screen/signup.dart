@@ -1,20 +1,11 @@
-import 'dart:convert';
-
 import 'package:eakazijobs/helpers/utils/customLoader.dart';
 import 'package:eakazijobs/models/signupModel.dart';
-import 'package:eakazijobs/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:eakazijobs/interactions.dart';
 import 'package:eakazijobs/integrations.dart';
-import 'package:eakazijobs/init.dart';
-import 'package:eakazijobs/features/authentication/login/view/screen/sign_in.dart'
-    as signIn;
-import 'package:get/get.dart';
-import 'package:agent_dart/agent_dart.dart';
 import 'package:eakazijobs/features/authentication/login/view/screen/sign_in.dart';
 import 'package:eakazijobs/features/shared_widgets/buttons.dart' as btn;
 
@@ -22,36 +13,10 @@ import '../../../../../constants/assets/images_constants.dart';
 import '../../../../../constants/theme/color_selection.dart';
 import '../../../../../helpers/routes/app_pages.dart';
 import '../../../../../helpers/utils/utils.dart';
-import '../../../../shared_widgets/buttons.dart';
-import '../../../../shared_widgets/input_text.dart';
-import '../../../../shared_widgets/options_drop_down.dart';
-import 'package:eakazijobs/helpers/utils/customLoader.dart';
-import 'package:eakazijobs/models/signupModel.dart';
-import 'package:eakazijobs/services/auth_service.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:get/get.dart';
-import 'package:sizer/sizer.dart';
-import 'package:eakazijobs/interactions.dart';
-import 'package:eakazijobs/integrations.dart';
-import 'package:eakazijobs/init.dart';
-import 'package:eakazijobs/features/authentication/login/view/screen/sign_in.dart'
-    as signIn;
-import 'package:get/get.dart';
-import 'package:agent_dart/agent_dart.dart';
-import 'package:eakazijobs/features/authentication/login/view/screen/sign_in.dart';
-import 'package:eakazijobs/features/shared_widgets/buttons.dart' as btn;
-import 'package:eakazijobs/services/getStates.dart';
-
-import '../../../../../constants/assets/images_constants.dart';
-import '../../../../../constants/theme/color_selection.dart';
-import '../../../../../helpers/routes/app_pages.dart';
-import '../../../../../helpers/utils/utils.dart';
-import '../../../../shared_widgets/buttons.dart';
 import '../../../../shared_widgets/input_text.dart';
 import '../../../../shared_widgets/options_drop_down.dart';
 
+// ignore: must_be_immutable
 class SignUp extends StatelessWidget {
   SignUp({Key? key}) : super(key: key);
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -59,7 +24,7 @@ class SignUp extends StatelessWidget {
   CustomLoader customLoader = CustomLoader();
 
   submit(context) async {
-    Controller c = Get.put(Controller());
+    // Controller c = Get.put(Controller());
     ValidateInputController e = Get.find();
     try {
       if (!_formKey.currentState!.validate()) {

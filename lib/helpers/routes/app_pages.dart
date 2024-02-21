@@ -1,9 +1,5 @@
 // ignore: avoid_classes_with_only_static_members
-
-import 'package:eakazijobs/features/freelancer/home/view/freelance_home_screen.dart';
 import 'package:eakazijobs/features/trainers/tariner_course/course_students_enrolled.dart';
-
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 import '../../features/authentication/login/view/screen/sign_in.dart';
@@ -15,7 +11,9 @@ import '../../features/employers/employer_post_jobs/view/screen/emp_course_succe
 import '../../features/employers/employer_post_jobs/view/screen/emp_post_jobs_final_screen.dart';
 import '../../features/employers/employer_post_jobs/view/screen/emp_post_jobs_screen.dart';
 import '../../features/employers/employer_post_jobs/view/screen/emp_post_jobs_secound_screen.dart';
-import '../../features/employers/employers_chat/view/screen/employer_chat_list.dart';
+import '../../features/employers/employers_home/view/screen/all_freelancers.dart';
+import '../../features/employers/employers_home/view/screen/employer_job_applicants.dart';
+import '../../features/employers/employers_home/view/screen/employer_job_details.dart';
 import '../../features/employers/employers_home/view/screen/employer_jobs.dart';
 import '../../features/employers/employers_home/view/screen/employers_home_screen.dart';
 import '../../features/freelancer/chat/view/screen/chat_list.dart';
@@ -33,9 +31,7 @@ import '../../features/freelancer/courses/view/free_course_details.dart';
 import '../../features/freelancer/jobs/view/binding/freelancer_jobs_details_binding.dart';
 import '../../features/freelancer/jobs/view/screen/free_lance_job_details.dart';
 import '../../features/freelancer/jobs/view/screen/free_lance_jobs.dart';
-import '../../features/freelancer/profile/view/screen/fl_profile.dart';
 import '../../features/freelancer/profile/view/screen/fl_profile_public.dart';
-import '../../features/freelancer/wallet/view/screen/fl_wallet_screen.dart';
 import '../../features/shared_widgets/feedBack_widgets/successful_screen_.dart';
 import '../../features/splash/view/main_splash/main_splash.dart';
 import '../../features/splash/view/onboarding/onboarding_1.dart';
@@ -53,7 +49,6 @@ import '../../features/wallet/exchange/view/screen/wallet_exchange_screen_2.dart
 import '../../features/wallet/exchange_p2p/view/screen/wallet_exchange_p2p_screen_3.dart';
 import '../../features/wallet/exchange_p2p/view/screen/wallet_exchange_p2p_screen_4.dart';
 import '../../features/wallet/home/view/screen/wallet_deposite_screen.dart';
-import '../../features/wallet/home/view/screen/wallet_screen.dart';
 import '../../features/wallet/send/view/screen/send_pinpad.dart';
 import '../../features/wallet/send/view/screen/wallet_send_screen.dart';
 import '../../features/wallet/send/view/screen/wallet_send_screen_2.dart';
@@ -344,6 +339,18 @@ class AppPages {
     GetPage(
       name : Routes.trainerEditCourse,
       page : () => TrEditCourse(),
+    ),
+    GetPage(
+      name : Routes.getFreelancers,
+      page : () => AllFreelancers(),
+    ),
+    GetPage(
+      name : Routes.empJobDetails,
+      page : () => EmpJobDetails(),
+    ),
+    GetPage(
+      name : Routes.empJobApplicants,
+      page : () => EmpJobApplicants(),
     ),
   ];
 }

@@ -1,13 +1,7 @@
-import 'package:async/async.dart';
 import 'package:eakazijobs/features/shared_widgets/search_container.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
-import 'package:sizer/sizer.dart';
-
-import '../../../../../constants/theme/color_selection.dart';
-import '../../../../../helpers/utils/utils.dart';
 import '../widgets/employer_messageListContainer.dart';
 
 class EmployerChatLists extends StatelessWidget {

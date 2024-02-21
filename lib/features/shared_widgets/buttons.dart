@@ -1,5 +1,4 @@
 import 'dart:ui';
-import 'package:agent_dart/agent_dart.dart';
 import 'package:eakazijobs/constants/theme/color_selection.dart';
 import 'package:flutter/material.dart';
 

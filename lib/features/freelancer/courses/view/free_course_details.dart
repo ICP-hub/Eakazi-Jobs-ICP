@@ -1,18 +1,11 @@
-import 'package:eakazijobs/helpers/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:sizer/sizer.dart';
-
-import '../../../../../constants/assets/images_constants.dart';
 import '../../../../../constants/theme/color_selection.dart';
 import '../../../../../helpers/utils/utils.dart';
 
-import '../../../shared_widgets/buttons.dart';
 import '../../../shared_widgets/tab_text.dart';
-
-import '../../jobs/view/controller/freelancer_jobs_details_ctrl.dart';
 import '../controller/freelancer_course_details_ctrl.dart';
 import '../widgets/course_text_widget.dart';
 

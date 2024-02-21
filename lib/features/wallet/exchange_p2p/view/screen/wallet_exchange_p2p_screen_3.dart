@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 import '../../../../../helpers/routes/app_pages.dart';
 import '../../../../shared_widgets/buttons.dart';
 import '../../../../shared_widgets/input_text.dart';
-import '../../../../shared_widgets/options_drop_down.dart';
 import '../../../home/view/widgets/wallet_home_container.dart';
 
 class WalletexchangeP2ThirdScreen extends StatelessWidget {

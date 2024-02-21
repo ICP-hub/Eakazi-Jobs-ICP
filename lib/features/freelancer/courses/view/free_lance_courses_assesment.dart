@@ -1,23 +1,17 @@
 import 'package:eakazijobs/constants/assets/images_constants.dart';
 import 'package:eakazijobs/constants/theme/color_selection.dart';
-import 'package:eakazijobs/features/shared_widgets/buttons.dart';
 import 'package:eakazijobs/features/shared_widgets/linear_percenth_indicator.dart';
-import 'package:eakazijobs/features/shared_widgets/svgs.dart';
 import 'package:eakazijobs/helpers/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:eakazijobs/features/authentication/login/view/screen/sign_in.dart';
+import 'package:eakazijobs/integrations.dart';
 
 import '../../../../constants/assets/icon_constans.dart';
-import '../../../../helpers/routes/app_pages.dart';
-import '../../../trainers/trainers_home/view/widgets/data_trainers_jobs.dart';
 import '../../shared_widgets/media_container.dart';
 import '../../shared_widgets/reconmended_tile.dart';
-import '../../shared_widgets/skill_container.dart';
-import 'package:eakazijobs/integrations.dart';
 
 class FreeLancerCoursesAssesment extends StatelessWidget {
   const FreeLancerCoursesAssesment({Key? key}) : super(key: key);

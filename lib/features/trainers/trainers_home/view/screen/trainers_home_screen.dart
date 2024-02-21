@@ -1,4 +1,3 @@
-import 'package:eakazijobs/constants/assets/images_constants.dart';
 import 'package:eakazijobs/constants/theme/color_selection.dart';
 import 'package:eakazijobs/features/shared_widgets/svgs.dart';
 import 'package:eakazijobs/features/trainers/shared_widgets/createCourse.dart';
@@ -13,10 +12,7 @@ import 'package:sizer/sizer.dart';
 import '../../../../../constants/assets/icon_constans.dart';
 import '../../../../../helpers/routes/app_pages.dart';
 import '../../../../shared_widgets/search_container.dart';
-import 'trainer_courses.dart';
 import '../../../../freelancer/shared_widgets/media_container.dart';
-import '../../../../freelancer/shared_widgets/reconmended_tile.dart';
-import '../../../../freelancer/shared_widgets/skill_container.dart';
 import '../widgets/data_trainers_jobs.dart';
 import 'package:eakazijobs/features/authentication/login/view/screen/sign_in.dart';
 import 'package:eakazijobs/integrations.dart';

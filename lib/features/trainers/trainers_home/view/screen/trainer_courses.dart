@@ -1,13 +1,11 @@
 import 'package:eakazijobs/constants/assets/images_constants.dart';
 import 'package:eakazijobs/constants/theme/color_selection.dart';
 import 'package:eakazijobs/features/shared_widgets/linear_percenth_indicator.dart';
-import 'package:eakazijobs/features/shared_widgets/svgs.dart';
 import 'package:eakazijobs/helpers/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:eakazijobs/features/authentication/login/view/screen/sign_in.dart';
 import 'package:eakazijobs/integrations.dart';
-import 'package:eakazijobs/features/trainers/shared_widgets/createCourse.dart';
 import 'package:eakazijobs/features/trainers/trainers_home/view/widgets/no_data_jobs_trainers.dart';
 import '../widgets/data_trainers_jobs.dart';
 

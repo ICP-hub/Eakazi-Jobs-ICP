@@ -1,6 +1,4 @@
-import 'package:eakazijobs/features/splash/view/onboarding/onboarding_1.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../../../helpers/routes/app_pages.dart';
 

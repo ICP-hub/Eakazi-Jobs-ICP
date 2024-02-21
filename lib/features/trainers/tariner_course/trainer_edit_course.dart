@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:eakazijobs/helpers/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -5,6 +7,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import '../../../../../constants/theme/color_selection.dart';
 import '../../../../../helpers/utils/utils.dart';
+import '../../../integrations.dart';
+import '../../authentication/login/view/screen/sign_in.dart' as signIn;
 import '../../employers/employers_profile/view/widgets/employer_profile_container.dart';
 import '../../shared_widgets/buttons.dart';
 import '../../shared_widgets/dotted_border.dart';
@@ -16,9 +20,17 @@ class TrEditCourse extends StatelessWidget {
 
   String? title = " ";
 
+  final courseId = Get.arguments[1];
+
+  Future<List<dynamic>> getCourseApplicants() async {
+    var applicants = await signIn.newActor!.getFunc(FieldsMethod.getCourseApplicants)?.call([courseId]);
+    print(applicants);
+    return applicants;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final tittle = Get.arguments;
+    final tittle = Get.arguments[0];
     return Scaffold(
       appBar: AppBar(
         title: Text(tittle ?? "Course details"),
@@ -48,11 +60,17 @@ class TrEditCourse extends StatelessWidget {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Get.toNamed(Routes.trainerCourseStudentsEnrolled);
+                              Get.toNamed(Routes.trainerCourseStudentsEnrolled, arguments: courseId);
                             },
-                            child: OverviewContainer(
-                              text: "100",
-                              subText: "Students Enrolled",
+                            child: FutureBuilder<List<dynamic>>(
+                              future: getCourseApplicants(),
+                              builder: (context, snapshot) {
+                                int applicantsCount = snapshot.data?.length ?? 0;
+                                return OverviewContainer(
+                                  text: applicantsCount.toString(),
+                                  subText: "Students Enrolled",
+                                );
+                              },
                             ),
                           ),
                           const SizedBox(

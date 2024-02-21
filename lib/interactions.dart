@@ -1,6 +1,4 @@
-// import 'package:agent_dart/agent_dart.dart';
 import 'package:flutter/material.dart';
-import 'init.dart';
 import 'integrations.dart';
 
 class MyApp extends StatefulWidget {

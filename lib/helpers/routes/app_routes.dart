@@ -51,4 +51,7 @@ abstract class Routes {
   static const trainerCourseStudentsEnrolled = '/trainerCourseStudentsEnrolled';
   static const trainerCertificateIssued = '/trainerCertificateIssued';
   static const trainerEditCourse = '/trainerEditCourse';
+  static const getFreelancers = '/getFreelancers';
+  static const empJobDetails = '/empJobDetails';
+  static const empJobApplicants = '/empJobApplicants';
 }

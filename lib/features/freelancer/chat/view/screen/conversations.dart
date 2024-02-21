@@ -1,25 +1,12 @@
-import 'dart:convert';
-import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
-import 'package:get/get.dart';
-// import 'package:flutter_chat_ui/flutter_chat_ui.dart';
-import 'package:http/http.dart' as http;
-
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
-
-import 'package:path_provider/path_provider.dart';
-import 'package:sizer/sizer.dart';
-import 'package:uuid/uuid.dart';
 
 import '../../../../../constants/theme/color_selection.dart';
 import '../../../../../helpers/theme/theme.dart';
 import '../../../../../helpers/utils/utils.dart';
-import '../../../../shared_widgets/svgs.dart';
 import '../widgets/app_bar.dart';
 
 class Conversations2 extends StatefulWidget {

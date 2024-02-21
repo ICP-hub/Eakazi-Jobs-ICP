@@ -1,13 +1,5 @@
-import 'dart:async';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
 import 'package:get/get.dart';
-
-import 'package:loader_overlay/loader_overlay.dart';
-
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../../../../../constants/theme/color_selection.dart';

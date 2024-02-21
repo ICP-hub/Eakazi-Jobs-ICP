@@ -1,20 +1,18 @@
 import 'package:eakazijobs/constants/assets/images_constants.dart';
 import 'package:eakazijobs/constants/theme/color_selection.dart';
-import 'package:eakazijobs/features/shared_widgets/linear_percenth_indicator.dart';
-import 'package:eakazijobs/features/shared_widgets/svgs.dart';
 import 'package:eakazijobs/helpers/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:sizer/sizer.dart';
 import 'package:eakazijobs/features/authentication/login/view/screen/sign_in.dart';
+import 'package:eakazijobs/models/signupModel.dart';
+import 'package:eakazijobs/integrations.dart';
 
 import '../../../../../constants/assets/icon_constans.dart';
 import '../../../shared_widgets/media_container.dart';
 import '../../../shared_widgets/reconmended_tile.dart';
 import '../../../shared_widgets/skill_container.dart';
-import 'package:eakazijobs/models/signupModel.dart';
-import 'package:eakazijobs/integrations.dart';
 
 SignupModel signupModel = SignupModel();
 
@@ -27,7 +25,6 @@ class FreeLancerJobs extends StatelessWidget {
       var allJobs =
       await newActor!.getFunc(FieldsMethod.getAllJobs)?.call([]);
       return allJobs ?? [];
-      print(allJobs);
     } catch (e) {
       print('Error fetching courses: $e');
       return [];
