@@ -27,4 +27,5 @@ class IconsAssets {
   static const String exchange2 = "assets/icons/exchange_2.svg";
   static const String withdrwal = "assets/icons/withdrawl.svg";
   // static const String devOpps = "assets/icons/la_dev.svg";
+  static const String chatIcon = "assets/icons/chat.svg";
 }

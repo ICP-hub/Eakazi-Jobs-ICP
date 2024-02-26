@@ -29,6 +29,8 @@ class ColorsConst {
   static const gold = Color(0xFFFFC960);
   static const appBartitleColor = Color(0xFF2C2C2C);
   static const tittleColor = Color(0xFF595085);
+
+  static const subTitleColor = Color(0xFF9295B7);
   static const tittleColor2 = Color(0xFF22215B);
   static const darkGreen = Color(0xFF479696);
   static const pink = Color(0xFFFF7E73);

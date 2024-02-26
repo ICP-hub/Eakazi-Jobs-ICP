@@ -1,5 +1,6 @@
 import 'package:eakazijobs/constants/assets/images_constants.dart';
 import 'package:eakazijobs/constants/theme/color_selection.dart';
+import 'package:eakazijobs/features/employers/shared_widgets/side_drawer.dart';
 import 'package:eakazijobs/features/shared_widgets/svgs.dart';
 import 'package:eakazijobs/helpers/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,7 @@ class EmployersHomeScreen extends StatelessWidget {
     // Controller c = Get.put(Controller());
     jobCreator();
     return Scaffold(
-      // appBar: AppBar(),
+      drawer: EmpNavDrawer(),
       body: SafeArea(
         child: Column(
           children: [
@@ -73,20 +74,25 @@ class EmployersHomeScreen extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                            Material(
-                              borderRadius: BorderRadius.circular(50),
-                              elevation: 2,
-                              shadowColor: ColorsConst.black.withOpacity(0.2),
-                              child: Container(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 12),
-                                height: 14,
-                                width: 44,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(50),
+                            InkWell(
+                              onTap: () {
+                                Scaffold.of(context).openDrawer();
+                              },
+                              child: Material(
+                                borderRadius: BorderRadius.circular(50),
+                                elevation: 2,
+                                shadowColor: ColorsConst.black.withOpacity(0.2),
+                                child: Container(
+                                  padding:
+                                  const EdgeInsets.symmetric(horizontal: 12),
+                                  height: 14,
+                                  width: 44,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                  child: const SvgIcon(IconsAssets.navhori),
                                 ),
-                                child: const SvgIcon(IconsAssets.navhori),
                               ),
                             )
                           ],

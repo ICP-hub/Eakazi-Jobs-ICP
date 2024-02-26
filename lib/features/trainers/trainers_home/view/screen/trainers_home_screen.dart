@@ -1,6 +1,7 @@
 import 'package:eakazijobs/constants/theme/color_selection.dart';
 import 'package:eakazijobs/features/shared_widgets/svgs.dart';
 import 'package:eakazijobs/features/trainers/shared_widgets/createCourse.dart';
+import 'package:eakazijobs/features/trainers/shared_widgets/side_drawer.dart';
 import 'package:eakazijobs/features/trainers/trainers_home/view/widgets/no_data_jobs_trainers.dart';
 import 'package:eakazijobs/helpers/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +40,7 @@ class TrainerssHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     courseCreator();
     return Scaffold(
+      drawer: TrainerNavDrawer(),
       body: SafeArea(
         child: Column(
           children: [
@@ -58,6 +60,7 @@ class TrainerssHomeScreen extends StatelessWidget {
                         return Text('Error: ${snapshot.error}');
                       } else {
                         return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Flexible(
                               child: Text(
@@ -66,21 +69,25 @@ class TrainerssHomeScreen extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                            const Spacer(),
-                            Material(
-                              borderRadius: BorderRadius.circular(50),
-                              elevation: 2,
-                              shadowColor: ColorsConst.black.withOpacity(0.2),
-                              child: Container(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 12),
-                                height: 14,
-                                width: 44,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(50),
+                            InkWell(
+                              onTap: () {
+                                Scaffold.of(context).openDrawer();
+                              },
+                              child: Material(
+                                borderRadius: BorderRadius.circular(50),
+                                elevation: 2,
+                                shadowColor: ColorsConst.black.withOpacity(0.2),
+                                child: Container(
+                                  padding:
+                                  const EdgeInsets.symmetric(horizontal: 12),
+                                  height: 14,
+                                  width: 44,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                  child: const SvgIcon(IconsAssets.navhori),
                                 ),
-                                child: const SvgIcon(IconsAssets.navhori),
                               ),
                             )
                           ],

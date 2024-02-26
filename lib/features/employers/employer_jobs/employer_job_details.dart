@@ -5,10 +5,10 @@ import 'package:get/get.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-import '../../../../../constants/assets/images_constants.dart';
-import '../../../../../constants/theme/color_selection.dart';
-import '../../../../../helpers/routes/app_pages.dart';
-import '../../../../shared_widgets/buttons.dart';
+import '../../../constants/assets/images_constants.dart';
+import '../../../constants/theme/color_selection.dart';
+import '../../../helpers/routes/app_pages.dart';
+import '../../shared_widgets/buttons.dart';
 
 class EmpJobDetails extends StatelessWidget {
   EmpJobDetails({Key? key}) : super(key: key);
@@ -61,7 +61,7 @@ class EmpJobDetails extends StatelessWidget {
                             ),
                             child: Padding(
                               padding: const EdgeInsets.all(20.0),
-                              child: Image.asset(image,
+                              child: Image.asset(image ?? ImageAssets.jobImage,
                                   width: 40, height: 40),
                             )),
                         top: 50,

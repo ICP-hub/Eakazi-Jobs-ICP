@@ -2,6 +2,7 @@
 import 'package:eakazijobs/features/trainers/tariner_course/course_students_enrolled.dart';
 import 'package:get/get.dart';
 
+import '../../features/alerts/view/alert_screen.dart';
 import '../../features/authentication/login/view/screen/sign_in.dart';
 import '../../features/authentication/signup/view/screen/signup.dart';
 import '../../features/bottom_nav_bar/bottom_nav_bar.dart';
@@ -11,17 +12,20 @@ import '../../features/employers/employer_post_jobs/view/screen/emp_course_succe
 import '../../features/employers/employer_post_jobs/view/screen/emp_post_jobs_final_screen.dart';
 import '../../features/employers/employer_post_jobs/view/screen/emp_post_jobs_screen.dart';
 import '../../features/employers/employer_post_jobs/view/screen/emp_post_jobs_secound_screen.dart';
-import '../../features/employers/employers_home/view/screen/all_freelancers.dart';
-import '../../features/employers/employers_home/view/screen/employer_job_applicants.dart';
-import '../../features/employers/employers_home/view/screen/employer_job_details.dart';
-import '../../features/employers/employers_home/view/screen/employer_jobs.dart';
+import '../../features/employers/employer_freelancer/all_freelancers.dart';
+import '../../features/employers/employer_jobs/employer_job_applicants.dart';
+import '../../features/employers/employer_jobs/employer_job_details.dart';
+import '../../features/employers/employer_jobs/employer_jobs.dart';
 import '../../features/employers/employers_home/view/screen/employers_home_screen.dart';
+import '../../features/employers/employer_freelancer/freelancer_profile.dart';
+import '../../features/employers/employers_profile/view/screen/employer_profile.dart';
 import '../../features/freelancer/chat/view/screen/chat_list.dart';
 import '../../features/freelancer/chat/view/screen/conversations.dart';
 import '../../features/freelancer/courses/binding/assement_course_binding.dart';
 import '../../features/freelancer/courses/binding/freelancer_course_details_binding.dart';
 import '../../features/freelancer/courses/view/assement_courses_sucessful.dart';
 import '../../features/freelancer/courses/view/assement_fullvideo_fl.dart';
+import '../../features/freelancer/profile/view/screen/fl_profile.dart';
 import '../../features/trainers/tariner_course/certificates_issued.dart';
 import '../../features/trainers/tariner_course/tariner_course_details.dart';
 import '../../features/trainers/tariner_course/trainer_edit_course.dart';
@@ -43,12 +47,14 @@ import '../../features/trainers/trainer_create_course/view/screen/trainer_create
 import '../../features/trainers/trainer_create_course/view/screen/trainer_create_course_successful.dart';
 import '../../features/trainers/trainer_create_course/view/screen/trainer_create_course_third_screen.dart';
 import '../../features/trainers/trainers_home/view/screen/trainers_home_screen.dart';
+import '../../features/trainers/trainers_profile/view/screen/trainer_profile.dart';
 import '../../features/wallet/exchange/view/screen/exchange_pinpad.dart';
 import '../../features/wallet/exchange/view/screen/wallet_exchange_screen.dart';
 import '../../features/wallet/exchange/view/screen/wallet_exchange_screen_2.dart';
 import '../../features/wallet/exchange_p2p/view/screen/wallet_exchange_p2p_screen_3.dart';
 import '../../features/wallet/exchange_p2p/view/screen/wallet_exchange_p2p_screen_4.dart';
 import '../../features/wallet/home/view/screen/wallet_deposite_screen.dart';
+import '../../features/wallet/home/view/screen/wallet_screen.dart';
 import '../../features/wallet/send/view/screen/send_pinpad.dart';
 import '../../features/wallet/send/view/screen/wallet_send_screen.dart';
 import '../../features/wallet/send/view/screen/wallet_send_screen_2.dart';
@@ -276,8 +282,8 @@ class AppPages {
       // page: () => const MyProfileVendor(),
     ),
     GetPage(
-      name : Routes.flCourseSuccessful,
-      page : () => const FLSuccessfulDone(),
+      name: Routes.flCourseSuccessful,
+      page: () => const FLSuccessfulDone(),
     ),
     GetPage(
       name: Routes.trainerHomeScreen,
@@ -305,52 +311,76 @@ class AppPages {
       page: () => const TrainerCreateFouthCourse(),
     ),
     GetPage(
-      name : Routes.trainerCreateCourseSuccessful,
-      page : () => const TrainerCreateCourseSuccessful(),
+      name: Routes.trainerCreateCourseSuccessful,
+      page: () => const TrainerCreateCourseSuccessful(),
     ),
     GetPage(
-      name : Routes.empPostSuccessScreen,
-      page : () => const EmployeeCourseSuccessful(),
+      name: Routes.empPostSuccessScreen,
+      page: () => const EmployeeCourseSuccessful(),
     ),
     GetPage(
-      name : Routes.empHomeScreen,
-      page : () => const EmployersHomeScreen(),
+      name: Routes.empHomeScreen,
+      page: () => const EmployersHomeScreen(),
     ),
     GetPage(
-      name : Routes.splashScreen,
-      page : () => const SplashScreen(),
+      name: Routes.splashScreen,
+      page: () => const SplashScreen(),
     ),
     GetPage(
-      name : Routes.employerJobs,
-      page : () => const EmployerJobs(),
+      name: Routes.employerJobs,
+      page: () => const EmployerJobs(),
     ),
     GetPage(
-      name : Routes.trainerCourseDetails,
-      page : () => TrCourseDetail(),
+      name: Routes.trainerCourseDetails,
+      page: () => TrCourseDetail(),
     ),
     GetPage(
-      name : Routes.trainerCourseStudentsEnrolled,
-      page : () => StudentsEnrolled(),
+      name: Routes.trainerCourseStudentsEnrolled,
+      page: () => StudentsEnrolled(),
     ),
     GetPage(
-      name : Routes.trainerCertificateIssued,
-      page : () => CertificateIssued(),
+      name: Routes.trainerCertificateIssued,
+      page: () => CertificateIssued(),
     ),
     GetPage(
-      name : Routes.trainerEditCourse,
-      page : () => TrEditCourse(),
+      name: Routes.trainerEditCourse,
+      page: () => TrEditCourse(),
     ),
     GetPage(
-      name : Routes.getFreelancers,
-      page : () => AllFreelancers(),
+      name: Routes.getFreelancers,
+      page: () => AllFreelancers(),
     ),
     GetPage(
-      name : Routes.empJobDetails,
-      page : () => EmpJobDetails(),
+      name: Routes.empJobDetails,
+      page: () => EmpJobDetails(),
     ),
     GetPage(
-      name : Routes.empJobApplicants,
-      page : () => EmpJobApplicants(),
+      name: Routes.empJobApplicants,
+      page: () => EmpJobApplicants(),
+    ),
+    GetPage(
+      name: Routes.empFreelancerProfile,
+      page: () => EmpFreelancerProfile(),
+    ),
+    GetPage(
+      name: Routes.walletHome,
+      page: () => WalletHomeScreen(),
+    ),
+    GetPage(
+      name: Routes.alerts,
+      page: () => AlertScreen(),
+    ),
+    GetPage(
+      name: Routes.flProfile,
+      page: () => const FreeLanceProfile(),
+    ),
+    GetPage(
+      name: Routes.employerProfile,
+      page: () => const EmployerProfileProfile(),
+    ),
+    GetPage(
+      name: Routes.trainerProfile,
+      page: () => const TrannerProfileProfile(),
     ),
   ];
 }

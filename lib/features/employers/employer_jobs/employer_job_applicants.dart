@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:get/get.dart';
 
-import '../../../../../constants/assets/images_constants.dart';
-import '../../../../../constants/theme/color_selection.dart';
-import '../../../../../helpers/utils/utils.dart';
-import '../../../../../integrations.dart';
-import '../../../../authentication/login/view/screen/sign_in.dart';
+import '../../../constants/assets/images_constants.dart';
+import '../../../constants/theme/color_selection.dart';
+import '../../../helpers/routes/app_pages.dart';
+import '../../../helpers/utils/utils.dart';
+import '../../../integrations.dart';
+import '../../authentication/login/view/screen/sign_in.dart';
 
 class EmpJobApplicants extends StatelessWidget {
   EmpJobApplicants({Key? key}) : super(key: key);
@@ -14,7 +15,8 @@ class EmpJobApplicants extends StatelessWidget {
   final jobId = Get.arguments;
 
   Future<List<dynamic>> getJobApplicants() async {
-    var applicants = await newActor!.getFunc(FieldsMethod.getJobApplicants)?.call([jobId]);
+    var applicants =
+        await newActor!.getFunc(FieldsMethod.getJobApplicants)?.call([jobId]);
     print(applicants);
     return applicants;
   }
@@ -101,73 +103,80 @@ class EmpJobApplicants extends StatelessWidget {
                             ),
                             child: Padding(
                               padding: const EdgeInsets.only(bottom: 24),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      CircleAvatar(
-                                        backgroundImage:
-                                        AssetImage(ImageAssets.studentImage),
-                                        radius: 19,
-                                      ),
-                                      const SizedBox(width: 12),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Text(
-                                                applicant['fullname'],
-                                                style: TextStyle(
-                                                  fontSize: 11.sp,
-                                                  fontWeight: FontWeight.w800,
-                                                  color: ColorsConst.black,
+                              child: GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(Routes.empFreelancerProfile, arguments: applicant['fullname']);
+                                },
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        CircleAvatar(
+                                          backgroundImage: AssetImage(
+                                              ImageAssets.studentImage),
+                                          radius: 19,
+                                        ),
+                                        const SizedBox(width: 12),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  applicant['fullname'],
+                                                  style: TextStyle(
+                                                    fontSize: 11.sp,
+                                                    fontWeight: FontWeight.w800,
+                                                    color: ColorsConst.black,
+                                                  ),
                                                 ),
-                                              ),
-                                              const SizedBox(width: 4),
-                                              Icon(
-                                                Icons.circle,
-                                                size: 7.sp,
-                                                color: ColorsConst.green,
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(height: 4),
-                                          Text(
-                                            "UI/UX Designer",
-                                            style: TextStyle(
-                                              fontSize: 8.sp,
-                                              fontWeight: FontWeight.w400,
-                                              color: ColorsConst.blackFour,
+                                                const SizedBox(width: 4),
+                                                Icon(
+                                                  Icons.circle,
+                                                  size: 7.sp,
+                                                  color: ColorsConst.green,
+                                                ),
+                                              ],
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  Container(
-                                    padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                    height: 4.h,
-                                    decoration: BoxDecoration(
-                                      // color: ColorsConst.white,
-                                      borderRadius: BorderRadius.circular(3),
-                                      border: Border.all(
-                                        color: ColorsConst.blackFour,
-                                      ),
+                                            const SizedBox(height: 4),
+                                            Text(
+                                              "UI/UX Designer",
+                                              style: TextStyle(
+                                                fontSize: 8.sp,
+                                                fontWeight: FontWeight.w400,
+                                                color: ColorsConst.blackFour,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
                                     ),
-                                    child: Center(
-                                      child: Text(
-                                        "Contact",
-                                        style: TextStyle(
-                                          fontSize: 8.sp,
-                                          color: ColorsConst.black,
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      height: 4.h,
+                                      decoration: BoxDecoration(
+                                        // color: ColorsConst.white,
+                                        borderRadius: BorderRadius.circular(3),
+                                        border: Border.all(
+                                          color: ColorsConst.blackFour,
+                                        ),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          "View Applicant",
+                                          style: TextStyle(
+                                            fontSize: 8.sp,
+                                            color: ColorsConst.black,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -215,7 +224,7 @@ class OverviewContainer extends StatelessWidget {
           Text(
             text,
             style: textTheme(context).bodyText1?.copyWith(
-              // color: color,
+                // color: color,
                 fontSize: 20),
           ),
           Text(

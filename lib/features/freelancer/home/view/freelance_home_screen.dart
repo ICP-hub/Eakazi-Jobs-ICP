@@ -17,6 +17,7 @@ import '../../../shared_widgets/search_container.dart';
 import '../../shared_widgets/media_container.dart';
 import '../../shared_widgets/reconmended_tile.dart';
 import '../../shared_widgets/skill_container.dart';
+import 'package:eakazijobs/features/freelancer/shared_widgets/side_drawer.dart';
 
 SignupModel signupModel = SignupModel();
 
@@ -32,6 +33,7 @@ class FreeLancerHome extends StatelessWidget {
   Widget build(BuildContext context) {
     // Controller c = Get.put(Controller());
     return Scaffold(
+      drawer: FlNavDrawer(),
       body: SafeArea(
         child: Column(
           children: [
@@ -62,20 +64,25 @@ class FreeLancerHome extends StatelessWidget {
                             ),
                             // const Spacer(),
                             // Menu bar icon
-                            Material(
-                              borderRadius: BorderRadius.circular(50),
-                              elevation: 2,
-                              shadowColor: ColorsConst.black.withOpacity(0.2),
-                              child: Container(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 12),
-                                height: 14,
-                                width: 44,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(50),
+                            InkWell(
+                              onTap: () {
+                                Scaffold.of(context).openDrawer();
+                              },
+                              child: Material(
+                                borderRadius: BorderRadius.circular(50),
+                                elevation: 2,
+                                shadowColor: ColorsConst.black.withOpacity(0.2),
+                                child: Container(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 12),
+                                  height: 14,
+                                  width: 44,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                  child: const SvgIcon(IconsAssets.navhori),
                                 ),
-                                child: const SvgIcon(IconsAssets.navhori),
                               ),
                             )
                           ],

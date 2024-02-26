@@ -15,36 +15,39 @@ class AppBarTittle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final ctrl = Get.find<ConversationCtrl>();
-    return Row(
-      children: [
-        SizedBox(
-          height: 50,
-          width: 50,
-          child: Stack(
-            children: [
-              ProfileImage(image: profileImage),
-            ],
+    return Padding(
+      padding: const EdgeInsets.only(top:16.0),
+      child: Row(
+        children: [
+          SizedBox(
+            height: 50,
+            width: 50,
+            child: Stack(
+              children: [
+                ProfileImage(image: profileImage),
+              ],
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 5, bottom: 5),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text("Mayowa Stack",
-                  style: textTheme(context)
-                      .subtitle1
-                      ?.copyWith(fontSize: 16, color: Colors.black)),
-              Text(
-                "Employer",
-                style: textTheme(context).subtitle1?.copyWith(
-                    fontSize: 12, color: Colors.black.withOpacity(0.4)),
-              ),
-            ],
+          Padding(
+            padding: const EdgeInsets.only(left: 5, bottom: 5),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text("Mayowa Stack",
+                    style: textTheme(context)
+                        .subtitle1
+                        ?.copyWith(fontSize: 16, color: Colors.black)),
+                Text(
+                  "Employer",
+                  style: textTheme(context).subtitle1?.copyWith(
+                      fontSize: 12, color: Colors.black.withOpacity(0.4)),
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

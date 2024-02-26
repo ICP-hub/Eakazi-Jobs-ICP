@@ -7,10 +7,10 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:sizer/sizer.dart';
 import 'package:eakazijobs/features/authentication/login/view/screen/sign_in.dart';
 
-import '../../../../../constants/assets/icon_constans.dart';
-import '../../../../../integrations.dart';
-import '../../../../freelancer/shared_widgets/media_container.dart';
-import '../../../shared_widgets/reconmended_tile.dart';
+import '../../../constants/assets/icon_constans.dart';
+import '../../../integrations.dart';
+import '../../freelancer/shared_widgets/media_container.dart';
+import '../shared_widgets/reconmended_tile.dart';
 
 class EmployerJobs extends StatelessWidget {
   const EmployerJobs({Key? key}) : super(key: key);

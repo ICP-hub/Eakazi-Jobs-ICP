@@ -3,24 +3,56 @@ import 'package:eakazijobs/helpers/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../../constants/assets/icon_constans.dart';
 import '../../../../../constants/assets/images_constants.dart';
 import '../../../../../helpers/routes/app_pages.dart';
+import '../../../../../integrations.dart';
+import '../../../../authentication/login/view/screen/sign_in.dart' as SignIn;
 import '../../../../shared_widgets/buttons.dart';
 import '../../../../shared_widgets/linear_percenth_indicator.dart';
+import '../../../../shared_widgets/svgs.dart';
 import '../../../shared_widgets/reconmended_tile.dart';
 import '../widgets/profile_container.dart';
 
 class FreeLanceProfilePublic extends StatelessWidget {
   const FreeLanceProfilePublic({super.key});
 
+  Future<int> countJobsApplied() async {
+    var countJobsApplied = await SignIn.newActor!
+        .getFunc(FieldsMethod.getJobsAppliedCount)
+        ?.call([]);
+    print(countJobsApplied);
+    return countJobsApplied;
+  }
+
+  Future<List<dynamic>> getRegisteredCourses() async {
+    var registeredCourses = await SignIn.newActor!
+        .getFunc(FieldsMethod.getCoursesRegisteredByUser)
+        ?.call([]);
+    print(registeredCourses);
+    return registeredCourses;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final name = Get.arguments;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Profile"),
+        actions: <Widget>[
+          GestureDetector(
+            onTap: () {
+              Get.toNamed(Routes.flChatList);
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(right: 24.0),
+              child: const SvgIcon(IconsAssets.chatIcon),
+            ),
+          ),
+        ],
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 16, top: 10),
+        padding: const EdgeInsets.only(left: 16, top: 10, right: 16),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,7 +63,7 @@ class FreeLanceProfilePublic extends StatelessWidget {
                 children: [
                   const CircleAvatar(
                     radius: 35,
-                    backgroundImage: const AssetImage(ImageAssets.avatar),
+                    backgroundImage: const AssetImage(ImageAssets.studentImage),
                   ),
                   const SizedBox(
                     width: 40,
@@ -41,7 +73,7 @@ class FreeLanceProfilePublic extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        "Marvelous IK",
+                        name ?? "Marvelous IK",
                         style: textTheme(context).subtitle2?.copyWith(
                             color: ColorsConst.tittleColor, fontSize: 20),
                       ),
@@ -136,17 +168,52 @@ class FreeLanceProfilePublic extends StatelessWidget {
                 height: 12,
               ),
               SizedBox(
-                height: 70,
+                height: 80,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
-                  children: const [
+                  children: [
                     OverviewContainer(
-                      text: "N20,600",
-                      subText: "Current balance",
+                      text: "0",
+                      subText: "Certifications",
                     ),
-                    OverviewContainer(
-                      text: "58",
-                      subText: "Jobs Applied",
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    FutureBuilder<int>(
+                      future: countJobsApplied(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Text(
+                            'Loading...', // You can replace this with a more appropriate loading message
+                            style: textTheme(context).bodyText2?.copyWith(
+                                  color: ColorsConst.tittleColor,
+                                ),
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text(
+                            'Error: ${snapshot.error}',
+                            style: textTheme(context).bodyText2?.copyWith(
+                                  color: ColorsConst.tittleColor,
+                                ),
+                          );
+                        } else if (snapshot.hasData) {
+                          // Use snapshot.data which is of type int
+                          return OverviewContainer(
+                            text: snapshot.data
+                                .toString(), // Convert the int to String
+                            subText: "Jobs Applied",
+                          );
+                        } else {
+                          // Handle the case when there's no data
+                          return Text(
+                            "0",
+                            style: textTheme(context).bodyText2?.copyWith(
+                                  color: ColorsConst.tittleColor,
+                                ),
+                          );
+                        }
+                      },
                     ),
                   ],
                 ),

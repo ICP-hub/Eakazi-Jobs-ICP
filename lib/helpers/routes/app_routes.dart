@@ -16,7 +16,7 @@ abstract class Routes {
   static const flCourseDetails = '/flCourseDetails';
   static const fLJobs = '/FL_Jobs';
   static const flJobsDetails = '/flJobDetails';
-  static const flProfilePublic = '/flProfile';
+  static const flProfilePublic = '/flProfilePublic';
   static const flChatList = '/flChatList';
   static const flConverstation = '/flConverstation';
   static const deposite = '/flDeposite';
@@ -54,4 +54,10 @@ abstract class Routes {
   static const getFreelancers = '/getFreelancers';
   static const empJobDetails = '/empJobDetails';
   static const empJobApplicants = '/empJobApplicants';
+  static const empFreelancerProfile = '/empFreelancerProfile';
+  static const walletHome = '/walletHome';
+  static const alerts = '/alerts';
+  static const flProfile = '/flProfile';
+  static const employerProfile = '/employerProfile';
+  static const trainerProfile = '/trainerProfile';
 }

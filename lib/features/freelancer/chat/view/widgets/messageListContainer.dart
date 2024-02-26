@@ -53,7 +53,7 @@ class MessagesContainer extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      "Obi Deric",
+                      "Obi Derick",
                       style:
                           textTheme(context).bodyText1?.copyWith(fontSize: 16),
                     ),
@@ -68,7 +68,7 @@ class MessagesContainer extends StatelessWidget {
                 ),
                 Text(
                   "Good day, i hope this message finds y...",
-                  style: textTheme(context).caption?.copyWith(fontSize: 12),
+                  style: textTheme(context).caption?.copyWith(fontSize: 11, overflow: TextOverflow.ellipsis),
                 ),
               ],
             ),
