@@ -79,7 +79,7 @@ class TrCourseDetail extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Get.toNamed(Routes.trainerCertificateIssued);
+                              Get.toNamed(Routes.trainerCertificateIssued, arguments: courseId);
                             },
                             child: OverviewContainer(
                               text: "100",

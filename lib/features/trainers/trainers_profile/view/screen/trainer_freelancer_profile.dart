@@ -4,21 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:get/get.dart';
 
-import '../../../constants/assets/icon_constans.dart';
-import '../../../constants/assets/images_constants.dart';
-import '../../../helpers/routes/app_pages.dart';
-import '../../freelancer/profile/view/widgets/profile_container.dart';
-import '../../shared_widgets/buttons.dart';
-import '../../shared_widgets/svgs.dart';
+import '../../../../../constants/assets/icon_constans.dart';
+import '../../../../../constants/assets/images_constants.dart';
+import '../../../../../helpers/routes/app_pages.dart';
+import '../../../../employers/employers_profile/view/widgets/employer_profile_container.dart';
+import '../../../../shared_widgets/buttons.dart';
+import '../../../../shared_widgets/svgs.dart';
 
-class EmpFreelancerProfile extends StatefulWidget {
-  const EmpFreelancerProfile({Key? key}) : super(key: key);
+
+class TrainerFreelancerProfile extends StatefulWidget {
+  const TrainerFreelancerProfile({Key? key}) : super(key: key);
 
   @override
-  _EmpFreelancerProfileState createState() => _EmpFreelancerProfileState();
+  _TrainerFreelancerProfileState createState() => _TrainerFreelancerProfileState();
 }
 
-class _EmpFreelancerProfileState extends State<EmpFreelancerProfile> {
+class _TrainerFreelancerProfileState extends State<TrainerFreelancerProfile> {
   String? applicationStatus;
 
   Widget doubleButtons(BuildContext context) {
@@ -83,7 +84,7 @@ class _EmpFreelancerProfileState extends State<EmpFreelancerProfile> {
                         const CircleAvatar(
                           radius: 40,
                           backgroundImage:
-                              const AssetImage(ImageAssets.studentImage),
+                          const AssetImage(ImageAssets.studentImage),
                         ),
                         const SizedBox(
                           width: 50,
@@ -120,7 +121,7 @@ class _EmpFreelancerProfileState extends State<EmpFreelancerProfile> {
                               },
                               child: Container(
                                 padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
+                                const EdgeInsets.symmetric(horizontal: 10),
                                 height: 5.h,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(3),
@@ -149,8 +150,8 @@ class _EmpFreelancerProfileState extends State<EmpFreelancerProfile> {
                     Text(
                       "Overview",
                       style: textTheme(context).bodyText1?.copyWith(
-                            color: ColorsConst.tittleColor2,
-                          ),
+                        color: ColorsConst.tittleColor2,
+                      ),
                     ),
                     const SizedBox(
                       height: 10,
@@ -169,7 +170,7 @@ class _EmpFreelancerProfileState extends State<EmpFreelancerProfile> {
                           ),
                           OverviewContainer(
                             text: "0",
-                            subText: "Jobs Completed",
+                            subText: "Courses registered",
                           ),
                         ],
                       ),
@@ -180,8 +181,8 @@ class _EmpFreelancerProfileState extends State<EmpFreelancerProfile> {
                     Text(
                       "Skills",
                       style: textTheme(context).bodyText1?.copyWith(
-                            color: ColorsConst.tittleColor2,
-                          ),
+                        color: ColorsConst.tittleColor2,
+                      ),
                     ),
                     const SizedBox(
                       height: 10,
@@ -231,22 +232,6 @@ class _EmpFreelancerProfileState extends State<EmpFreelancerProfile> {
               ),
             ),
           ),
-          if (applicationStatus == null)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
-              child: doubleButtons(context),
-            )
-          else
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: Text(
-                applicationStatus == 'accepted'
-                    ? "Application Accepted"
-                    : "Application Declined",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,
-                color: applicationStatus == 'accepted' ? Colors.green : Colors.red,),
-              ),
-            ),
         ],
       ),
     );

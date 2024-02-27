@@ -47,6 +47,7 @@ import '../../features/trainers/trainer_create_course/view/screen/trainer_create
 import '../../features/trainers/trainer_create_course/view/screen/trainer_create_course_successful.dart';
 import '../../features/trainers/trainer_create_course/view/screen/trainer_create_course_third_screen.dart';
 import '../../features/trainers/trainers_home/view/screen/trainers_home_screen.dart';
+import '../../features/trainers/trainers_profile/view/screen/trainer_freelancer_profile.dart';
 import '../../features/trainers/trainers_profile/view/screen/trainer_profile.dart';
 import '../../features/wallet/exchange/view/screen/exchange_pinpad.dart';
 import '../../features/wallet/exchange/view/screen/wallet_exchange_screen.dart';
@@ -381,6 +382,10 @@ class AppPages {
     GetPage(
       name: Routes.trainerProfile,
       page: () => const TrannerProfileProfile(),
+    ),
+    GetPage(
+      name: Routes.trainerFreelancerProfile,
+      page: () => const TrainerFreelancerProfile(),
     ),
   ];
 }
