@@ -21,6 +21,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 // Global variables --------------------------
 CanisterActor? newActor;
+String? principal_id;
 
 class SignIn extends StatefulWidget {
   SignIn({Key? key}) : super(key: key);
@@ -76,6 +77,8 @@ class _SignInState extends State<SignIn> {
 
         DelegationIdentity _delegationIdentity =
             DelegationIdentity(newIdentity!, _delegationChain);
+
+        principal_id = _delegationIdentity.getPrincipal().toText();
 
         HttpAgent newAgent = HttpAgent(
           options: HttpAgentOptions(

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:get/get.dart';
+import 'package:file_picker/file_picker.dart';
+import 'dart:convert';
+import 'dart:typed_data';
+import 'dart:io';
 
 import '../../../constants/assets/images_constants.dart';
 import '../../../constants/theme/color_selection.dart';
@@ -12,13 +16,39 @@ import '../../authentication/login/view/screen/sign_in.dart';
 class CertificateIssued extends StatelessWidget {
   CertificateIssued({Key? key}) : super(key: key);
 
-  final courseId = Get.arguments;
+  final courseId = Get.arguments[0];
+  final title = Get.arguments[1];
+  final description = Get.arguments[2];
 
   Future<List<dynamic>> getCourseApplicants() async {
     var applicants = await newActor!.getFunc(FieldsMethod.getCourseApplicants)?.call([courseId]);
     print(applicants);
     return applicants;
   }
+
+  void _pickFile(principalId, userId, userName) async {
+    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
+
+    // if no file is picked
+    if (result == null) return;
+
+    // we get the file from result object
+    final file = result.files.first;
+    File certificate = File(file.path!); // Converting into file
+    Uint8List imageBytes = await certificate.readAsBytes(); //converting to bytes
+    String base64string = base64.encode(imageBytes); //converting bytes to base64 string
+    print(base64string);
+
+    final certificateTag = userName + "_" + title;
+
+    final mintCertificate = await newActor!.getFunc(FieldsMethod.mintCertificate)?.call([principalId, userId, description, certificateTag, courseId, base64string]);
+    print(mintCertificate);
+    // _openFile(file);
+  }
+
+  // void _openFile(PlatformFile file) {
+  //   OpenFile.open(file.path);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -154,7 +184,7 @@ class CertificateIssued extends StatelessWidget {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        // To be implemented
+                                        _pickFile(applicant['principal_id'], applicant['id'], applicant['fullname']);
                                       },
                                       child: Container(
                                         padding:

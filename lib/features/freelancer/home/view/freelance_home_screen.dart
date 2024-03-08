@@ -10,6 +10,7 @@ import 'package:sizer/sizer.dart';
 import 'package:eakazijobs/models/signupModel.dart';
 import 'package:eakazijobs/features/authentication/login/view/screen/sign_in.dart';
 import 'package:eakazijobs/integrations.dart';
+import 'package:agent_dart/agent_dart.dart';
 
 import '../../../../constants/assets/icon_constans.dart';
 import '../../../../helpers/routes/app_pages.dart';
@@ -29,9 +30,16 @@ class FreeLancerHome extends StatelessWidget {
     return fullName;
   }
 
+  Future<void> getTokenMetadata() async {
+    final principal = Principal.fromText(principal_id!);
+    var tokenMetadata = await newActor!.getFunc(FieldsMethod.dip721OwnerMetadata)?.call([principal]);
+    print(tokenMetadata);
+  }
+
   @override
   Widget build(BuildContext context) {
     // Controller c = Get.put(Controller());
+    getTokenMetadata();
     return Scaffold(
       drawer: FlNavDrawer(),
       body: SafeArea(

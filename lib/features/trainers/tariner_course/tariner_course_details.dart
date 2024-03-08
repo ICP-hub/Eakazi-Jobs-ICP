@@ -32,6 +32,9 @@ class TrCourseDetail extends StatelessWidget {
     final rating = Get.arguments[1];
     final aboutAuthor = Get.arguments[2];
     final status = Get.arguments[3];
+
+    final description = title + " Course" + aboutAuthor;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(title ?? "Course details"),
@@ -79,7 +82,7 @@ class TrCourseDetail extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Get.toNamed(Routes.trainerCertificateIssued, arguments: courseId);
+                              Get.toNamed(Routes.trainerCertificateIssued, arguments: [courseId, title, description]);
                             },
                             child: OverviewContainer(
                               text: "100",

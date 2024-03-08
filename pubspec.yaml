@@ -38,6 +38,8 @@ dependencies:
   blurhash_dart: ^1.2.1
   fluttertoast: ^8.2.4
   restart_app: ^1.2.1
+  file_picker: ^6.1.1
+  open_file: ^3.3.2
 
 
 dev_dependencies:
