@@ -84,9 +84,15 @@ class TrCourseDetail extends StatelessWidget {
                             onTap: () {
                               Get.toNamed(Routes.trainerCertificateIssued, arguments: [courseId, title, description]);
                             },
-                            child: OverviewContainer(
-                              text: "100",
-                              subText: "Certificates Issued",
+                            child: FutureBuilder<List<dynamic>>(
+                              future: getCourseApplicants(),
+                              builder: (context, snapshot) {
+                                int applicantsCount = snapshot.data?.length ?? 0;
+                                return OverviewContainer(
+                                  text: applicantsCount.toString(),
+                                  subText: "Certificates Issued",
+                                );
+                              },
                             ),
                           ),
                         ],
@@ -331,13 +337,14 @@ class TrCourseDetail extends StatelessWidget {
 Widget singleButton(BuildContext context) {
   final title = Get.arguments[0];
   final courseId = Get.arguments[4];
+  final aboutAuthor = Get.arguments[2];
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 8),
     child: AuthBtn(
       text: "Edit Course",
       isComplete: true,
       onPressed: () {
-        Get.toNamed(Routes.trainerEditCourse, arguments: [title, courseId]);
+        Get.toNamed(Routes.trainerEditCourse, arguments: [title, courseId, aboutAuthor]);
       },
     ),
   );

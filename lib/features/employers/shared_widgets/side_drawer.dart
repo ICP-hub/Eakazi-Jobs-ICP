@@ -98,8 +98,7 @@ class EmpNavDrawer extends StatelessWidget {
                                     );
                                   } else {
                                     return Text(
-                                      "${snapshot.data}@email.com" ??
-                                          "user@email.com",
+                                      "${snapshot.data}@email.com",
                                       style: TextStyle(
                                         fontSize: 9.sp,
                                         fontWeight: FontWeight.w400,

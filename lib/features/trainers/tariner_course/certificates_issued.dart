@@ -26,7 +26,7 @@ class CertificateIssued extends StatelessWidget {
     return applicants;
   }
 
-  void _pickFile(principalId, userId, userName) async {
+  void _pickFile(BuildContext context, principalId, userId, userName) async {
     final result = await FilePicker.platform.pickFiles(allowMultiple: false);
 
     // if no file is picked
@@ -41,14 +41,93 @@ class CertificateIssued extends StatelessWidget {
 
     final certificateTag = userName + "_" + title;
 
-    final mintCertificate = await newActor!.getFunc(FieldsMethod.mintCertificate)?.call([principalId, userId, description, certificateTag, courseId, base64string]);
-    print(mintCertificate);
-    // _openFile(file);
+    _showLoadingDialog(context, "Minting Certificate...");
+
+    try {
+      final mintCertificate = await newActor!.getFunc(FieldsMethod.mintCertificate)?.call([principalId, description, certificateTag, courseId, base64string]);
+      print(mintCertificate);
+      _hideLoadingDialog(context);
+      _showSuccessDialog(context, "Certificate minted successfully");
+    } catch (e) {
+      _hideLoadingDialog(context);
+      _showErrorDialog(context, "Error minting certificate");
+    }
+
   }
 
-  // void _openFile(PlatformFile file) {
-  //   OpenFile.open(file.path);
-  // }
+  void _hideLoadingDialog(BuildContext context) {
+    Navigator.of(context).pop();
+  }
+
+  void _showLoadingDialog(BuildContext context, String text) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(
+                  height: 24,
+                  width: 24,
+                  child: CircularProgressIndicator(
+                    strokeWidth:
+                    3,
+                  ),
+                ),
+                const SizedBox(width: 24),
+                Text(text),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _showSuccessDialog(BuildContext context, String text) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Success"),
+          content: Text(text),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showErrorDialog(BuildContext context, String text) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Error"),
+          content: Text(text),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -184,7 +263,7 @@ class CertificateIssued extends StatelessWidget {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        _pickFile(applicant['principal_id'], applicant['id'], applicant['fullname']);
+                                        _pickFile(context, applicant['principal_id'], applicant['id'], applicant['fullname']);
                                       },
                                       child: Container(
                                         padding:

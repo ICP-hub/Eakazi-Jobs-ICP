@@ -31,6 +31,7 @@ class TrEditCourse extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tittle = Get.arguments[0];
+    final description = Get.arguments[2];
     return Scaffold(
       appBar: AppBar(
         title: Text(tittle ?? "Course details"),
@@ -78,11 +79,17 @@ class TrEditCourse extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Get.toNamed(Routes.trainerCertificateIssued);
+                              Get.toNamed(Routes.trainerCertificateIssued, arguments: [courseId, title, description]);
                             },
-                            child: OverviewContainer(
-                              text: "100",
-                              subText: "Certificates Issued",
+                            child: FutureBuilder<List<dynamic>>(
+                              future: getCourseApplicants(),
+                              builder: (context, snapshot) {
+                                int applicantsCount = snapshot.data?.length ?? 0;
+                                return OverviewContainer(
+                                  text: applicantsCount.toString(),
+                                  subText: "Certificates Issued",
+                                );
+                              },
                             ),
                           ),
                         ],

@@ -100,9 +100,13 @@ class PortfolioProjectsContainer extends StatelessWidget {
 class NftCertificates extends StatelessWidget {
   const NftCertificates({
     Key? key,
+    required this.courseName,
+    required this.courseCreator,
     required this.image,
   }) : super(key: key);
 
+  final String courseName;
+  final String courseCreator;
   final String image;
 
   @override
@@ -124,14 +128,14 @@ class NftCertificates extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "EA KAZI NFT CERTIFICATE",
+                  courseName,
                   style: textTheme(context).headline4?.copyWith(
                       color: ColorsConst.white, fontSize: 12, letterSpacing: 1),
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 4), // Adjust spacing
                 Text(
-                  "Ui/ux design fundamental",
+                  courseCreator,
                   style: textTheme(context).bodyText2?.copyWith(
                       color: ColorsConst.white, fontSize: 9, letterSpacing: 1),
                   overflow: TextOverflow.ellipsis,

@@ -61,4 +61,5 @@ abstract class Routes {
   static const employerProfile = '/employerProfile';
   static const trainerProfile = '/trainerProfile';
   static const trainerFreelancerProfile = '/trainerFreelancerProfile';
+  static const viewCertificate = '/viewCertificate';
 }

@@ -32,7 +32,7 @@ dependencies:
   flutter_inappwebview: ^5.8.0
   flutter_custom_tabs: ^1.2.1
   go_router: ^13.0.1
-  agent_dart: ^1.0.0-dev.17
+  agent_dart: ^1.0.0-dev.22
   flutter_web_auth: ^0.5.0
   webview_flutter: ^4.4.2
   blurhash_dart: ^1.2.1
@@ -40,7 +40,10 @@ dependencies:
   restart_app: ^1.2.1
   file_picker: ^6.1.1
   open_file: ^3.3.2
-
+  permission_handler: ^11.3.0
+  image_gallery_saver: ^2.0.3
+  pdf: ^3.10.8
+  path_provider: ^2.1.2
 
 dev_dependencies:
   flutter_test:
@@ -55,12 +58,12 @@ dev_dependencies:
   timeago: ^3.2.2
   dotted_border: ^2.0.0+3
   getwidget: ^3.0.1
-  google_fonts: ^6.1.0
+  google_fonts: ^4.0.4
   flutter_svg: ^1.1.5
   dropdown_button2: ^1.1.1
   percent_indicator: ^4.2.2
   badges: ^2.0.3
-  http: ^1.1.2
+  http: ^1.0.0
   pin_code_fields: ^7.4.0
   shared_preferences: ^2.2.2
   flutter_easyloading: ^3.0.5

@@ -1,13 +1,16 @@
+import 'package:get/get.dart';
 import 'package:eakazijobs/constants/theme/color_selection.dart';
 import 'package:eakazijobs/helpers/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:eakazijobs/features/authentication/login/view/screen/sign_in.dart';
 import '../../../../../constants/assets/images_constants.dart';
+import '../../../../../helpers/routes/app_pages.dart';
 import '../../../../shared_widgets/linear_percenth_indicator.dart';
 import '../../../shared_widgets/reconmended_tile.dart';
 import '../widgets/profile_container.dart';
 import 'package:eakazijobs/models/signupModel.dart';
 import 'package:eakazijobs/integrations.dart';
+
 
 SignupModel signupModel = SignupModel();
 
@@ -15,22 +18,94 @@ class FreeLanceProfile extends StatelessWidget {
   const FreeLanceProfile({super.key});
 
   Future<String> getName() async {
-    var fullName =
-    await newActor!.getFunc(FieldsMethod.getFullName)?.call([]);
+    var fullName = await newActor!.getFunc(FieldsMethod.getFullName)?.call([]);
     return fullName;
   }
 
   Future<int> countJobsApplied() async {
-    var countJobsApplied = await newActor!.getFunc(FieldsMethod.getJobsAppliedCount)?.call([]);
+    var countJobsApplied =
+        await newActor!.getFunc(FieldsMethod.getJobsAppliedCount)?.call([]);
     print(countJobsApplied);
     return countJobsApplied;
   }
 
   Future<List<dynamic>> getRegisteredCourses() async {
-    var registeredCourses =
-    await newActor!.getFunc(FieldsMethod.getCoursesRegisteredByUser)?.call([]);
+    var registeredCourses = await newActor!
+        .getFunc(FieldsMethod.getCoursesRegisteredByUser)
+        ?.call([]);
     print(registeredCourses);
     return registeredCourses;
+  }
+
+  Future<List<Map<String, String>>> getCourseNamesIdsAndCreators() async {
+    var selfData = await newActor!.getFunc(FieldsMethod.getSelf)?.call([]);
+    print(selfData);
+
+    var tokenIds = selfData['token_ids'] as List<List<dynamic>>?;
+    List<Map<String, String>> coursesInfo = [];
+
+    if (tokenIds != null && tokenIds.isNotEmpty) {
+      for (var tokenPair in tokenIds) {
+        String courseId = tokenPair[1];
+        var course = await getCourse(courseId);
+        coursesInfo.add({
+          'id': courseId,
+          'name': course['title'],
+          'creator': course['creator_fullname'],
+        });
+      }
+    }
+    print("Courses Info: $coursesInfo");
+    return coursesInfo;
+  }
+
+  Future<dynamic> getCourse(String id) async {
+    var course = await newActor!.getFunc(FieldsMethod.getCourse)?.call([id]);
+    return course;
+  }
+
+  Future<void> openCertificate(BigInt tokenId, String courseName) async {
+    var getMetadata = await newActor!.getFunc(FieldsMethod.dip721TokenMetadata)?.call([tokenId]);
+    var properties = getMetadata['Ok']['properties'];
+
+    String? certificateContent;
+
+    for (var property in properties) {
+      if (property[0] == "certificate") {
+        certificateContent = property[1]['TextContent'];
+        break;
+      }
+    }
+
+    print("Base64 : $certificateContent");
+
+    Get.toNamed(Routes.viewCertificate, arguments: [certificateContent, courseName]);
+
+  }
+
+  Future<void> getCertificate(String courseId, String courseName) async {
+    var selfData = await newActor!.getFunc(FieldsMethod.getSelf)?.call([]);
+    print(selfData);
+
+    var tokenIds = selfData['token_ids'] as List<List<dynamic>>?;
+
+    if (tokenIds != null && tokenIds.isNotEmpty) {
+      BigInt? tokenId;
+      for (var pair in tokenIds) {
+        if (pair[1] == courseId) {
+          tokenId = pair[0] as BigInt;
+          break;
+        }
+      }
+
+      if (tokenId != null) {
+        openCertificate(tokenId, courseName);
+      } else {
+        print("No token ID found for course ID: $courseId");
+      }
+    } else {
+      print("No token IDs available in the user's profile.");
+    }
   }
 
   @override
@@ -65,25 +140,25 @@ class FreeLanceProfile extends StatelessWidget {
                             return Text(
                               'Loading...', // You can replace this with a more appropriate loading message
                               style: textTheme(context).subtitle2?.copyWith(
-                                color: ColorsConst.tittleColor,
-                                fontSize: 20,
-                              ),
+                                    color: ColorsConst.tittleColor,
+                                    fontSize: 20,
+                                  ),
                             );
                           } else if (snapshot.hasError) {
                             return Text(
                               'Error: ${snapshot.error}',
                               style: textTheme(context).subtitle2?.copyWith(
-                                color: ColorsConst.tittleColor,
-                                fontSize: 20,
-                              ),
+                                    color: ColorsConst.tittleColor,
+                                    fontSize: 20,
+                                  ),
                             );
                           } else {
                             return Text(
                               snapshot.data ?? "User",
                               style: textTheme(context).subtitle2?.copyWith(
-                                color: ColorsConst.tittleColor,
-                                fontSize: 20,
-                              ),
+                                    color: ColorsConst.tittleColor,
+                                    fontSize: 20,
+                                  ),
                             );
                           }
                         },
@@ -91,15 +166,15 @@ class FreeLanceProfile extends StatelessWidget {
                       Text(
                         "UI/UX Designer",
                         style: textTheme(context).bodyText2?.copyWith(
-                          color: ColorsConst.tittleColor.withOpacity(0.6),
-                        ),
+                              color: ColorsConst.tittleColor.withOpacity(0.6),
+                            ),
                       ),
                       Text(
                         "Edit profile",
                         style: textTheme(context).caption?.copyWith(
-                          color: ColorsConst.tittleColor,
-                          decoration: TextDecoration.underline,
-                        ),
+                              color: ColorsConst.tittleColor,
+                              decoration: TextDecoration.underline,
+                            ),
                       ),
                     ],
                   )
@@ -165,24 +240,26 @@ class FreeLanceProfile extends StatelessWidget {
                     FutureBuilder<int>(
                       future: countJobsApplied(),
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
                           return Text(
                             'Loading...', // You can replace this with a more appropriate loading message
                             style: textTheme(context).bodyText2?.copyWith(
-                              color: ColorsConst.tittleColor,
-                            ),
+                                  color: ColorsConst.tittleColor,
+                                ),
                           );
                         } else if (snapshot.hasError) {
                           return Text(
                             'Error: ${snapshot.error}',
                             style: textTheme(context).bodyText2?.copyWith(
-                              color: ColorsConst.tittleColor,
-                            ),
+                                  color: ColorsConst.tittleColor,
+                                ),
                           );
                         } else if (snapshot.hasData) {
                           // Use snapshot.data which is of type int
                           return OverviewContainer(
-                            text: snapshot.data.toString(), // Convert the int to String
+                            text: snapshot.data
+                                .toString(), // Convert the int to String
                             subText: "Jobs Applied",
                           );
                         } else {
@@ -190,8 +267,8 @@ class FreeLanceProfile extends StatelessWidget {
                           return Text(
                             "0",
                             style: textTheme(context).bodyText2?.copyWith(
-                              color: ColorsConst.tittleColor,
-                            ),
+                                  color: ColorsConst.tittleColor,
+                                ),
                           );
                         }
                       },
@@ -237,16 +314,43 @@ class FreeLanceProfile extends StatelessWidget {
               const SizedBox(
                 height: 12,
               ),
-              SizedBox(
-                height: 80,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    NftCertificates(
-                      image: ImageAssets.profilePic2,
-                    ),
-                  ],
-                ),
+              FutureBuilder<List<Map<String, String>>>(
+                future:
+                    getCourseNamesIdsAndCreators(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Text("Error: ${snapshot.error}");
+                  } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                    List<Map<String, String>> coursesInfo = snapshot.data!;
+                    return SizedBox(
+                      height: 80,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: coursesInfo.length,
+                        itemBuilder: (context, index) {
+                          var course = coursesInfo[index];
+                          return GestureDetector(
+                            onTap: () {
+                              getCertificate(course['id'] ?? '', course['name'] ?? '');
+                            },
+                            child: NftCertificates(
+                              courseName: course['name'] ?? 'Unknown Name',
+                              courseCreator:
+                                  course['creator'] ?? 'Unknown Creator',
+                              image: ImageAssets
+                                  .profilePic2,
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  } else {
+                    // Handle the case when there's no data
+                    return Text("No certificates found.");
+                  }
+                },
               ),
               const SizedBox(
                 height: 24,
@@ -300,28 +404,6 @@ class FreeLanceProfile extends StatelessWidget {
                   },
                 ),
               ),
-              // Padding(
-              //   padding: const EdgeInsets.only(right: 16),
-              //   child: ReconmendedTile(
-              //     image: ImageAssets.jelurida,
-              //     tittle: "JelaAfrica",
-              //     subTittle2: "In progress",
-              //     mainTittle: "Visual Designer Course",
-              //     extraWidget: Column(
-              //       children: [
-              //         Text(
-              //           "60% Completed",
-              //           //   "Skill Acquisition",
-              //           style: textTheme(context).caption,
-              //         ),
-              //         SizedBox(
-              //           height: 3,
-              //         ),
-              //         LinerPercentIndicator(),
-              //       ],
-              //     ),
-              //   ),
-              // ),
             ],
           ),
         ),

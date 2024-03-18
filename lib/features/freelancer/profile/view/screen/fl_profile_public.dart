@@ -262,6 +262,8 @@ class FreeLanceProfilePublic extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   children: [
                     NftCertificates(
+                      courseName: "Name",
+                      courseCreator: "Creator",
                       image: ImageAssets.profilePic2,
                     ),
                   ],

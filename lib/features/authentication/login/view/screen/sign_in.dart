@@ -78,7 +78,7 @@ class _SignInState extends State<SignIn> {
         DelegationIdentity _delegationIdentity =
             DelegationIdentity(newIdentity!, _delegationChain);
 
-        principal_id = _delegationIdentity.getPrincipal().toText();
+        principal_id = _delegationIdentity.getPrincipal().toHex();
 
         HttpAgent newAgent = HttpAgent(
           options: HttpAgentOptions(
@@ -351,7 +351,7 @@ class AuthBtn extends StatelessWidget {
           style: textStyle,
         ),
         style: ElevatedButton.styleFrom(
-          primary: Colors.transparent,
+          backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
           shape: RoundedRectangleBorder(
             borderRadius: borderRadius,

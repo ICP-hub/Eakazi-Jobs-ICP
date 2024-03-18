@@ -1,7 +1,6 @@
 import 'dart:ffi';
-
-import 'package:agent_dart/agent_dart.dart';
 import 'init.dart';
+import 'package:agent_dart/agent_dart.dart';
 
 final RecordClass course = IDL.Record({
   'id': IDL.Text,
@@ -39,33 +38,40 @@ final RecordClass profile = IDL.Record({
   'organization': IDL.Text,
   'skills': IDL.Vec(IDL.Text),
   'location': IDL.Text,
-  'token_ids': IDL.Vec(IDL.Nat),
+  'token_ids': IDL.Vec(IDL.Tuple([IDL.Nat, IDL.Text])),
 });
 
-final CheckUser = IDL.Record({
+final checkUser = IDL.Record({
   'user': IDL.Principal,
 });
 
 // NFT related types
 
+final RecordClass initArgs = IDL.Record({
+  'cap': IDL.Opt(IDL.Principal),
+  'logo': IDL.Opt(IDL.Text),
+  'name': IDL.Opt(IDL.Text),
+  'custodians': IDL.Opt(IDL.Vec(IDL.Principal)),
+  'symbol': IDL.Opt(IDL.Text)
+});
+
 final VariantClass genericValue = IDL.Variant(
   {
-    'Nat64Content': IDL.Nat64,
-    'Nat32Content': IDL.Nat32,
-    'BoolContent': IDL.Bool,
-    'Nat8Content': IDL.Nat8,
-    'Int64Content': IDL.Int64,
-    'IntContent': IDL.Int,
-    'NatContent': IDL.Nat,
-    'Nat16Content': IDL.Nat16,
-    'Int32Content': IDL.Int32,
-    'Int8Content': IDL.Int8,
-    'FloatContent': IDL.Float64,
-    'Int16Content': IDL.Int16,
-    'BlobContent': IDL.Vec(IDL.Nat8),
-    // 'NestedContent': IDL.Vec(genericValue),
-    'Principal': IDL.Principal,
-    'TextContent': IDL.Text,
+    'Nat64Content' : IDL.Nat64,
+    'Nat32Content' : IDL.Nat32,
+    'BoolContent' : IDL.Bool,
+    'Nat8Content' : IDL.Nat8,
+    'Int64Content' : IDL.Int64,
+    'IntContent' : IDL.Int,
+    'NatContent' : IDL.Nat,
+    'Nat16Content' : IDL.Nat16,
+    'Int32Content' : IDL.Int32,
+    'Int8Content' : IDL.Int8,
+    'FloatContent' : IDL.Float64,
+    'Int16Content' : IDL.Int16,
+    'BlobContent' : IDL.Vec(IDL.Nat8),
+    'Principal' : IDL.Principal,
+    'TextContent' : IDL.Text,
   },
 );
 
@@ -80,27 +86,20 @@ final VariantClass nftError = IDL.Variant({
   'SelfTransfer': IDL.Null,
 });
 
-final TokenMetadata = IDL.Record({
-  'id': IDL.Nat,
-  'owner': IDL.Principal,
-  'operator': IDL.Principal,
-  'metadata': IDL.Vec(IDL.Nat8),
-});
-
 final RecordClass tokenMetadata = IDL.Record({
-  'transferred_at': IDL.Opt(IDL.Nat64),
-  'transferred_by': IDL.Opt(IDL.Principal),
-  'owner': IDL.Opt(IDL.Principal),
-  'operator': IDL.Opt(IDL.Principal),
-  'approved_at': IDL.Opt(IDL.Nat64),
-  'approved_by': IDL.Opt(IDL.Principal),
-  'properties': IDL.Vec(genericValue),
-  'is_burned': IDL.Bool,
-  'token_identifier': IDL.Nat,
-  'burned_at': IDL.Opt(IDL.Nat64),
-  'burned_by': IDL.Opt(IDL.Principal),
-  'minted_at': IDL.Nat64,
-  'minted_by': IDL.Principal,
+  'transferred_at' : IDL.Opt(IDL.Nat64),
+  'transferred_by' : IDL.Opt(IDL.Principal),
+  'owner' : IDL.Opt(IDL.Principal),
+  'operator' : IDL.Opt(IDL.Principal),
+  'approved_at' : IDL.Opt(IDL.Nat64),
+  'approved_by' : IDL.Opt(IDL.Principal),
+  'properties' : IDL.Vec(IDL.Tuple([IDL.Text, genericValue])),
+  'is_burned' : IDL.Bool,
+  'token_identifier' : IDL.Nat,
+  'burned_at' : IDL.Opt(IDL.Nat64),
+  'burned_by' : IDL.Opt(IDL.Principal),
+  'minted_at' : IDL.Nat64,
+  'minted_by' : IDL.Principal,
 });
 
 final VariantClass result = IDL.Variant({
@@ -108,8 +107,27 @@ final VariantClass result = IDL.Variant({
   'Err': nftError,
 });
 
-final VariantClass manualReply = IDL.Variant({
-  'Ok': tokenMetadata,
+final VariantClass result1 = IDL.Variant({
+  'Ok': IDL.Bool,
+  'Err': nftError,
+});
+
+final VariantClass result2 = IDL.Variant({
+  'Ok': IDL.Opt(IDL.Principal),
+  'Err': nftError,
+});
+
+final RecordClass manualReply = IDL.Record({
+  'logo' : IDL.Opt(IDL.Text),
+  'name' : IDL.Opt(IDL.Text),
+  'created_at' : IDL.Nat64,
+  'upgraded_at' : IDL.Nat64,
+  'custodians' : IDL.Vec(IDL.Principal),
+  'symbol' : IDL.Opt(IDL.Text),
+});
+
+final VariantClass manualReply1 = IDL.Variant({
+  'Ok': IDL.Vec(IDL.Nat),
   'Err': nftError,
 });
 
@@ -118,36 +136,51 @@ final VariantClass manualReply2 = IDL.Variant({
   'Err': nftError,
 });
 
+final VariantClass manualReply3 = IDL.Variant({
+  'Ok': tokenMetadata,
+  'Err': nftError,
+});
+
+final RecordClass stats = IDL.Record({
+  'cycles' : IDL.Nat,
+  'total_transactions' : IDL.Nat,
+  'total_unique_holders' : IDL.Nat,
+  'total_supply' : IDL.Nat,
+});
+
+final VariantClass supportedInterface = IDL.Variant({
+  'Burn' : IDL.Null,
+  'Mint' : IDL.Null,
+  'Approval' : IDL.Null,
+});
 abstract class FieldsMethod {
-  /// use staic const as method name
-  static const applyCourse = 'applyCourse';
-  static const checkUser = 'checkUser';
-  static const applyJobs = 'applyJobs';
-  static const createCourse = 'createCourse';
-  static const createJob = 'createJob';
-  static const createUser = 'createUser';
+  // use static const as method name
+  static const applyCourse = 'apply_course';
+  static const checkUser = 'check_user';
+  static const applyJobs = 'apply_jobs';
+  static const createCourse = 'create_course';
+  static const createJob = 'create_job';
+  static const createUser = 'create_user';
   static const get = 'get';
-  static const getAllCourse = 'getAllCourses';
-  static const getAllJobs = 'getAllJobs';
-  static const getCourse = 'getCourse';
-  static const getSelf = 'getSelf';
+  static const getAllCourse = 'get_all_courses';
+  static const getAllJobs = 'get_all_jobs';
+  static const getCourse = 'get_course';
+  static const getSelf = 'get_self';
   static const search = 'search';
   static const update = 'update';
-  static const getRole = 'getRole';
-  static const getFullName = 'getFullName';
-  static const getCourseByCreator = 'getCoursesByCreator';
-  static const getJobsByCreator = 'getJobsByCreator';
-  static const checkAppliedJob = 'checkAppliedJob';
-  static const checkAppliedCourse = 'checkAppliedCourse';
-  static const getJobsAppliedCount = 'getJobsAppliedCount';
-  static const getCoursesRegisteredByUser = 'getCoursesRegisteredByUser';
-  static const getCourseApplicants = 'getCourseApplicants';
-  static const getJobApplicants = 'getJobApplicants';
-  static const getAllFreelancers = 'getAllFreelancers';
-  static const getUserNFTInfo = 'get_user_nft_info';
+  static const getRole = 'get_role';
+  static const getFullName = 'get_full_name';
+  static const getCourseByCreator = 'get_courses_by_creator';
+  static const getJobsByCreator = 'get_jobs_by_creator';
+  static const checkAppliedJob = 'check_applied_job';
+  static const checkAppliedCourse = 'check_applied_course';
+  static const getJobsAppliedCount = 'get_jobs_applied_count';
+  static const getCoursesRegisteredByUser = 'get_courses_registered_by_user';
+  static const getCourseApplicants = 'get_course_applicants';
+  static const getJobApplicants = 'get_job_applicants';
+  static const getAllFreelancers = 'get_all_freelancers';
   static const mintCertificate = 'mint_certificate';
-  static const getOwnerMetadata = 'get_owner_token_metadata';
-  static const dip721OwnerMetadata = 'dip721_owner_token_metadata';
+  static const dip721TokenMetadata = 'dip721_token_metadata';
 
   static final ServiceClass idl = IDL.Service(
     {
@@ -181,15 +214,12 @@ abstract class FieldsMethod {
           IDL.Func([IDL.Text], [IDL.Vec(profile)], ['query']),
       FieldsMethod.getAllFreelancers:
           IDL.Func([], [IDL.Vec(profile)], ['query']),
-      FieldsMethod.getUserNFTInfo:
-          IDL.Func([IDL.Text], [manualReply], ['query']),
       FieldsMethod.mintCertificate: IDL.Func(
-          [IDL.Text, IDL.Text, IDL.Text, IDL.Text, IDL.Text, IDL.Text],
+          [IDL.Text, IDL.Text, IDL.Text, IDL.Text, IDL.Text],
           [result],
           []),
-      FieldsMethod.getOwnerMetadata: IDL.Func([], [manualReply2], ['query']),
-      FieldsMethod.dip721OwnerMetadata:
-          IDL.Func([IDL.Principal], [manualReply2], ['query']),
+      FieldsMethod.dip721TokenMetadata:
+          IDL.Func([IDL.Nat], [manualReply3], ['query']),
     },
   );
 }

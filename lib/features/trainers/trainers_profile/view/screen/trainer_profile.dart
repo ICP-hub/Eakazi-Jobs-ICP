@@ -164,7 +164,7 @@ class TrannerProfileProfile extends StatelessWidget {
                                     return Column(
                                       children: coursesToShow.map((course) {
                                         return JobsTrainersWidgte(
-                                            title: course['title']);
+                                            title: course['title'], id: course['id']);
                                       }).toList(),
                                     );
                                   } else if (snapshot.connectionState !=

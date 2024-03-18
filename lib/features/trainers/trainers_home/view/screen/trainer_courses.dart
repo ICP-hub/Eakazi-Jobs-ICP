@@ -86,7 +86,7 @@ class TrainerCourses extends StatelessWidget {
                         snapshot.hasData) {
                       return Column(
                         children: snapshot.data!.map((course) {
-                          return JobsTrainersWidgte(title: course['title']);
+                          return JobsTrainersWidgte(title: course['title'], id: course['id']);
                         }).toList(),
                       );
                     } else if (snapshot.connectionState != ConnectionState.waiting) {
