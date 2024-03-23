@@ -105,7 +105,7 @@ class EmpJobApplicants extends StatelessWidget {
                               padding: const EdgeInsets.only(bottom: 24),
                               child: GestureDetector(
                                 onTap: () {
-                                  Get.toNamed(Routes.empFreelancerProfile, arguments: applicant['fullname']);
+                                  Get.toNamed(Routes.empFreelancerProfile, arguments: [applicant['fullname'], applicant['principal_id'], applicant['id']]);
                                 },
                                 child: Row(
                                   mainAxisAlignment:

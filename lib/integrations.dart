@@ -39,10 +39,21 @@ final RecordClass profile = IDL.Record({
   'skills': IDL.Vec(IDL.Text),
   'location': IDL.Text,
   'token_ids': IDL.Vec(IDL.Tuple([IDL.Nat, IDL.Text])),
+  'reviews': IDL.Vec(reviews),
 });
 
-final checkUser = IDL.Record({
+final RecordClass checkUser = IDL.Record({
   'user': IDL.Principal,
+});
+
+final RecordClass reviews = IDL.Record({
+  'review' : IDL.Text,
+  'title' : IDL.Text,
+  'ratings' : IDL.Float64,
+  'image' : IDL.Opt(IDL.Text),
+  'reviewer_principal' : IDL.Opt(IDL.Principal),
+  'reviewer' : IDL.Text,
+  'review_time' : IDL.Int64,
 });
 
 // NFT related types
@@ -57,21 +68,21 @@ final RecordClass initArgs = IDL.Record({
 
 final VariantClass genericValue = IDL.Variant(
   {
-    'Nat64Content' : IDL.Nat64,
-    'Nat32Content' : IDL.Nat32,
-    'BoolContent' : IDL.Bool,
-    'Nat8Content' : IDL.Nat8,
-    'Int64Content' : IDL.Int64,
-    'IntContent' : IDL.Int,
-    'NatContent' : IDL.Nat,
-    'Nat16Content' : IDL.Nat16,
-    'Int32Content' : IDL.Int32,
-    'Int8Content' : IDL.Int8,
-    'FloatContent' : IDL.Float64,
-    'Int16Content' : IDL.Int16,
-    'BlobContent' : IDL.Vec(IDL.Nat8),
-    'Principal' : IDL.Principal,
-    'TextContent' : IDL.Text,
+    'Nat64Content': IDL.Nat64,
+    'Nat32Content': IDL.Nat32,
+    'BoolContent': IDL.Bool,
+    'Nat8Content': IDL.Nat8,
+    'Int64Content': IDL.Int64,
+    'IntContent': IDL.Int,
+    'NatContent': IDL.Nat,
+    'Nat16Content': IDL.Nat16,
+    'Int32Content': IDL.Int32,
+    'Int8Content': IDL.Int8,
+    'FloatContent': IDL.Float64,
+    'Int16Content': IDL.Int16,
+    'BlobContent': IDL.Vec(IDL.Nat8),
+    'Principal': IDL.Principal,
+    'TextContent': IDL.Text,
   },
 );
 
@@ -87,19 +98,19 @@ final VariantClass nftError = IDL.Variant({
 });
 
 final RecordClass tokenMetadata = IDL.Record({
-  'transferred_at' : IDL.Opt(IDL.Nat64),
-  'transferred_by' : IDL.Opt(IDL.Principal),
-  'owner' : IDL.Opt(IDL.Principal),
-  'operator' : IDL.Opt(IDL.Principal),
-  'approved_at' : IDL.Opt(IDL.Nat64),
-  'approved_by' : IDL.Opt(IDL.Principal),
-  'properties' : IDL.Vec(IDL.Tuple([IDL.Text, genericValue])),
-  'is_burned' : IDL.Bool,
-  'token_identifier' : IDL.Nat,
-  'burned_at' : IDL.Opt(IDL.Nat64),
-  'burned_by' : IDL.Opt(IDL.Principal),
-  'minted_at' : IDL.Nat64,
-  'minted_by' : IDL.Principal,
+  'transferred_at': IDL.Opt(IDL.Nat64),
+  'transferred_by': IDL.Opt(IDL.Principal),
+  'owner': IDL.Opt(IDL.Principal),
+  'operator': IDL.Opt(IDL.Principal),
+  'approved_at': IDL.Opt(IDL.Nat64),
+  'approved_by': IDL.Opt(IDL.Principal),
+  'properties': IDL.Vec(IDL.Tuple([IDL.Text, genericValue])),
+  'is_burned': IDL.Bool,
+  'token_identifier': IDL.Nat,
+  'burned_at': IDL.Opt(IDL.Nat64),
+  'burned_by': IDL.Opt(IDL.Principal),
+  'minted_at': IDL.Nat64,
+  'minted_by': IDL.Principal,
 });
 
 final VariantClass result = IDL.Variant({
@@ -118,12 +129,12 @@ final VariantClass result2 = IDL.Variant({
 });
 
 final RecordClass manualReply = IDL.Record({
-  'logo' : IDL.Opt(IDL.Text),
-  'name' : IDL.Opt(IDL.Text),
-  'created_at' : IDL.Nat64,
-  'upgraded_at' : IDL.Nat64,
-  'custodians' : IDL.Vec(IDL.Principal),
-  'symbol' : IDL.Opt(IDL.Text),
+  'logo': IDL.Opt(IDL.Text),
+  'name': IDL.Opt(IDL.Text),
+  'created_at': IDL.Nat64,
+  'upgraded_at': IDL.Nat64,
+  'custodians': IDL.Vec(IDL.Principal),
+  'symbol': IDL.Opt(IDL.Text),
 });
 
 final VariantClass manualReply1 = IDL.Variant({
@@ -142,17 +153,18 @@ final VariantClass manualReply3 = IDL.Variant({
 });
 
 final RecordClass stats = IDL.Record({
-  'cycles' : IDL.Nat,
-  'total_transactions' : IDL.Nat,
-  'total_unique_holders' : IDL.Nat,
-  'total_supply' : IDL.Nat,
+  'cycles': IDL.Nat,
+  'total_transactions': IDL.Nat,
+  'total_unique_holders': IDL.Nat,
+  'total_supply': IDL.Nat,
 });
 
 final VariantClass supportedInterface = IDL.Variant({
-  'Burn' : IDL.Null,
-  'Mint' : IDL.Null,
-  'Approval' : IDL.Null,
+  'Burn': IDL.Null,
+  'Mint': IDL.Null,
+  'Approval': IDL.Null,
 });
+
 abstract class FieldsMethod {
   // use static const as method name
   static const applyCourse = 'apply_course';
@@ -181,6 +193,10 @@ abstract class FieldsMethod {
   static const getAllFreelancers = 'get_all_freelancers';
   static const mintCertificate = 'mint_certificate';
   static const dip721TokenMetadata = 'dip721_token_metadata';
+  static const addReviews = 'add_reviews';
+  static const getAllReviews = 'get_all_reviews';
+  static const confirmReviewer = 'confirm_reviewer';
+  static const confirmReviewed = 'confirm_reviewed';
 
   static final ServiceClass idl = IDL.Service(
     {
@@ -215,11 +231,17 @@ abstract class FieldsMethod {
       FieldsMethod.getAllFreelancers:
           IDL.Func([], [IDL.Vec(profile)], ['query']),
       FieldsMethod.mintCertificate: IDL.Func(
-          [IDL.Text, IDL.Text, IDL.Text, IDL.Text, IDL.Text],
-          [result],
-          []),
+          [IDL.Text, IDL.Text, IDL.Text, IDL.Text, IDL.Text], [result], []),
       FieldsMethod.dip721TokenMetadata:
           IDL.Func([IDL.Nat], [manualReply3], ['query']),
+      FieldsMethod.addReviews: IDL.Func(
+        [IDL.Float64, IDL.Text, IDL.Text, IDL.Text, IDL.Text, IDL.Int64],
+        [reviews],
+        []
+      ),
+      FieldsMethod.getAllReviews: IDL.Func([IDL.Principal], [IDL.Vec(reviews)], []),
+      FieldsMethod.confirmReviewer: IDL.Func([IDL.Text], [IDL.Bool], ['query']),
+      FieldsMethod.confirmReviewed: IDL.Func([IDL.Principal], [IDL.Bool], ['query']),
     },
   );
 }

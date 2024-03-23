@@ -20,4 +20,5 @@ class ImageAssets {
   static const String studentImage = "assets/images/studentImage.png";
   static const String ellipse = "assets/images/ellipse.png";
   static const String jobImage = "assets/images/jobImage.png";
+  static const String reviewLogo = "assets/images/review_logo.png";
 }

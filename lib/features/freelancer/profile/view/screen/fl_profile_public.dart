@@ -35,7 +35,9 @@ class FreeLanceProfilePublic extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final name = Get.arguments;
+    final name = Get.arguments[0];
+    final reviewee_principal_id = Get.arguments[1];
+    final reviewee_id = Get.arguments[2];
     return Scaffold(
       appBar: AppBar(
         title: const Text("Profile"),
@@ -72,10 +74,37 @@ class FreeLanceProfilePublic extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(
-                        name ?? "Marvelous IK",
-                        style: textTheme(context).subtitle2?.copyWith(
-                            color: ColorsConst.tittleColor, fontSize: 20),
+                      Row(
+                        children: [
+                          Text(
+                            name ?? "Marvelous IK",
+                            style: textTheme(context).subtitle2?.copyWith(
+                                color: ColorsConst.tittleColor, fontSize: 20),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Get.toNamed(Routes.reviewScreen, arguments: [reviewee_principal_id, reviewee_id]);
+                            },
+                            child: Row(
+                              children: [
+                                Text(
+                                  '4.8',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 2,
+                                ),
+                                Icon(Icons.star, size: 16, color: Colors.amber),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                       Text(
                         "UI/UX Designer",

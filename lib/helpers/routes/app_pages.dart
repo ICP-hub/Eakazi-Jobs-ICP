@@ -1,4 +1,5 @@
 // ignore: avoid_classes_with_only_static_members
+import 'package:eakazijobs/features/shared_widgets/reviews/review_screen.dart';
 import 'package:eakazijobs/features/trainers/tariner_course/course_students_enrolled.dart';
 import 'package:get/get.dart';
 
@@ -27,6 +28,7 @@ import '../../features/freelancer/courses/view/assement_courses_sucessful.dart';
 import '../../features/freelancer/courses/view/assement_fullvideo_fl.dart';
 import '../../features/freelancer/profile/view/screen/fl_profile.dart';
 import '../../features/freelancer/shared_widgets/certificate_view.dart';
+import '../../features/shared_widgets/reviews/write_review.dart';
 import '../../features/trainers/tariner_course/certificates_issued.dart';
 import '../../features/trainers/tariner_course/tariner_course_details.dart';
 import '../../features/trainers/tariner_course/trainer_edit_course.dart';
@@ -76,8 +78,8 @@ class AppPages {
     GetPage(
       name: "/",
       binding: BottomNavBarBinding(),
-      // page : () =>  const SplashScreen(),
-      page: () => SignIn(),
+      page : () =>  const SplashScreen(),
+      // page: () => SignIn(),
     ),
     GetPage(
       name: Routes.onBoardng1,
@@ -391,6 +393,14 @@ class AppPages {
     GetPage(
       name: Routes.viewCertificate,
       page: () => ViewCertificate(),
+    ),
+    GetPage(
+      name: Routes.reviewScreen,
+      page: () => ReviewScreen(),
+    ),
+    GetPage(
+      name: Routes.writeReview,
+      page: () => WriteReview(),
     )
   ];
 }

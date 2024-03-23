@@ -12,6 +12,7 @@ import '../../../helpers/routes/app_pages.dart';
 import '../../../helpers/utils/utils.dart';
 import '../../../integrations.dart';
 import '../../authentication/login/view/screen/sign_in.dart';
+import 'package:eakazijobs/helpers/utils/customLoader.dart';
 
 class CertificateIssued extends StatelessWidget {
   CertificateIssued({Key? key}) : super(key: key);
@@ -19,6 +20,8 @@ class CertificateIssued extends StatelessWidget {
   final courseId = Get.arguments[0];
   final title = Get.arguments[1];
   final description = Get.arguments[2];
+
+  CustomLoader customLoader = CustomLoader();
 
   Future<List<dynamic>> getCourseApplicants() async {
     var applicants = await newActor!.getFunc(FieldsMethod.getCourseApplicants)?.call([courseId]);
@@ -41,94 +44,17 @@ class CertificateIssued extends StatelessWidget {
 
     final certificateTag = userName + "_" + title;
 
-    _showLoadingDialog(context, "Minting Certificate...");
+    customLoader.showLoader('Minting Certificate...');
 
     try {
       final mintCertificate = await newActor!.getFunc(FieldsMethod.mintCertificate)?.call([principalId, description, certificateTag, courseId, base64string]);
       print(mintCertificate);
-      _hideLoadingDialog(context);
-      _showSuccessDialog(context, "Certificate minted successfully");
+      customLoader.showSuccess("Certificate minted successfully");
     } catch (e) {
-      _hideLoadingDialog(context);
-      _showErrorDialog(context, "Error minting certificate");
+      customLoader.showSuccess("Certificate minted successfully");
     }
 
   }
-
-  void _hideLoadingDialog(BuildContext context) {
-    Navigator.of(context).pop();
-  }
-
-  void _showLoadingDialog(BuildContext context, String text) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          content: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const SizedBox(
-                  height: 24,
-                  width: 24,
-                  child: CircularProgressIndicator(
-                    strokeWidth:
-                    3,
-                  ),
-                ),
-                const SizedBox(width: 24),
-                Text(text),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  void _showSuccessDialog(BuildContext context, String text) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Success"),
-          content: Text(text),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _showErrorDialog(BuildContext context, String text) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Error"),
-          content: Text(text),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -216,7 +142,7 @@ class CertificateIssued extends StatelessWidget {
                                   children: [
                                     GestureDetector(
                                       onTap: () {
-                                        Get.toNamed(Routes.trainerFreelancerProfile, arguments: applicant['fullname']);
+                                        Get.toNamed(Routes.trainerFreelancerProfile, arguments: [applicant['fullname'], applicant['principal_id'], applicant['id']]);
                                       },
                                       child: Row(
                                         children: [

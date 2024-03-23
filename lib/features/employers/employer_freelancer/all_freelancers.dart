@@ -90,7 +90,7 @@ class AllFreelancers extends StatelessWidget {
                             ),
                             child: GestureDetector(
                               onTap: () {
-                                Get.toNamed(Routes.flProfilePublic, arguments: applicant['fullname']);
+                                Get.toNamed(Routes.flProfilePublic, arguments: [applicant['fullname'], applicant['principal_id'], applicant['id']]);
                               },
                               child: Padding(
                                 padding: const EdgeInsets.only(bottom: 24),

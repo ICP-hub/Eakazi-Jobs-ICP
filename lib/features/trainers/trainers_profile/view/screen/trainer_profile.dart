@@ -15,17 +15,35 @@ import 'package:eakazijobs/features/trainers/trainers_home/view/widgets/no_data_
 class TrannerProfileProfile extends StatelessWidget {
   const TrannerProfileProfile({super.key});
 
+  // Get full name of user
   Future<String> getName() async {
     var fullName = await newActor!.getFunc(FieldsMethod.getFullName)?.call([]);
     return fullName;
   }
 
+  // Get the user principal, id and rating
+  Future<Map<String, dynamic>> getUserData() async {
+    var selfData = await newActor!.getFunc(FieldsMethod.getSelf)?.call([]);
+    print("SelfData : $selfData");
+    var user_principal = selfData['principal_id'];
+    print("User_principal : $user_principal");
+    var user_id = selfData['id'];
+    print("User id : $user_id");
+    var rating_number = 4.8;
+    return {
+      'principal_id': user_principal,
+      'id': user_id,
+      'rating_number': rating_number
+    };
+  }
+
+  // Get list of all courses created by the trainer
   Future<List<dynamic>> courseCreatorList() async {
     try {
       var courses =
           await newActor!.getFunc(FieldsMethod.getCourseByCreator)?.call([]);
       print(courses);
-      return courses; // Assuming courses is a List<Course>
+      return courses;
     } catch (e) {
       print('Error fetching courses: $e');
       return [];
@@ -65,10 +83,69 @@ class TrannerProfileProfile extends StatelessWidget {
                           } else if (snapshot.hasError) {
                             return Text('Error: ${snapshot.error}');
                           } else {
-                            return Text(
-                              snapshot.data ?? "User",
-                              style: textTheme(context).subtitle2?.copyWith(
-                                  color: ColorsConst.tittleColor, fontSize: 20),
+                            return Row(
+                              children: [
+                                Text(
+                                  snapshot.data ?? "User",
+                                  style: textTheme(context).subtitle2?.copyWith(
+                                      color: ColorsConst.tittleColor,
+                                      fontSize: 20),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                FutureBuilder<Map<String, dynamic>>(
+                                  future: getUserData(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return Text(
+                                        '...',
+                                        style: textTheme(context)
+                                            .subtitle2
+                                            ?.copyWith(
+                                              color: ColorsConst.tittleColor,
+                                              fontSize: 12,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                      );
+                                    } else if (snapshot.hasError) {
+                                      return Text(
+                                        'Error: ${snapshot.error}',
+                                        style: textTheme(context)
+                                            .subtitle2
+                                            ?.copyWith(
+                                              color: ColorsConst.tittleColor,
+                                              fontSize: 5,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                      );
+                                    } else {
+                                      return GestureDetector(
+                                        onTap: () {
+                                          Get.toNamed(Routes.reviewScreen,
+                                              arguments: [snapshot.data!['principal_id'], snapshot.data!['id']]);
+                                        },
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              snapshot.data?['rating_number'].toString() ?? 'N/A',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 14),
+                                            ),
+                                            const SizedBox(
+                                              width: 2,
+                                            ),
+                                            Icon(Icons.star,
+                                                size: 16, color: Colors.amber),
+                                          ],
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
+                              ],
                             );
                           }
                         },
@@ -164,7 +241,8 @@ class TrannerProfileProfile extends StatelessWidget {
                                     return Column(
                                       children: coursesToShow.map((course) {
                                         return JobsTrainersWidgte(
-                                            title: course['title'], id: course['id']);
+                                            title: course['title'],
+                                            id: course['id']);
                                       }).toList(),
                                     );
                                   } else if (snapshot.connectionState !=
@@ -176,8 +254,7 @@ class TrannerProfileProfile extends StatelessWidget {
                                         height: 20,
                                         width: 20,
                                         child: CircularProgressIndicator(
-                                          strokeWidth:
-                                              2,
+                                          strokeWidth: 2,
                                         ),
                                       ),
                                     );
@@ -209,17 +286,13 @@ class Reconmmended extends StatelessWidget {
       padding: const EdgeInsets.only(top: 30),
       child: Row(
         children: [
-          Text("Published Courses",
-              //   "Skill Acquisition",
-              style: textTheme(context).headline4),
+          Text("Published Courses", style: textTheme(context).headline4),
           const Spacer(),
           GestureDetector(
             onTap: () {
               Get.toNamed(Routes.trainerCoursers);
             },
-            child: Text("See All",
-                //   "Skill Acquisition",
-                style: textTheme(context).headline4),
+            child: Text("See All", style: textTheme(context).headline4),
           ),
         ],
       ),

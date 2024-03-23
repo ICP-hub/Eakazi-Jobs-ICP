@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:eakazijobs/constants/theme/color_selection.dart';
 import 'package:eakazijobs/helpers/utils/utils.dart';
@@ -11,17 +13,34 @@ import '../widgets/profile_container.dart';
 import 'package:eakazijobs/models/signupModel.dart';
 import 'package:eakazijobs/integrations.dart';
 
-
 SignupModel signupModel = SignupModel();
 
 class FreeLanceProfile extends StatelessWidget {
   const FreeLanceProfile({super.key});
 
+  // Get the full name of the user
   Future<String> getName() async {
     var fullName = await newActor!.getFunc(FieldsMethod.getFullName)?.call([]);
     return fullName;
   }
 
+  // Get the user principal, id and rating
+  Future<Map<String, dynamic>> getUserData() async {
+    var selfData = await newActor!.getFunc(FieldsMethod.getSelf)?.call([]);
+    print("SelfData : $selfData");
+    var user_principal = selfData['principal_id'];
+    print("User_principal : $user_principal");
+    var user_id = selfData['id'];
+    print("User id : $user_id");
+    var rating_number = 4.8;
+    return {
+      'principal_id': user_principal,
+      'id': user_id,
+      'rating_number': rating_number
+    };
+  }
+
+  // Get jobs applied count
   Future<int> countJobsApplied() async {
     var countJobsApplied =
         await newActor!.getFunc(FieldsMethod.getJobsAppliedCount)?.call([]);
@@ -29,6 +48,7 @@ class FreeLanceProfile extends StatelessWidget {
     return countJobsApplied;
   }
 
+  // Get all the registered courses
   Future<List<dynamic>> getRegisteredCourses() async {
     var registeredCourses = await newActor!
         .getFunc(FieldsMethod.getCoursesRegisteredByUser)
@@ -37,9 +57,9 @@ class FreeLanceProfile extends StatelessWidget {
     return registeredCourses;
   }
 
+  // Get course details for the certificate
   Future<List<Map<String, String>>> getCourseNamesIdsAndCreators() async {
     var selfData = await newActor!.getFunc(FieldsMethod.getSelf)?.call([]);
-    print(selfData);
 
     var tokenIds = selfData['token_ids'] as List<List<dynamic>>?;
     List<Map<String, String>> coursesInfo = [];
@@ -59,13 +79,17 @@ class FreeLanceProfile extends StatelessWidget {
     return coursesInfo;
   }
 
+  // Get course from course_id
   Future<dynamic> getCourse(String id) async {
     var course = await newActor!.getFunc(FieldsMethod.getCourse)?.call([id]);
     return course;
   }
 
+  // Open certificate for a particular course
   Future<void> openCertificate(BigInt tokenId, String courseName) async {
-    var getMetadata = await newActor!.getFunc(FieldsMethod.dip721TokenMetadata)?.call([tokenId]);
+    var getMetadata = await newActor!
+        .getFunc(FieldsMethod.dip721TokenMetadata)
+        ?.call([tokenId]);
     var properties = getMetadata['Ok']['properties'];
 
     String? certificateContent;
@@ -79,13 +103,13 @@ class FreeLanceProfile extends StatelessWidget {
 
     print("Base64 : $certificateContent");
 
-    Get.toNamed(Routes.viewCertificate, arguments: [certificateContent, courseName]);
-
+    Get.toNamed(Routes.viewCertificate,
+        arguments: [certificateContent, courseName]);
   }
 
+  // Fetch certificate function
   Future<void> getCertificate(String courseId, String courseName) async {
     var selfData = await newActor!.getFunc(FieldsMethod.getSelf)?.call([]);
-    print(selfData);
 
     var tokenIds = selfData['token_ids'] as List<List<dynamic>>?;
 
@@ -138,7 +162,7 @@ class FreeLanceProfile extends StatelessWidget {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
                             return Text(
-                              'Loading...', // You can replace this with a more appropriate loading message
+                              'Loading...',
                               style: textTheme(context).subtitle2?.copyWith(
                                     color: ColorsConst.tittleColor,
                                     fontSize: 20,
@@ -153,12 +177,70 @@ class FreeLanceProfile extends StatelessWidget {
                                   ),
                             );
                           } else {
-                            return Text(
-                              snapshot.data ?? "User",
-                              style: textTheme(context).subtitle2?.copyWith(
-                                    color: ColorsConst.tittleColor,
-                                    fontSize: 20,
-                                  ),
+                            return Row(
+                              children: [
+                                Text(
+                                  snapshot.data ?? "User",
+                                  style: textTheme(context).subtitle2?.copyWith(
+                                        color: ColorsConst.tittleColor,
+                                        fontSize: 20,
+                                      ),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                FutureBuilder<Map<String, dynamic>>(
+                                  future: getUserData(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return Text(
+                                        '...',
+                                        style: textTheme(context)
+                                            .subtitle2
+                                            ?.copyWith(
+                                              color: ColorsConst.tittleColor,
+                                              fontSize: 12,
+                                          overflow: TextOverflow.ellipsis,
+                                            ),
+                                      );
+                                    } else if (snapshot.hasError) {
+                                      return Text(
+                                        'Error: ${snapshot.error}',
+                                        style: textTheme(context)
+                                            .subtitle2
+                                            ?.copyWith(
+                                              color: ColorsConst.tittleColor,
+                                              fontSize: 5,
+                                          overflow: TextOverflow.ellipsis,
+                                            ),
+                                      );
+                                    } else {
+                                      return GestureDetector(
+                                        onTap: () {
+                                          Get.toNamed(Routes.reviewScreen,
+                                              arguments: [snapshot.data!['principal_id'], snapshot.data!['id']]);
+                                        },
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              snapshot.data?['rating_number'].toString() ?? 'N/A',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 14),
+                                            ),
+                                            const SizedBox(
+                                              width: 2,
+                                            ),
+                                            Icon(Icons.star,
+                                                size: 16, color: Colors.amber),
+                                          ],
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
+                              ],
                             );
                           }
                         },
@@ -243,7 +325,7 @@ class FreeLanceProfile extends StatelessWidget {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
                           return Text(
-                            'Loading...', // You can replace this with a more appropriate loading message
+                            'Loading...',
                             style: textTheme(context).bodyText2?.copyWith(
                                   color: ColorsConst.tittleColor,
                                 ),
@@ -256,14 +338,11 @@ class FreeLanceProfile extends StatelessWidget {
                                 ),
                           );
                         } else if (snapshot.hasData) {
-                          // Use snapshot.data which is of type int
                           return OverviewContainer(
-                            text: snapshot.data
-                                .toString(), // Convert the int to String
+                            text: snapshot.data.toString(),
                             subText: "Jobs Applied",
                           );
                         } else {
-                          // Handle the case when there's no data
                           return Text(
                             "0",
                             style: textTheme(context).bodyText2?.copyWith(
@@ -315,8 +394,7 @@ class FreeLanceProfile extends StatelessWidget {
                 height: 12,
               ),
               FutureBuilder<List<Map<String, String>>>(
-                future:
-                    getCourseNamesIdsAndCreators(),
+                future: getCourseNamesIdsAndCreators(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(child: CircularProgressIndicator());
@@ -333,21 +411,20 @@ class FreeLanceProfile extends StatelessWidget {
                           var course = coursesInfo[index];
                           return GestureDetector(
                             onTap: () {
-                              getCertificate(course['id'] ?? '', course['name'] ?? '');
+                              getCertificate(
+                                  course['id'] ?? '', course['name'] ?? '');
                             },
                             child: NftCertificates(
                               courseName: course['name'] ?? 'Unknown Name',
                               courseCreator:
                                   course['creator'] ?? 'Unknown Creator',
-                              image: ImageAssets
-                                  .profilePic2,
+                              image: ImageAssets.profilePic2,
                             ),
                           );
                         },
                       ),
                     );
                   } else {
-                    // Handle the case when there's no data
                     return Text("No certificates found.");
                   }
                 },

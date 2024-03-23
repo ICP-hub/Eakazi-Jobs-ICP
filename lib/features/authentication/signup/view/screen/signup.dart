@@ -264,22 +264,3 @@ class ValidateInputController extends GetxController {
   RxBool isRoleSelected = false.obs;
   void updateValidateStatus(state) => isValidated.value = state;
 }
-
-// class UserDetails extends StatelessWidget {
-//   final String fullName;
-//   final String email;
-//   final String role;
-//
-//   const UserDetails({
-//     Key? key,
-//     required this.fullName,
-//     required this.email,
-//     required this.role,
-//   }) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     // TODO: implement build
-//     throw UnimplementedError();
-//   }
-// }
