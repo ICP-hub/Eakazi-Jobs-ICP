@@ -20,7 +20,6 @@ class CertificateIssued extends StatelessWidget {
   final courseId = Get.arguments[0];
   final title = Get.arguments[1];
   final description = Get.arguments[2];
-
   CustomLoader customLoader = CustomLoader();
 
   Future<List<dynamic>> getCourseApplicants() async {

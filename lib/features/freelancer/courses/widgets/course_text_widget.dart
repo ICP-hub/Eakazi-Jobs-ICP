@@ -6,6 +6,7 @@ import '../../../../../helpers/utils/utils.dart';
 import '../../../../integrations.dart';
 import '../../../authentication/login/view/screen/sign_in.dart' as SignIn;
 import '../../../shared_widgets/buttons.dart';
+import 'package:eakazijobs/helpers/utils/customLoader.dart';
 
 
 class CourseDescription extends StatefulWidget {
@@ -27,6 +28,8 @@ class CourseDescription extends StatefulWidget {
 class _CourseDescriptionSate extends State<CourseDescription> {
 
   late Future<bool> isAppliedFuture;
+
+  CustomLoader customLoader = CustomLoader();
 
   @override
   void initState() {
@@ -79,11 +82,16 @@ class _CourseDescriptionSate extends State<CourseDescription> {
                   text: "Take Course",
                   isComplete: true,
                   onPressed: () async {
+                    customLoader.showLoader('Taking course...');
+
                     var applyJob = await SignIn.newActor!
                         .getFunc(FieldsMethod.applyCourse)
                         ?.call([widget.courseId]);
 
                     print(applyJob);
+
+                    customLoader.showSuccess('Course Registration successful');
+
                     Get.toNamed(Routes.flCourseSuccessful);
                   },
                 ),
