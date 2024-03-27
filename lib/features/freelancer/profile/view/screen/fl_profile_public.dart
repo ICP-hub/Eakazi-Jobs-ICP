@@ -1,3 +1,4 @@
+import 'package:agent_dart/principal/principal.dart';
 import 'package:eakazijobs/constants/theme/color_selection.dart';
 import 'package:eakazijobs/helpers/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,23 @@ class FreeLanceProfilePublic extends StatelessWidget {
         ?.call([]);
     print(registeredCourses);
     return registeredCourses;
+  }
+
+  Future<double> getAllReviews() async {
+    String reviewee_p_string = Get.arguments[1].toString();
+    Principal reviewee_Principal = Principal.fromText(reviewee_p_string);
+    var getReviews = await SignIn.newActor!
+        .getFunc(FieldsMethod.getAllReviews)
+        ?.call([reviewee_Principal]);
+
+    double averageRating = 0;
+    if (getReviews != null && getReviews.isNotEmpty) {
+      double totalRating =
+          getReviews.fold(0.0, (acc, review) => acc + review['ratings']);
+      averageRating = totalRating / getReviews.length;
+    }
+
+    return averageRating;
   }
 
   @override
@@ -84,26 +102,55 @@ class FreeLanceProfilePublic extends StatelessWidget {
                           const SizedBox(
                             width: 10,
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Get.toNamed(Routes.reviewScreen, arguments: [reviewee_principal_id, reviewee_id]);
-                            },
-                            child: Row(
-                              children: [
-                                Text(
-                                  '4.8',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 14
+                          FutureBuilder<double>(
+                            future: getAllReviews(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Text(
+                                  '...',
+                                  style: textTheme(context).subtitle2?.copyWith(
+                                        color: ColorsConst.tittleColor,
+                                        fontSize: 12,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                );
+                              } else if (snapshot.hasError) {
+                                return Text(
+                                  'Error: ${snapshot.error}',
+                                  style: textTheme(context).subtitle2?.copyWith(
+                                        color: ColorsConst.tittleColor,
+                                        fontSize: 5,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                );
+                              } else {
+                                return GestureDetector(
+                                  onTap: () {
+                                    Get.toNamed(Routes.reviewScreen,
+                                        arguments: [
+                                          reviewee_principal_id,
+                                          reviewee_id
+                                        ]);
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        '${snapshot.data}',
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 14),
+                                      ),
+                                      const SizedBox(
+                                        width: 2,
+                                      ),
+                                      Icon(Icons.star,
+                                          size: 16, color: Colors.amber),
+                                    ],
                                   ),
-                                ),
-                                const SizedBox(
-                                  width: 2,
-                                ),
-                                Icon(Icons.star, size: 16, color: Colors.amber),
-                              ],
-                            ),
-                          ),
+                                );
+                              }
+                            },
+                          )
                         ],
                       ),
                       Text(

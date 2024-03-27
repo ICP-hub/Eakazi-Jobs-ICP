@@ -12,6 +12,7 @@ import '../../../shared_widgets/reconmended_tile.dart';
 import '../widgets/profile_container.dart';
 import 'package:eakazijobs/models/signupModel.dart';
 import 'package:eakazijobs/integrations.dart';
+import 'package:agent_dart/principal/principal.dart';
 
 SignupModel signupModel = SignupModel();
 
@@ -32,11 +33,23 @@ class FreeLanceProfile extends StatelessWidget {
     print("User_principal : $user_principal");
     var user_id = selfData['id'];
     print("User id : $user_id");
-    var rating_number = 4.8;
+
+    String reviewee_p_string = user_principal.toString();
+    Principal reviewee_Principal = Principal.fromText(reviewee_p_string);
+    var getReviews = await newActor!
+        .getFunc(FieldsMethod.getAllReviews)
+        ?.call([reviewee_Principal]);
+
+    double averageRating = 0;
+    if (getReviews != null && getReviews.isNotEmpty) {
+      double totalRating = getReviews.fold(0.0, (acc, review) => acc + review['ratings']);
+      averageRating = totalRating / getReviews.length;
+    }
+
     return {
       'principal_id': user_principal,
       'id': user_id,
-      'rating_number': rating_number
+      'rating_number': averageRating
     };
   }
 

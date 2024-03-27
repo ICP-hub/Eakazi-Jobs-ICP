@@ -1,3 +1,4 @@
+import 'package:agent_dart/principal/principal.dart';
 import 'package:eakazijobs/constants/theme/color_selection.dart';
 import 'package:eakazijobs/helpers/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -29,11 +30,23 @@ class TrannerProfileProfile extends StatelessWidget {
     print("User_principal : $user_principal");
     var user_id = selfData['id'];
     print("User id : $user_id");
-    var rating_number = 4.8;
+
+    String reviewee_p_string = user_principal.toString();
+    Principal reviewee_Principal = Principal.fromText(reviewee_p_string);
+    var getReviews = await newActor!
+        .getFunc(FieldsMethod.getAllReviews)
+        ?.call([reviewee_Principal]);
+
+    double averageRating = 0;
+    if (getReviews != null && getReviews.isNotEmpty) {
+      double totalRating = getReviews.fold(0.0, (acc, review) => acc + review['ratings']);
+      averageRating = totalRating / getReviews.length;
+    }
+
     return {
       'principal_id': user_principal,
       'id': user_id,
-      'rating_number': rating_number
+      'rating_number': averageRating
     };
   }
 

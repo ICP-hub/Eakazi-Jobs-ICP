@@ -1,3 +1,4 @@
+import 'package:agent_dart/principal/principal.dart';
 import 'package:eakazijobs/constants/theme/color_selection.dart';
 import 'package:eakazijobs/helpers/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -7,20 +8,39 @@ import 'package:get/get.dart';
 import '../../../../../constants/assets/icon_constans.dart';
 import '../../../../../constants/assets/images_constants.dart';
 import '../../../../../helpers/routes/app_pages.dart';
+import '../../../../../integrations.dart';
+import '../../../../authentication/login/view/screen/sign_in.dart' as SignIn;
 import '../../../../employers/employers_profile/view/widgets/employer_profile_container.dart';
 import '../../../../shared_widgets/buttons.dart';
 import '../../../../shared_widgets/svgs.dart';
-
 
 class TrainerFreelancerProfile extends StatefulWidget {
   const TrainerFreelancerProfile({Key? key}) : super(key: key);
 
   @override
-  _TrainerFreelancerProfileState createState() => _TrainerFreelancerProfileState();
+  _TrainerFreelancerProfileState createState() =>
+      _TrainerFreelancerProfileState();
 }
 
 class _TrainerFreelancerProfileState extends State<TrainerFreelancerProfile> {
   String? applicationStatus;
+
+  Future<double> getAllReviews() async {
+    String reviewee_p_string = Get.arguments[1].toString();
+    Principal reviewee_Principal = Principal.fromText(reviewee_p_string);
+    var getReviews = await SignIn.newActor!
+        .getFunc(FieldsMethod.getAllReviews)
+        ?.call([reviewee_Principal]);
+
+    double averageRating = 0;
+    if (getReviews != null && getReviews.isNotEmpty) {
+      double totalRating =
+          getReviews.fold(0.0, (acc, review) => acc + review['ratings']);
+      averageRating = totalRating / getReviews.length;
+    }
+
+    return averageRating;
+  }
 
   Widget doubleButtons(BuildContext context) {
     return Padding(
@@ -86,7 +106,7 @@ class _TrainerFreelancerProfileState extends State<TrainerFreelancerProfile> {
                         const CircleAvatar(
                           radius: 40,
                           backgroundImage:
-                          const AssetImage(ImageAssets.studentImage),
+                              const AssetImage(ImageAssets.studentImage),
                         ),
                         const SizedBox(
                           width: 30,
@@ -99,31 +119,66 @@ class _TrainerFreelancerProfileState extends State<TrainerFreelancerProfile> {
                                 Text(
                                   name ?? "Applicant Name",
                                   style: textTheme(context).subtitle2?.copyWith(
-                                      color: ColorsConst.tittleColor, fontSize: 20),
+                                      color: ColorsConst.tittleColor,
+                                      fontSize: 20),
                                 ),
                                 const SizedBox(
                                   width: 10,
                                 ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Get.toNamed(Routes.reviewScreen, arguments: [reviewee_principal_id, reviewee_id]);
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        '4.8',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 14
+                                FutureBuilder<double>(
+                                  future: getAllReviews(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return Text(
+                                        '...',
+                                        style: textTheme(context)
+                                            .subtitle2
+                                            ?.copyWith(
+                                              color: ColorsConst.tittleColor,
+                                              fontSize: 12,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                      );
+                                    } else if (snapshot.hasError) {
+                                      return Text(
+                                        'Error: ${snapshot.error}',
+                                        style: textTheme(context)
+                                            .subtitle2
+                                            ?.copyWith(
+                                              color: ColorsConst.tittleColor,
+                                              fontSize: 5,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                      );
+                                    } else {
+                                      return GestureDetector(
+                                        onTap: () {
+                                          Get.toNamed(Routes.reviewScreen,
+                                              arguments: [
+                                                reviewee_principal_id,
+                                                reviewee_id
+                                              ]);
+                                        },
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              '${snapshot.data}',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 14),
+                                            ),
+                                            const SizedBox(
+                                              width: 2,
+                                            ),
+                                            Icon(Icons.star,
+                                                size: 16, color: Colors.amber),
+                                          ],
                                         ),
-                                      ),
-                                      const SizedBox(
-                                        width: 2,
-                                      ),
-                                      Icon(Icons.star, size: 16, color: Colors.amber),
-                                    ],
-                                  ),
-                                ),
+                                      );
+                                    }
+                                  },
+                                )
                               ],
                             ),
                             Text(
@@ -150,7 +205,7 @@ class _TrainerFreelancerProfileState extends State<TrainerFreelancerProfile> {
                               },
                               child: Container(
                                 padding:
-                                const EdgeInsets.symmetric(horizontal: 10),
+                                    const EdgeInsets.symmetric(horizontal: 10),
                                 height: 5.h,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(3),
@@ -179,8 +234,8 @@ class _TrainerFreelancerProfileState extends State<TrainerFreelancerProfile> {
                     Text(
                       "Overview",
                       style: textTheme(context).bodyText1?.copyWith(
-                        color: ColorsConst.tittleColor2,
-                      ),
+                            color: ColorsConst.tittleColor2,
+                          ),
                     ),
                     const SizedBox(
                       height: 10,
@@ -210,8 +265,8 @@ class _TrainerFreelancerProfileState extends State<TrainerFreelancerProfile> {
                     Text(
                       "Skills",
                       style: textTheme(context).bodyText1?.copyWith(
-                        color: ColorsConst.tittleColor2,
-                      ),
+                            color: ColorsConst.tittleColor2,
+                          ),
                     ),
                     const SizedBox(
                       height: 10,
@@ -288,4 +343,3 @@ class Reconmmended extends StatelessWidget {
     );
   }
 }
-

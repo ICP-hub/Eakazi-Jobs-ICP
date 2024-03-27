@@ -1,3 +1,4 @@
+import 'package:agent_dart/principal/principal.dart';
 import 'package:eakazijobs/constants/theme/color_selection.dart';
 import 'package:eakazijobs/helpers/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,8 @@ import 'package:get/get.dart';
 import '../../../constants/assets/icon_constans.dart';
 import '../../../constants/assets/images_constants.dart';
 import '../../../helpers/routes/app_pages.dart';
+import '../../../integrations.dart';
+import '../../authentication/login/view/screen/sign_in.dart' as SignIn;
 import '../../freelancer/profile/view/widgets/profile_container.dart';
 import '../../shared_widgets/buttons.dart';
 import '../../shared_widgets/svgs.dart';
@@ -20,6 +23,23 @@ class EmpFreelancerProfile extends StatefulWidget {
 
 class _EmpFreelancerProfileState extends State<EmpFreelancerProfile> {
   String? applicationStatus;
+
+  Future<double> getAllReviews() async {
+    String reviewee_p_string = Get.arguments[1].toString();
+    Principal reviewee_Principal = Principal.fromText(reviewee_p_string);
+    var getReviews = await SignIn.newActor!
+        .getFunc(FieldsMethod.getAllReviews)
+        ?.call([reviewee_Principal]);
+
+    double averageRating = 0;
+    if (getReviews != null && getReviews.isNotEmpty) {
+      double totalRating =
+          getReviews.fold(0.0, (acc, review) => acc + review['ratings']);
+      averageRating = totalRating / getReviews.length;
+    }
+
+    return averageRating;
+  }
 
   Widget doubleButtons(BuildContext context) {
     return Padding(
@@ -98,31 +118,66 @@ class _EmpFreelancerProfileState extends State<EmpFreelancerProfile> {
                                 Text(
                                   name ?? "Applicant Name",
                                   style: textTheme(context).subtitle2?.copyWith(
-                                      color: ColorsConst.tittleColor, fontSize: 20),
+                                      color: ColorsConst.tittleColor,
+                                      fontSize: 20),
                                 ),
                                 const SizedBox(
                                   width: 10,
                                 ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Get.toNamed(Routes.reviewScreen, arguments: [reviewee_principal_id, reveiwee_id]);
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        '4.8',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 14
+                                FutureBuilder<double>(
+                                  future: getAllReviews(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return Text(
+                                        '...',
+                                        style: textTheme(context)
+                                            .subtitle2
+                                            ?.copyWith(
+                                              color: ColorsConst.tittleColor,
+                                              fontSize: 12,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                      );
+                                    } else if (snapshot.hasError) {
+                                      return Text(
+                                        'Error: ${snapshot.error}',
+                                        style: textTheme(context)
+                                            .subtitle2
+                                            ?.copyWith(
+                                              color: ColorsConst.tittleColor,
+                                              fontSize: 5,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                      );
+                                    } else {
+                                      return GestureDetector(
+                                        onTap: () {
+                                          Get.toNamed(Routes.reviewScreen,
+                                              arguments: [
+                                                reviewee_principal_id,
+                                                reveiwee_id
+                                              ]);
+                                        },
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              '${snapshot.data}',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 14),
+                                            ),
+                                            const SizedBox(
+                                              width: 2,
+                                            ),
+                                            Icon(Icons.star,
+                                                size: 16, color: Colors.amber),
+                                          ],
                                         ),
-                                      ),
-                                      const SizedBox(
-                                        width: 2,
-                                      ),
-                                      Icon(Icons.star, size: 16, color: Colors.amber),
-                                    ],
-                                  ),
-                                ),
+                                      );
+                                    }
+                                  },
+                                )
                               ],
                             ),
                             Text(
@@ -272,8 +327,13 @@ class _EmpFreelancerProfileState extends State<EmpFreelancerProfile> {
                 applicationStatus == 'accepted'
                     ? "Application Accepted"
                     : "Application Declined",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,
-                color: applicationStatus == 'accepted' ? Colors.green : Colors.red,),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: applicationStatus == 'accepted'
+                      ? Colors.green
+                      : Colors.red,
+                ),
               ),
             ),
         ],
@@ -303,4 +363,3 @@ class Reconmmended extends StatelessWidget {
     );
   }
 }
-
